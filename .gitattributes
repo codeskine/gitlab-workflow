@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+*.md text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.sh text eol=lf
+
+VERSION text eol=lf
+
+# Documentation language detection
+*.md linguist-detectable=true

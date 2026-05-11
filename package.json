@@ -1,0 +1,48 @@
+{
+  "name": "gitlab-author",
+  "version": "1.0.0",
+  "description": "Cursor Agent Skills per autorare artefatti GitLab (issue, milestone, merge request) con template embedded in italiano, snippet di codice e diagrammi mermaid. Layout multi-skill ispirato a vince-winkintel/gitlab-cli-skills. Publish via glab.",
+  "license": "MIT",
+  "keywords": [
+    "cursor",
+    "cursor-skill",
+    "agent-skill",
+    "agent-skills",
+    "gitlab",
+    "glab",
+    "issue",
+    "milestone",
+    "merge-request",
+    "mr",
+    "issue-templates",
+    "markdown",
+    "italian"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "SKILL.md",
+    "VERSION",
+    "SECURITY.md",
+    "LICENSE",
+    "gitlab-issue-author",
+    "scripts/install.js"
+  ],
+  "bin": {
+    "gitlab-author": "scripts/install.js"
+  },
+  "scripts": {
+    "install-skill": "node scripts/install.js",
+    "install-skill:project": "node scripts/install.js --project",
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['gitlab-issue-author/SKILL.md','SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeskine/gitlab-author-skills.git"
+  },
+  "homepage": "https://github.com/codeskine/gitlab-author-skills#readme",
+  "bugs": {
+    "url": "https://github.com/codeskine/gitlab-author-skills/issues"
+  }
+}
