@@ -62,7 +62,7 @@ Per la sezione `## Modifiche`, usa snippet di **5-20 righe** per ogni punto sign
 
 **NON pubblicare ancora.** Mostra la bozza completa in chat. Chiedi conferma esplicita:
 
-> "Bozza pronta. Procedo a creare la MR su GitLab con titolo '<titolo>', label '<label>', milestone '<milestone|nessuna>'? (si/modifiche/annulla)"
+> "Bozza pronta. Procedo a creare la MR su GitLab con titolo '<titolo>', label `<label>`, milestone `<milestone|nessuna>`? (si/modifiche/annulla)"
 
 Se l'utente chiede modifiche, applicale e rimostra la bozza. Ripeti finche' non e' approvata.
 
