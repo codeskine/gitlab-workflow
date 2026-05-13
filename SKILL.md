@@ -56,7 +56,7 @@ gitlab-author-skills/
 ├── LICENSE                        # MIT
 ├── SECURITY.md
 ├── package.json                   # bin: gitlab-author (npx)
-├── gitlab-issue/           # sub-skill: issue
+├── gitlab-issue/                  # sub-skill: issue
 │   ├── SKILL.md
 │   ├── templates/
 │   │   ├── bug.md
@@ -65,6 +65,14 @@ gitlab-author-skills/
 │   │   └── technical-debt.md
 │   └── references/
 │       └── mermaid-diagrams.md
+├── gitlab-milestone/              # sub-skill: milestone
+│   ├── SKILL.md
+│   └── templates/
+│       └── milestone.md
+├── gitlab-mr/                     # sub-skill: merge request
+│   ├── SKILL.md
+│   └── templates/
+│       └── mr.md
 └── scripts/
     └── install.js                 # CLI di installazione con discovery
 ```
