@@ -9,8 +9,8 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 | Sub-skill                                              | Scopo                                                                                          | Stato       |
 |--------------------------------------------------------|------------------------------------------------------------------------------------------------|-------------|
 | [`gitlab-issue`](./gitlab-issue)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| `gitlab-milestone`                              | Genera milestone con scope, deliverables e date target.                                        | Pianificata |
-| `gitlab-mr`                                     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Pianificata |
+| [`gitlab-milestone`](./gitlab-milestone)               | Genera milestone con scope, deliverables e date target.                                        | Disponibile |
+| [`gitlab-mr`](./gitlab-mr)                             | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Disponibile |
 
 ## Installazione
 

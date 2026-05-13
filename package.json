@@ -27,6 +27,8 @@
     "SECURITY.md",
     "LICENSE",
     "gitlab-issue",
+    "gitlab-milestone",
+    "gitlab-mr",
     "scripts/install.js"
   ],
   "bin": {
@@ -35,7 +37,7 @@
   "scripts": {
     "install-skill": "node scripts/install.js",
     "install-skill:project": "node scripts/install.js --project",
-    "prepack": "node -e \"const fs=require('fs');for(const p of ['gitlab-issue/SKILL.md','SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['gitlab-issue/SKILL.md','gitlab-milestone/SKILL.md','gitlab-mr/SKILL.md','SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
   },
   "repository": {
     "type": "git",
