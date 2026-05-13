@@ -44,15 +44,40 @@ L'utente **deve** specificare il tipo nel prompt (es. *"crea una issue di tipo b
 
 Leggi **solo** il file `templates/<tipo>.md` corrispondente al tipo scelto. Non caricare gli altri.
 
-### 3. Esplora il codice citato o inferito
+### 3. Esplora il contesto
+
+**Estrazione automatica da git** (eseguita sempre, in silenzio):
+
+```bash
+git log --oneline -20                     # area di lavoro recente
+git diff HEAD                             # file e simboli coinvolti
+```
+
+Se tipo `bug` o `technical-debt`, esegui anche:
+
+```bash
+git blame <file> -L <inizio>,<fine>       # autore/data delle righe incriminate
+```
+
+**Estrazione dalla codebase:**
 
 Usa `Read`, `Grep`, `Glob` per:
 
-- aprire i file menzionati dall'utente
+- aprire i file identificati dal diff o menzionati dall'utente
 - risolvere i riferimenti simbolici (nome funzione, struct, package -> file:riga esatti)
 - identificare i chiamanti rilevanti quando utile a costruire il diagramma
 
-**Snippet di codice**: includi blocchi di **5-20 righe** per ogni punto significativo, con citazione esatta `path/file.ext` riga N (formato come negli esempi del team). Usa la sintassi appropriata per il linguaggio (` ```go `, ` ```python `, ` ```ts `, ecc.).
+**Snippet di codice**: includi blocchi di **5-20 righe** per ogni punto significativo, con citazione esatta `path/file.ext` riga N. Usa la sintassi appropriata per il linguaggio (` ```go `, ` ```python `, ` ```ts `, ecc.).
+
+L'enricchimento e' silenzioso: nessun output intermedio. Tutto converge nella bozza.
+
+### 3b. Suggerisci la milestone
+
+```bash
+glab milestone list --state active
+```
+
+Scegli la milestone piu' pertinente al contesto (branch name, label, tipo di issue). Se nessuna e' pertinente, lascia vuoto. La scelta viene mostrata nel draft gate.
 
 ### 4. Applica la policy diagrammi
 
@@ -78,7 +103,7 @@ Pattern mermaid riusabili in [references/mermaid-diagrams.md](references/mermaid
 
 Chiedi conferma esplicita prima di procedere:
 
-> "Bozza pronta. Procedo a creare l'issue su GitLab con titolo '<titolo>' e label `<label>`? (si/modifiche/annulla)"
+> "Bozza pronta. Procedo a creare l'issue su GitLab con titolo '<titolo>', label `<label>`, milestone `<milestone|nessuna>`? (si/modifiche/annulla)"
 
 Se l'utente chiede modifiche, applicale e rimostra la bozza. Ripeti finche' non e' approvata.
 
@@ -93,6 +118,7 @@ Dopo OK esplicito:
 glab issue create \
   --title "<titolo>" \
   --label "<label-default>" \
+  --milestone "<milestone>" \
   --description "$(cat /tmp/issue-<tipo>-<slug>.md)"
 ```
 
