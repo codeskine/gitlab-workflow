@@ -22,7 +22,7 @@ Questa skill:
 - Scrive file temporanei in `/tmp/issue-<tipo>-<slug>.md`
 - Non legge ne' modifica credenziali. Si appoggia all'autenticazione esistente di `glab` (`~/.config/glab-cli/config.yml`)
 
-Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare il workflow descritto in [`gitlab-issue-author/SKILL.md`](./gitlab-issue-author/SKILL.md).
+Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare il workflow descritto in [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md).
 
 ## Dipendenze
 

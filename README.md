@@ -8,9 +8,9 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 
 | Sub-skill                                              | Scopo                                                                                          | Stato       |
 |--------------------------------------------------------|------------------------------------------------------------------------------------------------|-------------|
-| [`gitlab-issue-author`](./gitlab-issue-author)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| `gitlab-milestone-author`                              | Genera milestone con scope, deliverables e date target.                                        | Pianificata |
-| `gitlab-mr-author`                                     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Pianificata |
+| [`gitlab-issue`](./gitlab-issue)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
+| [`gitlab-milestone`](./gitlab-milestone)               | Genera milestone con scope, deliverables e date target.                                        | Disponibile |
+| [`gitlab-mr`](./gitlab-mr)                             | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Disponibile |
 
 ## Installazione
 
@@ -24,7 +24,7 @@ npx gitlab-author install
 npx gitlab-author install --project --force
 
 # Solo una sub-skill specifica
-npx gitlab-author install --skill gitlab-issue-author
+npx gitlab-author install --skill gitlab-issue
 
 # Elenco delle sub-skill disponibili
 npx gitlab-author list
@@ -58,7 +58,7 @@ gitlab-author-skills/
 ├── .gitignore
 ├── .gitattributes
 ├── package.json                   # name: gitlab-author, bin: gitlab-author
-├── gitlab-issue-author/           # sub-skill: issue
+├── gitlab-issue/           # sub-skill: issue
 │   ├── SKILL.md
 │   ├── templates/
 │   │   ├── bug.md
@@ -109,13 +109,13 @@ Convenzioni trasversali a tutte le sub-skill:
 
 Dettagli per tipo:
 
-- [`gitlab-issue-author/SKILL.md`](./gitlab-issue-author/SKILL.md)
+- [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
 
 ## Aggiungere una nuova sub-skill
 
-`scripts/install.js` rileva automaticamente le sub-skill via discovery: ogni directory a livello root del repository che contiene un file `SKILL.md` viene installata. Per aggiungere `gitlab-milestone-author`:
+`scripts/install.js` rileva automaticamente le sub-skill via discovery: ogni directory a livello root del repository che contiene un file `SKILL.md` viene installata. Per aggiungere `gitlab-milestone`:
 
-1. Crea `gitlab-milestone-author/SKILL.md` con frontmatter `name` e `description`
+1. Crea `gitlab-milestone/SKILL.md` con frontmatter `name` e `description`
 2. Aggiungi eventuali `templates/` e `references/`
 3. `npx gitlab-author list` mostrera' la nuova sub-skill senza modifiche al `package.json`
 
