@@ -9,11 +9,11 @@ Collezione di Cursor Agent Skills per **autorare artefatti GitLab** (issue, mile
 
 ## Sub-skill disponibili
 
-| Sub-skill                                              | Scopo                                                                                          | Stato     |
-|--------------------------------------------------------|------------------------------------------------------------------------------------------------|-----------|
-| [`gitlab-issue-author`](./gitlab-issue-author)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| `gitlab-milestone-author`                              | Genera milestone con scope, deliverables e date target.                                        | Pianificata |
-| `gitlab-mr-author`                                     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Pianificata |
+| Sub-skill                                    | Scopo                                                                                          | Stato     |
+|----------------------------------------------|------------------------------------------------------------------------------------------------|-----------|
+| [`gitlab-issue`](./gitlab-issue)             | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
+| `gitlab-milestone`                           | Genera milestone con scope, deliverables e date target.                                        | Pianificata |
+| `gitlab-mr`                                  | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Pianificata |
 
 Ogni sub-skill e' una directory a livello root con il proprio `SKILL.md` ed eventuali sotto-cartelle `templates/`, `references/`. Quando si aggiunge una nuova sub-skill, `scripts/install.js` la rileva automaticamente via discovery (cartella root con `SKILL.md`).
 
@@ -27,7 +27,7 @@ npx gitlab-author install
 npx gitlab-author install --project --force
 
 # Installa solo una sub-skill specifica
-npx gitlab-author install --skill gitlab-issue-author
+npx gitlab-author install --skill gitlab-issue
 
 # Elenco delle sub-skill disponibili
 npx gitlab-author list
@@ -56,7 +56,7 @@ gitlab-author-skills/
 ├── LICENSE                        # MIT
 ├── SECURITY.md
 ├── package.json                   # bin: gitlab-author (npx)
-├── gitlab-issue-author/           # sub-skill: issue
+├── gitlab-issue/           # sub-skill: issue
 │   ├── SKILL.md
 │   ├── templates/
 │   │   ├── bug.md

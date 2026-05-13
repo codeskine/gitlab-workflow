@@ -1,5 +1,5 @@
 ---
-name: gitlab-issue-author
+name: gitlab-issue
 description: Genera issue GitLab ben documentate (bug, documentazione, debito tecnico, feature) con template embedded in italiano, snippet di codice 5-20 righe e diagrammi mermaid quando rilevanti. Usa la CLI glab per pubblicare. Applicare quando l'utente chiede di creare una issue GitLab, aprire un bug, documentare debito tecnico, proporre una feature, o documentare una modifica.
 ---
 
@@ -129,7 +129,7 @@ Questa sub-skill fa parte del pacchetto npm **`gitlab-author`** (repo: `gitlab-a
 npx gitlab-author install
 
 # Solo questa sub-skill, nel repository corrente
-npx gitlab-author install --skill gitlab-issue-author --project --force
+npx gitlab-author install --skill gitlab-issue --project --force
 ```
 
 Usa `--force` se la cartella di destinazione esiste gia'. Il tarball npm include un `README.md` con tutte le opzioni.

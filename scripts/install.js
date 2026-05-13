@@ -9,7 +9,7 @@
  *   gitlab-author-skills/
  *   ├── SKILL.md
  *   ├── VERSION
- *   ├── gitlab-issue-author/       <- sub-skill copiata
+ *   ├── gitlab-issue/       <- sub-skill copiata
  *   │   ├── SKILL.md
  *   │   ├── templates/
  *   │   └── references/
@@ -18,7 +18,7 @@
  * Uso:
  *   npx gitlab-author install
  *   npx gitlab-author install --project
- *   npx gitlab-author install --skill gitlab-issue-author
+ *   npx gitlab-author install --skill gitlab-issue
  *   npx gitlab-author install --force
  *   npx gitlab-author list
  *
@@ -69,7 +69,7 @@ Comandi:
 Opzioni per install:
   --project          Destinazione: ./.cursor/skills/ (repo corrente)
                      Default: ~/.cursor/skills/
-  --skill <name>     Installa solo la sub-skill indicata (es. gitlab-issue-author)
+  --skill <name>     Installa solo la sub-skill indicata (es. gitlab-issue)
                      Default: tutte le sub-skill rilevate
   --force            Sovrascrive le directory di destinazione se esistono
 
@@ -79,7 +79,7 @@ Globali:
 Esempi:
   npx gitlab-author
   npx gitlab-author install --project --force
-  npx gitlab-author install --skill gitlab-issue-author
+  npx gitlab-author install --skill gitlab-issue
   npx gitlab-author list
 `);
 }

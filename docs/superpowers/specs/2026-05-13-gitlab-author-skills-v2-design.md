@@ -1,7 +1,7 @@
 # gitlab-author-skills v2 — Design Spec
 
 **Data:** 2026-05-13  
-**Scope:** Revisione di `gitlab-issue-author` + design di `gitlab-milestone-author` e `gitlab-mr-author`  
+**Scope:** Revisione di `gitlab-issue` + design di `gitlab-milestone` e `gitlab-mr`  
 **Approccio:** Spec unificata con common context layer condiviso da tutte le sub-skill
 
 ---
@@ -45,7 +45,7 @@ Prompt di conferma standard:
 
 ---
 
-## 2. Revisioni a `gitlab-issue-author`
+## 2. Revisioni a `gitlab-issue`
 
 ### Passo 3 — Esplorazione automatica del contesto (aggiornato)
 
@@ -91,7 +91,7 @@ glab issue create \
 
 ---
 
-## 3. `gitlab-milestone-author` (nuova sub-skill)
+## 3. `gitlab-milestone` (nuova sub-skill)
 
 ### Quando usare
 
@@ -155,7 +155,7 @@ glab milestone create \
 
 ---
 
-## 4. `gitlab-mr-author` (nuova sub-skill)
+## 4. `gitlab-mr` (nuova sub-skill)
 
 ### Quando usare
 
@@ -243,13 +243,13 @@ glab mr create \
 gitlab-author-skills/
 ├── SKILL.md                              # aggiornare sezione sub-skill disponibili
 ├── README.md                             # aggiornare tabella stato sub-skill
-├── gitlab-issue-author/
+├── gitlab-issue/
 │   └── SKILL.md                          # aggiornare passi 3, 3b e draft gate
-├── gitlab-milestone-author/              # nuova directory
+├── gitlab-milestone/                     # nuova directory
 │   ├── SKILL.md                          # nuova sub-skill
 │   └── templates/
 │       └── milestone.md                  # nuovo template
-└── gitlab-mr-author/                     # nuova directory
+└── gitlab-mr/                            # nuova directory
     ├── SKILL.md                          # nuova sub-skill
     └── templates/
         └── mr.md                         # nuovo template
