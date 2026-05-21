@@ -8,9 +8,9 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 
 | Sub-skill                                              | Scopo                                                                                          | Stato       |
 |--------------------------------------------------------|------------------------------------------------------------------------------------------------|-------------|
-| [`gitlab-issue-author`](./gitlab-issue-author)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| `gitlab-milestone-author`                              | Genera milestone con scope, deliverables e date target.                                        | Pianificata |
-| `gitlab-mr-author`                                     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Pianificata |
+| [`gitlab-issue`](./gitlab-issue)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
+| [`gitlab-milestone`](./gitlab-milestone)               | Genera milestone con scope, deliverables e date target.                                        | Disponibile |
+| [`gitlab-mr`](./gitlab-mr)                             | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Disponibile |
 
 ## Installazione
 
@@ -24,7 +24,7 @@ npx gitlab-author install
 npx gitlab-author install --project --force
 
 # Solo una sub-skill specifica
-npx gitlab-author install --skill gitlab-issue-author
+npx gitlab-author install --skill gitlab-issue
 
 # Elenco delle sub-skill disponibili
 npx gitlab-author list
@@ -58,7 +58,7 @@ gitlab-author-skills/
 ├── .gitignore
 ├── .gitattributes
 ├── package.json                   # name: gitlab-author, bin: gitlab-author
-├── gitlab-issue-author/           # sub-skill: issue
+├── gitlab-issue/                  # sub-skill: issue
 │   ├── SKILL.md
 │   ├── templates/
 │   │   ├── bug.md
@@ -67,6 +67,14 @@ gitlab-author-skills/
 │   │   └── technical-debt.md
 │   └── references/
 │       └── mermaid-diagrams.md
+├── gitlab-milestone/              # sub-skill: milestone
+│   ├── SKILL.md
+│   └── templates/
+│       └── milestone.md
+├── gitlab-mr/                     # sub-skill: merge request
+│   ├── SKILL.md
+│   └── templates/
+│       └── mr.md
 └── scripts/
     └── install.js                 # CLI di installazione (bin npm) con discovery
 ```
@@ -80,6 +88,8 @@ Dopo `npx gitlab-author install`, in qualsiasi progetto aperto in Cursor:
 "Apri un debito tecnico per le allocazioni ripetute in AzureClientController"
 "Proponi una feature per migliorare l'onboarding CI"
 "Crea una issue di documentazione per il feature flag X introdotto da !224136"
+"Crea una milestone per la release 2.1 con le issue aperte del componente auth"
+"Scrivi la descrizione della MR per questo branch e chiudi la issue #42"
 ```
 
 L'agente:
@@ -107,17 +117,20 @@ Convenzioni trasversali a tutte le sub-skill:
 - Checklist `- [ ]` per attivita' / requisiti
 - Nessuna riga "Aprire una Merge Request" nelle attivita' della issue (l'MR e' fuori scope della issue stessa)
 
-Dettagli per tipo:
+Dettagli per sub-skill:
 
-- [`gitlab-issue-author/SKILL.md`](./gitlab-issue-author/SKILL.md)
+- [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
+- [`gitlab-milestone/SKILL.md`](./gitlab-milestone/SKILL.md)
+- [`gitlab-mr/SKILL.md`](./gitlab-mr/SKILL.md)
 
 ## Aggiungere una nuova sub-skill
 
-`scripts/install.js` rileva automaticamente le sub-skill via discovery: ogni directory a livello root del repository che contiene un file `SKILL.md` viene installata. Per aggiungere `gitlab-milestone-author`:
+`scripts/install.js` rileva automaticamente le sub-skill via discovery: ogni directory a livello root del repository che contiene un file `SKILL.md` viene installata. Per aggiungere, ad esempio, `gitlab-epic`:
 
-1. Crea `gitlab-milestone-author/SKILL.md` con frontmatter `name` e `description`
+1. Crea `gitlab-epic/SKILL.md` con frontmatter `name` e `description`
 2. Aggiungi eventuali `templates/` e `references/`
-3. `npx gitlab-author list` mostrera' la nuova sub-skill senza modifiche al `package.json`
+3. Aggiungi `"gitlab-epic"` al campo `files` di `package.json`
+4. `npx gitlab-author list` mostrera' la nuova sub-skill
 
 ## Licenza
 

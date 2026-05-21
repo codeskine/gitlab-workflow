@@ -16,13 +16,16 @@ Riceverai una risposta entro 7 giorni lavorativi.
 
 ## Scope
 
-Questa skill:
+Questo pacchetto di skill:
 
-- Esegue `glab issue create` con il contenuto preparato dall'agente, **solo dopo conferma esplicita** dell'utente (draft gate)
-- Scrive file temporanei in `/tmp/issue-<tipo>-<slug>.md`
+- Esegue `glab issue create`, `glab milestone create` o `glab mr create` con il contenuto preparato dall'agente, **solo dopo conferma esplicita** dell'utente (draft gate)
+- Scrive file temporanei in `/tmp/issue-<tipo>-<slug>.md`, `/tmp/milestone-<slug>.md`, `/tmp/mr-<slug>.md`
 - Non legge ne' modifica credenziali. Si appoggia all'autenticazione esistente di `glab` (`~/.config/glab-cli/config.yml`)
 
-Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare il workflow descritto in [`gitlab-issue-author/SKILL.md`](./gitlab-issue-author/SKILL.md).
+Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare i workflow descritti in:
+- [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
+- [`gitlab-milestone/SKILL.md`](./gitlab-milestone/SKILL.md)
+- [`gitlab-mr/SKILL.md`](./gitlab-mr/SKILL.md)
 
 ## Dipendenze
 
