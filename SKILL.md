@@ -15,16 +15,6 @@ Collezione di Cursor Agent Skills per **autorare artefatti GitLab** (issue, mile
 | [`gitlab-milestone`](./gitlab-milestone)     | Genera milestone con scope, deliverables e date target.                                        | Disponibile |
 | [`gitlab-mr`](./gitlab-mr)                   | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Disponibile |
 
-Ogni sub-skill e' una directory a livello root con il proprio `SKILL.md` ed eventuali sotto-cartelle `templates/`, `references/`. Quando si aggiunge una nuova sub-skill, `scripts/install.js` la rileva automaticamente via discovery (cartella root con `SKILL.md`).
-
-## Quando usare questa skill
-
-L'agente attiva automaticamente la sub-skill corretta quando l'utente chiede di:
-
-- aprire una issue (bug, documentation, technical-debt, feature)
-- creare/aggiornare una milestone
-- redigere la descrizione di una merge request
-
 ## Stile canonico trasversale
 
 Tutte le sub-skill condividono lo stile:
