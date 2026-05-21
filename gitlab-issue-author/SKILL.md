@@ -1,6 +1,6 @@
 ---
 name: gitlab-issue-author
-description: Genera issue GitLab ben documentate (bug, documentazione, debito tecnico, feature) con template embedded in italiano, snippet di codice 5-20 righe e diagrammi mermaid quando rilevanti. Usa la CLI glab per pubblicare. Applicare quando l'utente chiede di creare una issue GitLab, aprire un bug, documentare debito tecnico, proporre una feature, o documentare una modifica.
+description: Applicare quando l'utente chiede di creare una issue GitLab, aprire un bug, documentare debito tecnico, proporre una feature, o documentare una modifica.
 ---
 
 # GitLab issue author
@@ -120,26 +120,7 @@ I dettagli completi sono nei file `templates/*.md`. Riassunto trasversale:
 - Per i comandi `glab` avanzati (auth, MR, pipelines, ecc.), affidati al pacchetto [`gitlab-cli-skills`](https://github.com/vince-winkintel/gitlab-cli-skills) (skill `glab-issue`, `glab-auth`, `glab-label`, ecc.) se installato.
 - Fallback: la skill `glab` locale fornisce i comandi base.
 
-## Installazione tramite npm
-
-Questa sub-skill fa parte del pacchetto npm **`gitlab-author`** (repo: `gitlab-author-skills`).
-
-```bash
-# Installa tutte le sub-skill del pacchetto
-npx gitlab-author install
-
-# Solo questa sub-skill, nel repository corrente
-npx gitlab-author install --skill gitlab-issue-author --project --force
-```
-
-Usa `--force` se la cartella di destinazione esiste gia'. Il tarball npm include un `README.md` con tutte le opzioni.
-
 ## Riferimenti
 
-- Template ufficiali GitLab (fonte secondaria di ispirazione): [`.gitlab/issue_templates/`](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/issue_templates)
 - Pattern mermaid: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
-- Template per tipo:
-  - [templates/bug.md](templates/bug.md)
-  - [templates/technical-debt.md](templates/technical-debt.md)
-  - [templates/feature.md](templates/feature.md)
-  - [templates/documentation.md](templates/documentation.md)
+- Template per tipo: [templates/bug.md](templates/bug.md), [templates/technical-debt.md](templates/technical-debt.md), [templates/feature.md](templates/feature.md), [templates/documentation.md](templates/documentation.md)

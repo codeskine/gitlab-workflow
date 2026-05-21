@@ -1,6 +1,6 @@
 ---
 name: gitlab-author-skills
-description: Collezione di Agent Skills per autorare artefatti GitLab (issue, milestone, merge request) tramite la CLI glab. Include sub-skill specializzate per ciascun tipo di artefatto, con template embedded in italiano, snippet di codice 5-20 righe e diagrammi mermaid quando rilevanti. Usare quando l'utente chiede di creare, redigere o pubblicare issue, milestone o MR su GitLab.
+description: Usare quando l'utente chiede di creare, redigere o pubblicare issue, milestone o MR su GitLab tramite la CLI glab.
 ---
 
 # gitlab-author-skills
@@ -17,27 +17,6 @@ Collezione di Cursor Agent Skills per **autorare artefatti GitLab** (issue, mile
 
 Ogni sub-skill e' una directory a livello root con il proprio `SKILL.md` ed eventuali sotto-cartelle `templates/`, `references/`. Quando si aggiunge una nuova sub-skill, `scripts/install.js` la rileva automaticamente via discovery (cartella root con `SKILL.md`).
 
-## Quick start
-
-```bash
-# Installa tutte le sub-skill nella home Cursor (~/.cursor/skills/)
-npx gitlab-author install
-
-# Installa solo nel repository corrente (./.cursor/skills/)
-npx gitlab-author install --project --force
-
-# Installa solo una sub-skill specifica
-npx gitlab-author install --skill gitlab-issue-author
-
-# Elenco delle sub-skill disponibili
-npx gitlab-author list
-```
-
-Prerequisiti:
-
-- [`glab`](https://gitlab.com/gitlab-org/cli) (`brew install glab`)
-- Autenticazione: `glab auth login`
-
 ## Quando usare questa skill
 
 L'agente attiva automaticamente la sub-skill corretta quando l'utente chiede di:
@@ -45,29 +24,6 @@ L'agente attiva automaticamente la sub-skill corretta quando l'utente chiede di:
 - aprire una issue (bug, documentation, technical-debt, feature)
 - creare/aggiornare una milestone
 - redigere la descrizione di una merge request
-
-## Struttura del repository
-
-```
-gitlab-author-skills/
-├── SKILL.md                       # orchestratore (questo file)
-├── VERSION                        # versione del pacchetto
-├── README.md
-├── LICENSE                        # MIT
-├── SECURITY.md
-├── package.json                   # bin: gitlab-author (npx)
-├── gitlab-issue-author/           # sub-skill: issue
-│   ├── SKILL.md
-│   ├── templates/
-│   │   ├── bug.md
-│   │   ├── documentation.md
-│   │   ├── feature.md
-│   │   └── technical-debt.md
-│   └── references/
-│       └── mermaid-diagrams.md
-└── scripts/
-    └── install.js                 # CLI di installazione con discovery
-```
 
 ## Stile canonico trasversale
 
@@ -79,7 +35,3 @@ Tutte le sub-skill condividono lo stile:
 - Diagrammi mermaid quando il contesto lo giustifica (vedi policy nelle singole sub-skill).
 - Draft gate: l'agente mostra la bozza in chat e attende conferma esplicita prima di pubblicare via `glab`.
 
-## Riferimenti
-
-- Convenzione del layout ispirata a [`vince-winkintel/gitlab-cli-skills`](https://github.com/vince-winkintel/gitlab-cli-skills)
-- Template ufficiali GitLab: [`.gitlab/issue_templates/`](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/issue_templates) e [`.gitlab/merge_request_templates/`](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/merge_request_templates)
