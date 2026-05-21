@@ -1,6 +1,6 @@
 ---
 name: gitlab-milestone
-description: Genera milestone GitLab strutturate con scope, deliverables e date target, pubblicandole tramite glab. Applicare quando l'utente chiede di creare o aggiornare una milestone GitLab, pianificare uno sprint o una release, o raggruppare issue per un obiettivo condiviso.
+description: Applicare quando l'utente chiede di creare o aggiornare una milestone GitLab, pianificare uno sprint o una release, o raggruppare issue per un obiettivo condiviso.
 ---
 
 # GitLab milestone
@@ -83,18 +83,6 @@ glab milestone create \
 - Riferimenti `#N` per le issue collegate.
 - Checklist `- [ ]` per deliverable e criteri di completamento.
 - Date sempre in formato `YYYY-MM-DD`.
-
-## Installazione tramite npm
-
-Questa sub-skill fa parte del pacchetto npm **`gitlab-author`** (repo: `gitlab-author-skills`).
-
-```bash
-# Installa tutte le sub-skill del pacchetto
-npx gitlab-author install
-
-# Solo questa sub-skill, nel repository corrente
-npx gitlab-author install --skill gitlab-milestone --project --force
-```
 
 ## Riferimenti
 

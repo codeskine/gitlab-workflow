@@ -1,6 +1,6 @@
 ---
 name: gitlab-mr
-description: Genera descrizioni di merge request GitLab strutturate in italiano, estraendo contesto da git diff, commit e issue collegate, e pubblicandole tramite glab. Applicare quando l'utente chiede di creare o redigere la descrizione di una MR.
+description: Applicare quando l'utente chiede di creare o redigere la descrizione di una MR su GitLab.
 ---
 
 # GitLab MR
@@ -98,18 +98,6 @@ glab mr create \
 - Riferimenti `path/file.ext` riga N per ogni snippet di codice (5-20 righe).
 - Checklist `- [ ]` per "Come testare" e "Checklist autore".
 - `Closes #N` per fix, `Related to #N` per feature/refactor.
-
-## Installazione tramite npm
-
-Questa sub-skill fa parte del pacchetto npm **`gitlab-author`** (repo: `gitlab-author-skills`).
-
-```bash
-# Installa tutte le sub-skill del pacchetto
-npx gitlab-author install
-
-# Solo questa sub-skill, nel repository corrente
-npx gitlab-author install --skill gitlab-mr --project --force
-```
 
 ## Riferimenti
 

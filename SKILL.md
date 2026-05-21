@@ -24,4 +24,3 @@ Tutte le sub-skill condividono lo stile:
 - Riferimenti `path/file.ext` riga N per ogni snippet di codice (5-20 righe).
 - Diagrammi mermaid quando il contesto lo giustifica (vedi policy nelle singole sub-skill).
 - Draft gate: l'agente mostra la bozza in chat e attende conferma esplicita prima di pubblicare via `glab`.
-
