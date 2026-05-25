@@ -1,66 +1,66 @@
-# Pattern Mermaid per le issue GitLab
+# Mermaid Patterns for GitLab Issues
 
-Riferimento per i diagrammi mermaid da includere nelle issue. Carica solo quando devi generare un diagramma.
+Reference for mermaid diagrams to include in issues. Load only when you need to generate a diagram.
 
-## Policy di applicazione
+## Application Policy
 
-| Tipo issue        | Pattern              | Quando includere                                                 |
-|-------------------|----------------------|------------------------------------------------------------------|
-| `bug`             | `sequenceDiagram`    | La issue coinvolge >=2 attori (goroutine, processi, servizi)     |
-| `technical-debt`  | `sequenceDiagram`    | La issue descrive una catena di chiamata o un flusso problematico|
-| `feature`         | `flowchart`          | Solo se la proposta ha gia' un flusso definito (MVC convergente) |
-| `documentation`   | Nessuno              | Mai                                                              |
+| Issue type       | Pattern           | When to include                                                  |
+| ---------------- | ----------------- | ---------------------------------------------------------------- |
+| `bug`            | `sequenceDiagram` | The issue involves >=2 actors (goroutines, processes, services)  |
+| `technical-debt` | `sequenceDiagram` | The issue describes a call chain or a problematic flow           |
+| `feature`        | `flowchart`       | Only if the proposal already has a defined flow (converging MVC) |
+| `documentation`  | None              | Never                                                            |
 
-## Regole di localizzazione
+## Language Rules
 
-- **Etichette descrittive** (ruoli, sistemi, concetti): **italiano**
-  - Esempi: `Sistema Operativo`, `goroutine-segnale`, `Database`, `Client API`, `Coda messaggi`
-- **Identificatori di codice** (nomi di funzione, struct, package, metodi): **inglese / nome originale**
-  - Esempi: `scrapeTags`, `AzureClientController`, `GetResourceGraphClient`, `main`
+- **Descriptive labels** (roles, systems, concepts): use the **user's active language at runtime**
+  - Examples: `Operating System`, `signal-goroutine`, `Database`, `API Client`, `Message Queue`
+- **Code identifiers** (function names, structs, packages, methods): **English / original name**
+  - Examples: `scrapeTags`, `AzureClientController`, `GetResourceGraphClient`, `main`
 
-## Sintassi mermaid sicura
+## Safe Mermaid Syntax
 
-- NON usare spazi nei nomi/ID dei nodi e dei partecipanti. Usa camelCase, PascalCase o underscores.
-- Quando un'etichetta contiene caratteri speciali (parentesi, due punti, virgole), usa virgolette doppie.
-- Non usare keyword riservate come ID di nodo: `end`, `subgraph`, `graph`, `flowchart`.
+- Do NOT use spaces in node names/IDs or participant names. Use camelCase, PascalCase, or underscores.
+- When a label contains special characters (parentheses, colons, commas), use double quotes.
+- Do not use reserved keywords as node IDs: `end`, `subgraph`, `graph`, `flowchart`.
 
-## Pattern 1 — sequenceDiagram per bug multi-attore
+## Pattern 1 — sequenceDiagram for Multi-Actor Bug
 
-Usare quando il bug e' una race condition, una sequenza di eventi problematica, un ordering di operazioni errato.
+Use when the bug is a race condition, a problematic event sequence, or an incorrect operation ordering.
 
 ```mermaid
 sequenceDiagram
-    participant OS as Sistema Operativo
+    participant OS as Operating System
     participant M as main
-    participant GS as goroutine-segnale
-    participant GE as goroutine-execute
+    participant GS as signal-goroutine
+    participant GE as execute-goroutine
 
-    M->>GS: go func() — ascolta segnali OS
+    M->>GS: go func() — listen for OS signals
     M->>GE: go Execute(context.Background())
-    M->>M: <-done (blocca)
+    M->>M: <-done (blocks)
 
     OS->>GS: SIGTERM
-    GS->>M: close(done) — 1° chiusura
+    GS->>M: close(done) — 1st close
 
-    alt Execute() completa prima del return di main
-        GE-->>GE: defer close(done) — 2° chiusura
-        Note over GE: PANIC: close su canale gia' chiuso
-    else main() ritorna per primo
-        M->>M: return — processo termina
+    alt Execute() completes before main returns
+        GE-->>GE: defer close(done) — 2nd close
+        Note over GE: PANIC: close on already-closed channel
+    else main() returns first
+        M->>M: return — process exits
     end
 ```
 
-Elementi chiave:
+Key elements:
 
-- `participant <ID> as <Etichetta italiana>` — l'ID e' un identificatore corto, l'etichetta e' leggibile in italiano
-- `->>` per chiamata sincrona, `-->>` per ritorno
-- `alt / else / end` per rami condizionali con esiti diversi
-- `Note over <ID>: <testo>` per annotazioni critiche (panic, comportamento non atteso)
-- `loop <condizione> ... end` per cicli (vedi Pattern 2)
+- `participant <ID> as <descriptive label>` — the ID is a short identifier, the label is readable in the user's active language
+- `->>` for synchronous call, `-->>` for return
+- `alt / else / end` for conditional branches with different outcomes
+- `Note over <ID>: <text>` for critical annotations (panic, unexpected behavior)
+- `loop <condition> ... end` for loops (see Pattern 2)
 
-## Pattern 2 — sequenceDiagram per technical-debt con ciclo
+## Pattern 2 — sequenceDiagram for Technical-Debt with Loop
 
-Usare per debito tecnico legato a ripetizione di operazioni in un loop (allocazioni, chiamate ridondanti, ecc.).
+Use for technical debt related to repeated operations in a loop (allocations, redundant calls, etc.).
 
 ```mermaid
 sequenceDiagram
@@ -68,52 +68,52 @@ sequenceDiagram
     participant GRP as getResourceGroupsPager
     participant AC as AzureClientController
 
-    loop per ogni subscription [1..N]
+    loop for each subscription [1..N]
         ST->>GRP: getResourceGroupsPager(c, subscriptionID)
         GRP->>AC: GetResourceGroupClient(subscriptionID)
-        AC->>AC: armresources.NewResourceGroupsClient() — nuova istanza
+        AC->>AC: armresources.NewResourceGroupsClient() — new instance
         AC-->>GRP: client
         GRP-->>ST: pager
     end
 ```
 
-Elementi chiave:
+Key elements:
 
-- `loop <descrizione del loop>` — la descrizione e' in italiano, ma puo' includere variabili in inglese (`[1..N]`)
-- Le auto-chiamate (`AC->>AC: ...`) sono utili per mostrare allocazioni interne / passi di setup ripetuti
+- `loop <loop description>` — description is in the user's active language; may include English variables (`[1..N]`)
+- Self-calls (`AC->>AC: ...`) are useful for showing internal allocations / repeated setup steps
 
-## Pattern 3 — flowchart per feature a MVC convergente
+## Pattern 3 — flowchart for Feature with Converging MVC
 
-Usare SOLO quando la feature ha gia' un flusso utente definito (non per proposte ancora in discovery).
+Use ONLY when the feature already has a defined user flow (not for proposals still in discovery).
 
 ```mermaid
 flowchart TD
-    start([Utente apre il progetto])
-    hasCI{Progetto ha gia'<br/>una pipeline?}
-    showEntry[Mostra entry point<br/>CI onboarding]
-    skipEntry[Esperienza standard]
-    chooseTemplate[Scegli template<br/>iniziale]
-    generateYaml[Genera .gitlab-ci.yml]
-    firstRun[Prima esecuzione pipeline]
+    start([User opens the project])
+    hasCI{Project already has<br/>a pipeline?}
+    showEntry[Show entry point<br/>CI onboarding]
+    skipEntry[Standard experience]
+    chooseTemplate[Choose initial<br/>template]
+    generateYaml[Generate .gitlab-ci.yml]
+    firstRun[First pipeline run]
 
     start --> hasCI
     hasCI -->|No| showEntry
-    hasCI -->|Si| skipEntry
+    hasCI -->|Yes| skipEntry
     showEntry --> chooseTemplate
     chooseTemplate --> generateYaml
     generateYaml --> firstRun
 ```
 
-Elementi chiave:
+Key elements:
 
-- `flowchart TD` (top-down) o `LR` (left-right) a seconda della complessita'
-- Forme: `([...])` ovale per inizio/fine, `[...]` rettangolo per azione, `{...}` rombo per decisione
-- Etichette degli archi con `-->|"<testo>"|` quando contengono spazi o caratteri speciali
-- `<br/>` per andare a capo dentro un'etichetta
+- `flowchart TD` (top-down) or `LR` (left-right) depending on complexity
+- Shapes: `([...])` oval for start/end, `[...]` rectangle for action, `{...}` diamond for decision
+- Edge labels with `-->|"<text>"|` when they contain spaces or special characters
+- `<br/>` for line breaks inside a label
 
-## Quando NON aggiungere un diagramma
+## When NOT to Add a Diagram
 
-- Bug isolato su singolo attore / funzione pura → niente diagramma
-- Debito tecnico locale (es. nome variabile, refactor di una funzione) → niente diagramma
-- Feature discovery / proposta esplorativa → niente diagramma
-- Issue di documentazione → MAI un diagramma
+- Isolated bug on a single actor / pure function → no diagram
+- Local technical debt (e.g., variable name, single-function refactor) → no diagram
+- Feature discovery / exploratory proposal → no diagram
+- Documentation issue → NEVER a diagram
