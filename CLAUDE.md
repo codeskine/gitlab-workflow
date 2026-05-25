@@ -36,15 +36,15 @@ Project-specific requirements below are the source of truth where they differ fr
 New skills go in `<skill-name>/SKILL.md`. Each file requires YAML frontmatter.
 This project does **not** use `openclaw` metadata.
 
-| Field | Required | Constraints |
-| --- | --- | --- |
-| `name` | Spec-required | 1–64 chars. Lowercase `a-z`, digits, hyphens. No leading/trailing/consecutive hyphens. Must match parent directory name. |
-| `description` | Spec-required | 1–1024 chars. Must include a "Use when" or "Apply when" trigger clause. Must contain the word `GitLab`. |
-| `license` | Project-required | `MIT` |
-| `compatibility` | Project-required | Base: `Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated.` Extend when the skill has additional requirements. |
-| `metadata` | Project-required | Must include `author` (string) and `version` (semver `a.b.c`, e.g. `"1.0.0"`). No `openclaw` block. |
-| `user-invocable` | Project-required | Boolean. `true` for slash-command skills, `false` for contextual auto-trigger. |
-| `allowed-tools` | Project-required | Space-delimited list. See [Allowed Tools](#allowed-tools). |
+| Field            | Required         | Constraints                                                                                                                                       |
+| ---------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`           | Spec-required    | 1–64 chars. Lowercase `a-z`, digits, hyphens. No leading/trailing/consecutive hyphens. Must match parent directory name.                          |
+| `description`    | Spec-required    | 1–1024 chars. Must include a "Use when" or "Apply when" trigger clause. Must contain the word `GitLab`.                                           |
+| `license`        | Project-required | `MIT`                                                                                                                                             |
+| `compatibility`  | Project-required | Base: `Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated.` Extend when the skill has additional requirements. |
+| `metadata`       | Project-required | Must include `author` (string) and `version` (semver `a.b.c`, e.g. `"1.0.0"`). No `openclaw` block.                                               |
+| `user-invocable` | Project-required | Boolean. `true` for slash-command skills, `false` for contextual auto-trigger.                                                                    |
+| `allowed-tools`  | Project-required | Space-delimited list. See [Allowed Tools](#allowed-tools).                                                                                        |
 
 Example frontmatter:
 
@@ -116,10 +116,10 @@ Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 
 **Skill-specific extras:**
 
-| Extra tool | When to add |
-| --- | --- |
-| `WebFetch` | Skills that fetch external documentation or resources |
-| `WebSearch` | Skills requiring research or external discovery |
+| Extra tool  | When to add                                           |
+| ----------- | ----------------------------------------------------- |
+| `WebFetch`  | Skills that fetch external documentation or resources |
+| `WebSearch` | Skills requiring research or external discovery       |
 
 ## Skill Body
 
@@ -170,11 +170,11 @@ template files.
 
 These directives go before the first heading, in this order:
 
-| Directive | Format | When to include |
-| --- | --- | --- |
-| **Persona** | `**Persona:** You are a <role>. <mindset>.` | Skills with a defined analytical or generative domain |
-| **Thinking mode** | `**Thinking mode:** Use \`ultrathink\` for <task>.` | Deep analysis tasks |
-| **Modes** | `**Modes:**` section listing distinct invocation contexts | Skills with multiple execution paths (draft, review, publish) |
+| Directive         | Format                                                    | When to include                                               |
+| ----------------- | --------------------------------------------------------- | ------------------------------------------------------------- |
+| **Persona**       | `**Persona:** You are a <role>. <mindset>.`               | Skills with a defined analytical or generative domain         |
+| **Thinking mode** | `**Thinking mode:** Use \`ultrathink\` for <task>.`       | Deep analysis tasks                                           |
+| **Modes**         | `**Modes:**` section listing distinct invocation contexts | Skills with multiple execution paths (draft, review, publish) |
 
 All three are optional. Most skills in this project are procedural and need none.
 
