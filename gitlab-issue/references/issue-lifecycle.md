@@ -27,28 +27,30 @@ workflow:
         - "start working on #N"
         - "lavora la issue #N"
         - "pick up #N"
-      transitions_to: "workflow::in dev"
-      glab: "glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'"
+      transitions:
+        - to: "workflow::in dev"
+          glab: "glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'"
     - label: "workflow::in dev"
-      triggers:
-        - "create MR for #N"
-        - "crea una MR per la issue #N"
-      transitions_to: "workflow::in review"
-      glab: "handled by gitlab-mr skill"
+      transitions:
+        - triggers:
+            - "create MR for #N"
+            - "crea una MR per la issue #N"
+          to: "workflow::in review"
+          glab: "handled by gitlab-mr skill"
+        - triggers:
+            - "resolve #N (skip review)"
+            - "chiudi direttamente #N"
+          to: "workflow::complete"
+          glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N"
     - label: "workflow::in review"
-      triggers:
-        - "resolve #N"
-        - "risolvi #N"
-        - "close #N"
-        - "chiudi #N"
-      transitions_to: "workflow::complete"
-      glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N"
-    - label: "workflow::in dev"
-      triggers:
-        - "resolve #N (skip review)"
-        - "chiudi direttamente #N"
-      transitions_to: "workflow::complete"
-      glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N"
+      transitions:
+        - triggers:
+            - "resolve #N"
+            - "risolvi #N"
+            - "close #N"
+            - "chiudi #N"
+          to: "workflow::complete"
+          glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N"
 ```
 
 ## Transition table

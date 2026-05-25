@@ -7,15 +7,6 @@
 {relevant code}
 ```
 
-```mermaid
-sequenceDiagram
-    participant {Actor1} as {Descriptive label}
-    participant {Actor2} as {Descriptive label or code identifier}
-
-    {Actor1}->>{Actor2}: {action}
-    {Actor2}-->>{Actor1}: {response}
-```
-
 ### 2. {Optional subsection}
 
 ---
