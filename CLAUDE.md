@@ -105,6 +105,22 @@ description: "...Not for merge requests (→ See codeskine/gitlab-author-skills@
 
 ## Allowed Tools
 
+Every skill MUST declare an `allowed-tools` field. Start from the **default set** and add
+skill-specific extras as needed.
+
+**Default set** (include in every skill):
+
+```
+Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
+```
+
+**Skill-specific extras:**
+
+| Extra tool | When to add |
+| --- | --- |
+| `WebFetch` | Skills that fetch external documentation or resources |
+| `WebSearch` | Skills requiring research or external discovery |
+
 ## Skill Body
 
 ## Workflows
