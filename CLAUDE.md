@@ -179,3 +179,33 @@ These directives go before the first heading, in this order:
 All three are optional. Most skills in this project are procedural and need none.
 
 ## Workflows
+
+### Working in worktrees
+
+All implementation work MUST happen in a git worktree under `.claude/worktrees/`. Never
+work directly on a checked-out branch.
+
+Before starting any task, propose a branch name and ask the developer to confirm. Run
+`git worktree list` first — if an existing worktree covers the same skill or topic, suggest
+reusing it.
+
+### Adding a new sub-skill
+
+1. Create `<name>/SKILL.md` with all project-required frontmatter fields.
+2. Create `<name>/templates/<type>.md` for each artifact type the skill handles.
+3. Optionally create `<name>/references/` for deep documentation.
+4. Update the sub-skill routing table in the root `SKILL.md`.
+5. Add `"<name>"` to the `files` array in `package.json`.
+6. Run the description quality check: contains `GitLab`, has "Use when" trigger clause,
+   no over-triggering patterns, no `openclaw` block.
+
+### After updating a skill
+
+After making changes, suggest the following as next steps. Do NOT execute automatically.
+
+1. Format markdowns: `npx prettier --write "**/*.md"`
+2. Measure token counts:
+   - Description: `awk 'NR==1 && /^---$/{found=1; next} found && /^---$/{exit} found && /^description:/{print}' <name>/SKILL.md | tiktoken-cli`
+   - SKILL.md body: `tiktoken-cli <name>/SKILL.md`
+3. Increment `metadata.version` in the changed SKILL.md.
+4. Bump `version` in `package.json`.
