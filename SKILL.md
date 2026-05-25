@@ -1,26 +1,28 @@
 ---
 name: gitlab-author-skills
-description: Usare quando l'utente chiede di creare, redigere o pubblicare issue, milestone o MR su GitLab tramite la CLI glab.
+description: "GitLab artifact author. Use when the user asks to create or publish
+  an issue, milestone, or merge request on GitLab via glab. Routes to the correct
+  sub-skill: gitlab-issue for issues, gitlab-milestone for milestones,
+  gitlab-mr for merge requests."
+user-invocable: false
+license: MIT
+compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
+metadata:
+  author: codeskine
+  version: "2.0.0"
+allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
 # gitlab-author-skills
 
-Collezione di Cursor Agent Skills per **autorare artefatti GitLab** (issue, milestone, merge request) e pubblicarli tramite la CLI [`glab`](https://gitlab.com/gitlab-org/cli).
+GitLab artifact authoring for Claude Code / AI coding agents. Routes to the correct sub-skill based on the artifact type requested.
 
-## Sub-skill disponibili
+## Available sub-skills
 
-| Sub-skill                                    | Scopo                                                                                          | Stato     |
-|----------------------------------------------|------------------------------------------------------------------------------------------------|-----------|
-| [`gitlab-issue`](./gitlab-issue)             | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| [`gitlab-milestone`](./gitlab-milestone)     | Genera milestone con scope, deliverables e date target.                                        | Disponibile |
-| [`gitlab-mr`](./gitlab-mr)                   | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                  | Disponibile |
+| Sub-skill                                    | Purpose                                                                           | Status    |
+|----------------------------------------------|-----------------------------------------------------------------------------------|-----------|
+| [`gitlab-issue`](./gitlab-issue)             | Bug reports, feature requests, technical debt, documentation issues.              | Available |
+| [`gitlab-milestone`](./gitlab-milestone)     | Milestone with scope, deliverables and target dates.                              | Available |
+| [`gitlab-mr`](./gitlab-mr)                   | Merge request descriptions with issue references and diff summary.                | Available |
 
-## Stile canonico trasversale
-
-Tutte le sub-skill condividono lo stile:
-
-- Titoli di sezione **in italiano** (`## Descrizione`, `## Impatto`, `## File coinvolti`, ecc.)
-- Frasi tecniche dense e affermative. No emoji, no preamboli decorativi.
-- Riferimenti `path/file.ext` riga N per ogni snippet di codice (5-20 righe).
-- Diagrammi mermaid quando il contesto lo giustifica (vedi policy nelle singole sub-skill).
-- Draft gate: l'agente mostra la bozza in chat e attende conferma esplicita prima di pubblicare via `glab`.
+Cross-cutting conventions (draft gate, snippet policy, language-agnostic templates, no duplication) are defined in [CLAUDE.md](../CLAUDE.md).
