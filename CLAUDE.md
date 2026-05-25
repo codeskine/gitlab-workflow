@@ -68,6 +68,41 @@ modifying a skill, increment its `metadata.version` and bump the `version` field
 
 ### Description quality
 
+Descriptions are the primary triggering mechanism. A poorly calibrated description wastes
+context (too broad) or never fires (too vague).
+
+Every description **MUST** contain the word `GitLab` — skills must not activate on
+non-GitLab requests.
+
+**Too vague** — no trigger context, ignored:
+
+```yaml
+# Bad — no trigger clause
+description: Creates GitLab artifacts
+
+# Good — specific trigger scenarios
+description: "GitLab issue author. Use when the user asks to create a bug report,
+  feature request, technical debt item, or documentation issue on GitLab via glab."
+```
+
+**Too broad** — matches all GitLab work, floods context:
+
+```yaml
+# Bad — triggers on every GitLab task
+description: Use when working with GitLab or glab for any task.
+
+# Good — scoped to merge requests only
+description: "GitLab merge request author. Use when the user asks to create or draft
+  a merge request description, or publish a branch via glab mr create."
+```
+
+**Overlap** — add explicit boundary disclaimers with `→ See` cross-references:
+
+```yaml
+# Good — clear boundary between sub-skills
+description: "...Not for merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)."
+```
+
 ## Allowed Tools
 
 ## Skill Body
