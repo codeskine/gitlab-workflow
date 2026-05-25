@@ -7,7 +7,7 @@ description: Applicare quando l'utente chiede di creare o aggiornare una milesto
 
 Genera milestone GitLab strutturate e ben documentate in **italiano**, pronte per essere pubblicate tramite `glab milestone create`.
 
-> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `templates/milestone.md`.
+> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `assets/milestone.md`.
 
 ## Quando usare questa skill
 
@@ -45,7 +45,7 @@ Usa branch name e tag git per inferire la release o lo sprint target.
 
 ### 3. Componi la bozza
 
-Leggi `templates/milestone.md` e compila tutte le sezioni con il contesto estratto.
+Leggi `assets/milestone.md` e compila tutte le sezioni con il contesto estratto.
 
 ### 4. Draft gate
 
@@ -86,4 +86,4 @@ glab milestone create \
 
 ## Riferimenti
 
-- Template: [templates/milestone.md](templates/milestone.md)
+- Template: [assets/milestone.md](assets/milestone.md)

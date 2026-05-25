@@ -1,11 +1,12 @@
 {
   "name": "gitlab-author",
   "version": "1.0.0",
-  "description": "Cursor Agent Skills per autorare artefatti GitLab (issue, milestone, merge request) con template embedded in italiano, snippet di codice e diagrammi mermaid. Layout multi-skill ispirato a vince-winkintel/gitlab-cli-skills. Publish via glab.",
+  "description": "Claude Code / Cursor Agent Skills plugin for authoring GitLab artifacts (issues, milestones, merge requests) via the glab CLI.",
   "license": "MIT",
   "keywords": [
     "cursor",
     "cursor-skill",
+    "claude-code",
     "agent-skill",
     "agent-skills",
     "gitlab",
@@ -15,29 +16,21 @@
     "merge-request",
     "mr",
     "issue-templates",
-    "markdown",
-    "italian"
+    "markdown"
   ],
   "engines": {
     "node": ">=18"
   },
   "files": [
-    "SKILL.md",
     "VERSION",
     "SECURITY.md",
     "LICENSE",
-    "gitlab-issue",
-    "gitlab-milestone",
-    "gitlab-mr",
-    "scripts/install.js"
+    "skills",
+    ".claude-plugin",
+    ".cursor-plugin"
   ],
-  "bin": {
-    "gitlab-author": "scripts/install.js"
-  },
   "scripts": {
-    "install-skill": "node scripts/install.js",
-    "install-skill:project": "node scripts/install.js --project",
-    "prepack": "node -e \"const fs=require('fs');for(const p of ['gitlab-issue/SKILL.md','gitlab-milestone/SKILL.md','gitlab-mr/SKILL.md','SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-issue/SKILL.md','skills/gitlab-milestone/SKILL.md','skills/gitlab-mr/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
   },
   "repository": {
     "type": "git",

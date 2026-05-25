@@ -25,10 +25,10 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 
 | Type             | Template                                                   | Default label          |
 | ---------------- | ---------------------------------------------------------- | ---------------------- |
-| `bug`            | [templates/bug.md](templates/bug.md)                       | `type::bug`            |
-| `feature`        | [templates/feature.md](templates/feature.md)               | `type::feature`        |
-| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md) | `type::technical-debt` |
-| `documentation`  | [templates/documentation.md](templates/documentation.md)   | `type::documentation`  |
+| `bug`            | [assets/bug.md](assets/bug.md)                       | `type::bug`            |
+| `feature`        | [assets/feature.md](assets/feature.md)               | `type::feature`        |
+| `technical-debt` | [assets/technical-debt.md](assets/technical-debt.md) | `type::technical-debt` |
+| `documentation`  | [assets/documentation.md](assets/documentation.md)   | `type::documentation`  |
 
 Default labels are starting points. Override with `--label` when the project uses different scoped labels.
 
@@ -42,7 +42,7 @@ The user must specify the type in the prompt (e.g. _"create a bug issue for..."_
 
 ### 2. Load the template
 
-Read only `templates/<type>.md` for the chosen type.
+Read only `assets/<type>.md` for the chosen type.
 
 ### 3. Explore context
 
@@ -158,4 +158,4 @@ Full state machine: [references/issue-lifecycle.md](references/issue-lifecycle.m
 - Mermaid patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
 - Issue lifecycle: [references/issue-lifecycle.md](references/issue-lifecycle.md)
 - Full glab flag reference: [references/glab-issue-commands.md](references/glab-issue-commands.md)
-- Templates: [templates/bug.md](templates/bug.md), [templates/feature.md](templates/feature.md), [templates/technical-debt.md](templates/technical-debt.md), [templates/documentation.md](templates/documentation.md)
+- Templates: [assets/bug.md](assets/bug.md), [assets/feature.md](assets/feature.md), [assets/technical-debt.md](assets/technical-debt.md), [assets/documentation.md](assets/documentation.md)

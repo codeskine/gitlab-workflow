@@ -7,7 +7,7 @@ description: Applicare quando l'utente chiede di creare o redigere la descrizion
 
 Genera descrizioni di merge request GitLab strutturate e ben documentate in **italiano**, pronte per essere pubblicate tramite `glab mr create`.
 
-> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `templates/mr.md`.
+> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `assets/mr.md`.
 
 ## Quando usare questa skill
 
@@ -54,7 +54,7 @@ Scegli la milestone piu' pertinente al contesto. Se nessuna e' pertinente, lasci
 
 ### 2. Componi la bozza
 
-Leggi `templates/mr.md` e compila tutte le sezioni con il contesto estratto.
+Leggi `assets/mr.md` e compila tutte le sezioni con il contesto estratto.
 
 Per la sezione `## Modifiche`, usa snippet di **5-20 righe** per ogni punto significativo, con citazione esatta `path/file.ext` riga N.
 
@@ -101,4 +101,4 @@ glab mr create \
 
 ## Riferimenti
 
-- Template: [templates/mr.md](templates/mr.md)
+- Template: [assets/mr.md](assets/mr.md)

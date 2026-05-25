@@ -1,0 +1,7 @@
+{
+  "name": "gitlab-author-skills",
+  "version": "1.0.0",
+  "description": "Claude Code Agent Skills plugin for authoring GitLab artifacts (issues, milestones, merge requests) via the glab CLI.",
+  "skills": ["gitlab-issue", "gitlab-milestone", "gitlab-mr"],
+  "repository": "https://github.com/codeskine/gitlab-author-skills"
+}
