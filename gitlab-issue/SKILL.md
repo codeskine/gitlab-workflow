@@ -1,152 +1,159 @@
 ---
 name: gitlab-issue
-description: Applicare quando l'utente chiede di creare una issue GitLab, aprire un bug, documentare debito tecnico, proporre una feature, o documentare una modifica.
+description: "GitLab issue author. Use when the user asks to open a bug report,
+  feature request, technical debt item, or documentation issue on GitLab via glab.
+  Apply when the user says 'create an issue', 'report a bug', 'track tech debt',
+  or 'propose a feature'. Not for merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)
+  or milestones (→ See codeskine/gitlab-author-skills@gitlab-milestone)."
+user-invocable: true
+license: MIT
+compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
+metadata:
+  author: codeskine
+  version: "2.0.0"
+allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
 # GitLab issue author
 
-Genera issue GitLab strutturate e ben documentate in **italiano**, pronte per essere pubblicate tramite `glab issue create`.
+**Modes:**
+- **Create** — generate a new issue from context and publish via `glab issue create`
+- **Transition** — change the lifecycle state of an existing issue via `glab issue edit`
 
-> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, `elements-of-style`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile delle issue e' quello definito qui dentro e nei file `templates/*.md`. Non aggiungere preamboli, emoji, intestazioni decorative o convenzioni non previste dai template.
+## Supported types
 
-## Quando usare questa skill
+| Type             | Template                                                      | Default label          |
+|------------------|---------------------------------------------------------------|------------------------|
+| `bug`            | [templates/bug.md](templates/bug.md)                         | `type::bug`            |
+| `feature`        | [templates/feature.md](templates/feature.md)                 | `type::feature`        |
+| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md)   | `type::technical-debt` |
+| `documentation`  | [templates/documentation.md](templates/documentation.md)     | `type::documentation`  |
 
-Attiva quando l'utente chiede di:
+Default labels are starting points. Override with `--label` when the project uses different scoped labels.
 
-- creare una issue su GitLab
-- aprire un bug
-- tracciare debito tecnico
-- proporre una feature / proposal
-- richiedere documentazione
+## Create workflow
 
-## Tipi supportati
+### 1. Identify the issue type
 
-| Tipo                  | Template                                              | Label default                     |
-|-----------------------|-------------------------------------------------------|-----------------------------------|
-| `bug`                 | [templates/bug.md](templates/bug.md)                  | `type::bug`                       |
-| `technical-debt`      | [templates/technical-debt.md](templates/technical-debt.md) | `type::technical-debt`            |
-| `feature`             | [templates/feature.md](templates/feature.md)          | `type::feature`                   |
-| `documentation`       | [templates/documentation.md](templates/documentation.md) | `type::documentation`             |
+The user must specify the type in the prompt (e.g. *"create a bug issue for..."*, *"open a technical debt on..."*). If missing, ask once:
 
-Le label default sono indicative. Se l'utente specifica label diverse o il progetto target usa scoped label differenti, applica le sue. Sovrascrivibili a runtime con `--label`.
+> "What type of issue do you want to open? bug / feature / technical-debt / documentation"
 
-## Workflow
+### 2. Load the template
 
-Segui questi passi nell'ordine:
+Read only `templates/<type>.md` for the chosen type.
 
-### 1. Identifica il tipo di issue
+### 3. Explore context
 
-L'utente **deve** specificare il tipo nel prompt (es. *"crea una issue di tipo bug per ..."*, *"apri un debito tecnico su ..."*). Se manca, chiedi una sola volta:
-
-> "Che tipo di issue vuoi aprire? bug / documentation / technical-debt / feature"
-
-### 2. Carica il template corrispondente
-
-Leggi **solo** il file `templates/<tipo>.md` corrispondente al tipo scelto. Non caricare gli altri.
-
-### 3. Esplora il contesto
-
-**Estrazione automatica da git** (eseguita sempre, in silenzio):
+**Automatic git extraction** (silent):
 
 ```bash
-git log --oneline -20                     # area di lavoro recente
-git diff HEAD                             # file e simboli coinvolti
+git log --oneline -20        # recent work area
+git diff HEAD                # files and symbols involved
 ```
 
-Se tipo `bug` o `technical-debt`, esegui anche:
+For `bug` or `technical-debt`, also run:
 
 ```bash
-git blame <file> -L <inizio>,<fine>       # autore/data delle righe incriminate
+git blame <file> -L <start>,<end>   # author and date of affected lines
 ```
 
-**Estrazione dalla codebase:**
+**Codebase exploration:** Use `Read`, `Grep`, `Glob` to open identified files, resolve symbolic references (function name, struct, package → `file:line`), and find relevant callers when useful for diagrams.
 
-Usa `Read`, `Grep`, `Glob` per:
+**Snippet policy:** Include fenced code blocks of 5–20 lines per significant point, with exact `path/file.ext` line N citation. Use language-appropriate syntax highlighting.
 
-- aprire i file identificati dal diff o menzionati dall'utente
-- risolvere i riferimenti simbolici (nome funzione, struct, package -> file:riga esatti)
-- identificare i chiamanti rilevanti quando utile a costruire il diagramma
+Context gathering is silent — no intermediate output. Everything converges in the draft.
 
-**Snippet di codice**: includi blocchi di **5-20 righe** per ogni punto significativo, con citazione esatta `path/file.ext` riga N. Usa la sintassi appropriata per il linguaggio (` ```go `, ` ```python `, ` ```ts `, ecc.).
-
-L'enricchimento e' silenzioso: nessun output intermedio. Tutto converge nella bozza.
-
-### 3b. Suggerisci la milestone
+### 4. Discover labels and milestone
 
 ```bash
+glab label list              # discover real project labels before suggesting
 glab milestone list --state active
 ```
 
-Scegli la milestone piu' pertinente al contesto (branch name, label, tipo di issue). Se nessuna e' pertinente, lascia vuoto. La scelta viene mostrata nel draft gate.
+Select the most relevant active milestone based on branch name, label, or issue type. If none fits, leave empty. Suggest `workflow::ready` as the initial lifecycle label alongside the type label.
 
-### 4. Applica la policy diagrammi
+### 5. Apply diagram policy
 
-Diagrammi mermaid automatici secondo questa policy:
+| Issue type       | Default diagram   | When to include                                                  |
+|------------------|-------------------|------------------------------------------------------------------|
+| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components       |
+| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                |
+| `feature`        | `flowchart` (opt) | Only if the proposal already has a defined flow (convergent MVC) |
+| `documentation`  | None              | Never by default                                                 |
 
-| Tipo issue        | Diagramma di default                                        | Quando aggiungerlo                                          |
-|-------------------|-------------------------------------------------------------|-------------------------------------------------------------|
-| `bug`             | `sequenceDiagram`                                           | Se la issue coinvolge >=2 attori / goroutine / componenti   |
-| `technical-debt`  | `sequenceDiagram`                                           | Se descrive una catena di chiamata o flusso problematico    |
-| `feature`         | `flowchart` (opzionale)                                     | Solo se la proposta ha gia' un flusso definito (MVC convergente). Per proposte discovery: niente diagramma. |
-| `documentation`   | Nessuno                                                     | Mai di default                                              |
+Reusable mermaid patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
 
-Pattern mermaid riusabili in [references/mermaid-diagrams.md](references/mermaid-diagrams.md).
+### 6. Draft gate
 
-**Localizzazione delle etichette mermaid**:
+**Do not publish yet.** Present the complete draft in chat with all template sections filled in. Include the proposed title and labels.
 
-- Etichette descrittive in **italiano**: `Sistema Operativo`, `goroutine-segnale`, `Database`, `Client API`
-- Identificatori di codice **in inglese**: `scrapeTags`, `AzureClientController`, `GetResourceGraphClient`
+Wait for explicit confirmation:
 
-### 5. Componi la bozza in chat (draft gate)
+> "Draft ready. Shall I create the issue on GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
 
-**NON pubblicare ancora.** Mostra all'utente in chat la bozza completa con tutte le sezioni del template compilate. Includi titolo proposto e label che verranno applicate.
+If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-Chiedi conferma esplicita prima di procedere:
+### 7. Publish via glab
 
-> "Bozza pronta. Procedo a creare l'issue su GitLab con titolo '<titolo>', label `<label>`, milestone `<milestone|nessuna>`? (si/modifiche/annulla)"
+After explicit approval:
 
-Se l'utente chiede modifiche, applicale e rimostra la bozza. Ripeti finche' non e' approvata.
-
-### 6. Pubblica via glab
-
-Dopo OK esplicito:
-
-1. Scrivi la bozza approvata su file temporaneo: `/tmp/issue-<tipo>-<slug>.md` (slug = primi 5-7 token del titolo, kebab-case)
-2. Esegui:
+1. Write the approved draft to a temp file: `/tmp/issue-<type>-<slug>.md` (slug = first 5–7 tokens of the title, kebab-case)
+2. Run:
 
 ```bash
 glab issue create \
-  --title "<titolo>" \
-  --label "<label-default>" \
+  --title "<title>" \
+  --label "<type-label>,workflow::ready" \
   --milestone "<milestone>" \
-  --description "$(cat /tmp/issue-<tipo>-<slug>.md)"
+  --description "$(cat /tmp/issue-<type>-<slug>.md)"
 ```
 
-3. Restituisci l'URL della issue creata.
+Optional flags (use when the user specifies):
 
-**Anti-pattern da evitare** (vedi anche la skill `glab` locale):
+```bash
+  --assignee "<username>"      # discover members first: glab member list
+  --confidential               # for sensitive issues
+  --repo "<group/project>"     # cross-project creation
+```
 
-- NON usare `--body` (e' un flag di `gh`, non di `glab`). Usa `--description`.
-- Per descrizioni lunghe o con backtick / `$`, usare sempre `$(cat /tmp/file.md)` o heredoc `<< 'EOF'` con delimitatore single-quoted.
-- `glab issue note` per commentare, NON `glab issue comment`.
+Anti-patterns:
+- Do **not** use `--body` (that is a `gh` flag, not `glab`). Use `--description`.
+- For descriptions with backticks or `$`, use `$(cat /tmp/file.md)` or heredoc with single-quoted delimiter `<< 'EOF'`.
+- Use `glab issue note` to comment, **not** `glab issue comment`.
 
-## Stile canonico delle issue
+3. Return the created issue URL.
 
-I dettagli completi sono nei file `templates/*.md`. Riassunto trasversale:
+**Post-creation:** If the user mentioned related issues, link them:
 
-- **Titoli di sezione in italiano** (`## Descrizione`, `## Impatto`, ecc.). Mai sezioni in inglese.
-- Frasi tecniche dense e affermative. No fronzoli, no emoji, no preamboli decorativi.
-- Riferimenti puntuali `path/file.ext` riga N per ogni snippet.
-- Tabelle / elenchi puntati per criticita' multiple.
-- Checklist `- [ ]` per attivita' o requisiti.
-- **Non includere mai una riga "Aprire una Merge Request"** nelle attivita'. L'MR e' fuori scope della issue.
+```bash
+glab issue link <new-issue-id> --target-id <related-id>
+```
 
-## Integrazione con altre skill GitLab
+→ Full flag reference: [references/glab-issue-commands.md](references/glab-issue-commands.md)
 
-- Per i comandi `glab` avanzati (auth, MR, pipelines, ecc.), affidati al pacchetto [`gitlab-cli-skills`](https://github.com/vince-winkintel/gitlab-cli-skills) (skill `glab-issue`, `glab-auth`, `glab-label`, ecc.) se installato.
-- Fallback: la skill `glab` locale fornisce i comandi base.
+## Transition workflow
 
-## Riferimenti
+Use when the user says "start working on #N", "lavora la issue #N", "resolve #N", or similar lifecycle phrases.
 
-- Pattern mermaid: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
-- Template per tipo: [templates/bug.md](templates/bug.md), [templates/technical-debt.md](templates/technical-debt.md), [templates/feature.md](templates/feature.md), [templates/documentation.md](templates/documentation.md)
+1. Read current issue state:
+   ```bash
+   glab issue view <N> --output json
+   ```
+2. Determine the current `workflow::` label.
+3. Look up the valid transition in [references/issue-lifecycle.md](references/issue-lifecycle.md).
+4. Warn if the requested transition is invalid (e.g. issue is already `workflow::in dev`).
+5. Apply the transition:
+   ```bash
+   glab issue edit <N> --label "<new-state>" --unlabel "<current-state>"
+   ```
+6. Confirm the transition in chat.
+
+Full state machine: [references/issue-lifecycle.md](references/issue-lifecycle.md)
+
+## References
+
+- Mermaid patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
+- Issue lifecycle: [references/issue-lifecycle.md](references/issue-lifecycle.md)
+- Full glab flag reference: [references/glab-issue-commands.md](references/glab-issue-commands.md)
+- Templates: [templates/bug.md](templates/bug.md), [templates/feature.md](templates/feature.md), [templates/technical-debt.md](templates/technical-debt.md), [templates/documentation.md](templates/documentation.md)
