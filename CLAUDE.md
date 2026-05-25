@@ -123,4 +123,59 @@ Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 
 ## Skill Body
 
+The body contains step-by-step workflow instructions. Use `references/` files for depth
+(referenced via relative links from SKILL.md). Keep references one level deep — avoid
+deeply nested chains.
+
+### Token budgets
+
+- **~100 tokens per description** — loaded at startup for all skills
+- **< 2,500 tokens per SKILL.md** — project recommendation
+- **< 5,000 tokens per SKILL.md** — spec limit
+- **< 500 lines per SKILL.md** — move detailed content to `references/`
+
+A lean SKILL.md is better. Stay well below limits when possible.
+
+### Mandatory invariants
+
+Four invariants apply to every skill in this project. Violating any of them is a defect.
+
+**1. Draft gate**
+
+Every skill MUST present the complete artifact draft in chat and wait for explicit user
+confirmation before executing any `glab` command. The confirmation prompt must include title,
+labels, and milestone. If the user requests changes, apply them and re-present the draft.
+Repeat until approved.
+
+**2. Snippet policy**
+
+Every artifact that references code MUST include fenced code blocks of 5–20 lines per
+significant point, with exact `path/file.ext` line N citation. Use language-appropriate
+syntax highlighting.
+
+**3. Language-agnostic templates**
+
+Template files define structure — sections, ordering, checklist shape — not language.
+Section headings and prose in generated artifacts follow the user's active language at
+runtime. No language is hardcoded. Existing templates remain valid; new templates must not
+hardcode any language.
+
+**4. No duplication**
+
+Workflow logic (steps, conditions, commands) lives exclusively in `SKILL.md`. Structure and
+content shape live exclusively in `templates/`. Never copy SKILL.md instructions into
+template files.
+
+### Top-of-body directives (optional)
+
+These directives go before the first heading, in this order:
+
+| Directive | Format | When to include |
+| --- | --- | --- |
+| **Persona** | `**Persona:** You are a <role>. <mindset>.` | Skills with a defined analytical or generative domain |
+| **Thinking mode** | `**Thinking mode:** Use \`ultrathink\` for <task>.` | Deep analysis tasks |
+| **Modes** | `**Modes:**` section listing distinct invocation contexts | Skills with multiple execution paths (draft, review, publish) |
+
+All three are optional. Most skills in this project are procedural and need none.
+
 ## Workflows
