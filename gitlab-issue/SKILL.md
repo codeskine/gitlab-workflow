@@ -17,17 +17,18 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 # GitLab issue author
 
 **Modes:**
+
 - **Create** — generate a new issue from context and publish via `glab issue create`
 - **Transition** — change the lifecycle state of an existing issue via `glab issue edit`
 
 ## Supported types
 
-| Type             | Template                                                      | Default label          |
-|------------------|---------------------------------------------------------------|------------------------|
-| `bug`            | [templates/bug.md](templates/bug.md)                         | `type::bug`            |
-| `feature`        | [templates/feature.md](templates/feature.md)                 | `type::feature`        |
-| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md)   | `type::technical-debt` |
-| `documentation`  | [templates/documentation.md](templates/documentation.md)     | `type::documentation`  |
+| Type             | Template                                                   | Default label          |
+| ---------------- | ---------------------------------------------------------- | ---------------------- |
+| `bug`            | [templates/bug.md](templates/bug.md)                       | `type::bug`            |
+| `feature`        | [templates/feature.md](templates/feature.md)               | `type::feature`        |
+| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md) | `type::technical-debt` |
+| `documentation`  | [templates/documentation.md](templates/documentation.md)   | `type::documentation`  |
 
 Default labels are starting points. Override with `--label` when the project uses different scoped labels.
 
@@ -35,7 +36,7 @@ Default labels are starting points. Override with `--label` when the project use
 
 ### 1. Identify the issue type
 
-The user must specify the type in the prompt (e.g. *"create a bug issue for..."*, *"open a technical debt on..."*). If missing, ask once:
+The user must specify the type in the prompt (e.g. _"create a bug issue for..."_, _"open a technical debt on..."_). If missing, ask once:
 
 > "What type of issue do you want to open? bug / feature / technical-debt / documentation"
 
@@ -76,9 +77,9 @@ Select the most relevant active milestone based on branch name, label, or issue 
 ### 5. Apply diagram policy
 
 | Issue type       | Default diagram   | When to include                                                  |
-|------------------|-------------------|------------------------------------------------------------------|
-| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components       |
-| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                |
+| ---------------- | ----------------- | ---------------------------------------------------------------- |
+| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components        |
+| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                 |
 | `feature`        | `flowchart` (opt) | Only if the proposal already has a defined flow (convergent MVC) |
 | `documentation`  | None              | Never by default                                                 |
 
@@ -118,6 +119,7 @@ Optional flags (use when the user specifies):
 ```
 
 Anti-patterns:
+
 - Do **not** use `--body` (that is a `gh` flag, not `glab`). Use `--description`.
 - For descriptions with backticks or `$`, use `$(cat /tmp/file.md)` or heredoc with single-quoted delimiter `<< 'EOF'`.
 - Use `glab issue note` to comment, **not** `glab issue comment`.

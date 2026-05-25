@@ -13,17 +13,15 @@ of generated content follows the user's active language at runtime.
 
 ## Project Structure
 
-Skills live at repository root — one directory per sub-skill:
-
 ```
-<skill-name>/       # sub-skill root (gitlab-issue, gitlab-milestone, gitlab-mr)
-  SKILL.md          # Required: frontmatter + workflow instructions
-  templates/        # Required: one .md file per artifact type
-  references/       # Optional: deep documentation loaded on demand
-SKILL.md            # Root orchestrator — sub-skill routing table
-scripts/
-  install.js        # npm CLI (gitlab-author) for installation
-package.json        # Plugin manifest and install script entry point
+skills/               # Claude Code skill definitions
+  <skill-name>/
+    SKILL.md          # Required: metadata + instructions
+    references/       # Optional: detailed documentation loaded on demand
+    scripts/          # Optional: executable code
+    assets/           # Optional: templates, resources, linter configs (.golangci.yml, etc.)
+.claude-plugin/       # Plugin metadata and configuration
+.cursor-plugin/       # Plugin metadata and configuration (version must match .claude-plugin/plugin.json)
 ```
 
 ## Agent Skills Specification

@@ -12,19 +12,19 @@ glab issue create \
 
 ## Complete flag table — `glab issue create`
 
-| Flag | Value | When to use |
-|------|-------|-------------|
-| `--title` | string | Required. Issue title. |
-| `--label` | comma-separated | Labels to apply. Comma-separate multiple: `"type::bug,workflow::ready"`. |
-| `--milestone` | string | Milestone title or ID. |
-| `--description` | string or `$(cat file)` | Issue body. Prefer `$(cat /tmp/file.md)` for multi-line content. |
-| `--assignee` | username | Assign to a project member. Discover members first (see below). |
-| `--confidential` | flag (no value) | Mark issue as confidential (visible only to project members). |
-| `--weight` | integer | Issue weight (1–10 or project-defined range). |
-| `--due-date` | YYYY-MM-DD | Due date for the issue. |
-| `--related-issue-id` | integer | Link to a related issue at creation time. |
-| `--link-type` | `relates_to` \| `blocks` \| `is_blocked_by` | Type of relationship link (default: `relates_to`). |
-| `--repo` | group/project | Cross-project creation. Requires authentication for the target project. |
+| Flag                 | Value                                       | When to use                                                              |
+| -------------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
+| `--title`            | string                                      | Required. Issue title.                                                   |
+| `--label`            | comma-separated                             | Labels to apply. Comma-separate multiple: `"type::bug,workflow::ready"`. |
+| `--milestone`        | string                                      | Milestone title or ID.                                                   |
+| `--description`      | string or `$(cat file)`                     | Issue body. Prefer `$(cat /tmp/file.md)` for multi-line content.         |
+| `--assignee`         | username                                    | Assign to a project member. Discover members first (see below).          |
+| `--confidential`     | flag (no value)                             | Mark issue as confidential (visible only to project members).            |
+| `--weight`           | integer                                     | Issue weight (1–10 or project-defined range).                            |
+| `--due-date`         | YYYY-MM-DD                                  | Due date for the issue.                                                  |
+| `--related-issue-id` | integer                                     | Link to a related issue at creation time.                                |
+| `--link-type`        | `relates_to` \| `blocks` \| `is_blocked_by` | Type of relationship link (default: `relates_to`).                       |
+| `--repo`             | group/project                               | Cross-project creation. Requires authentication for the target project.  |
 
 ## Discovery commands
 
@@ -60,12 +60,12 @@ glab issue close <issue-id>
 
 ## Anti-patterns
 
-| Wrong | Correct | Why |
-|-------|---------|-----|
-| `--body "..."` | `--description "..."` | `--body` is a GitHub CLI (`gh`) flag; `glab` uses `--description` |
-| Inline description with backticks | `--description "$(cat /tmp/file.md)"` | Shell expansion breaks on backticks and unquoted `$` |
-| `glab issue comment <id>` | `glab issue note <id> --message "..."` | `comment` is not a valid `glab issue` subcommand |
-| `--description "multi\nline"` | Write to file, use `$(cat file)` | Shell quoting fails on embedded newlines |
+| Wrong                             | Correct                                | Why                                                               |
+| --------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
+| `--body "..."`                    | `--description "..."`                  | `--body` is a GitHub CLI (`gh`) flag; `glab` uses `--description` |
+| Inline description with backticks | `--description "$(cat /tmp/file.md)"`  | Shell expansion breaks on backticks and unquoted `$`              |
+| `glab issue comment <id>`         | `glab issue note <id> --message "..."` | `comment` is not a valid `glab issue` subcommand                  |
+| `--description "multi\nline"`     | Write to file, use `$(cat file)`       | Shell quoting fails on embedded newlines                          |
 
 ## Heredoc pattern
 
