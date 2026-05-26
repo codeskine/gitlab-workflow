@@ -10,6 +10,9 @@ node_modules/
 .cursor/plans/
 .cursor/skills/
 
+# local docs
+docs/
+
 # logs
 npm-debug.log*
 
