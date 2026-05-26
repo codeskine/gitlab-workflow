@@ -172,6 +172,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 {
   "name": "gitlab-workflow",
   "version": "1.0.0-rc.1",
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
   "author": { "name": "Stefano Veloccia" },
@@ -186,7 +187,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 {
   "name": "gitlab-workflow",
   "version": "1.0.0-rc.1",
-  "description": "Claude Code Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
   "author": { "name": "Stefano Veloccia" },
@@ -216,7 +217,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 {
   "name": "gitlab-workflow",
   "version": "1.0.0-rc.1",
-  "description": "Cursor Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
   "author": { "name": "Stefano Veloccia" },
@@ -246,7 +247,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 {
   "name": "gitlab-workflow",
   "version": "1.0.0-rc.1",
-  "description": "Codex Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
   "author": { "name": "Stefano Veloccia" },
