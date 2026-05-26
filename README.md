@@ -6,12 +6,12 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 
 ## Sub-skill disponibili
 
-| Sub-skill                              | Scopo                                                                                                 | Stato       |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------- |
-| [`gitlab-plan`](./gitlab-plan)         | Genera milestone con scope, deliverables e date target.                                               | Disponibile |
-| [`gitlab-track`](./gitlab-track)       | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| [`gitlab-commit`](./gitlab-commit)     | Committa le modifiche staged con messaggi convenzionali e traceabilità.                               | Disponibile |
-| [`gitlab-review`](./gitlab-review)     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                         | Disponibile |
+| Sub-skill                          | Scopo                                                                                                 | Stato       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------- |
+| [`gitlab-plan`](./gitlab-plan)     | Genera milestone con scope, deliverables e date target.                                               | Disponibile |
+| [`gitlab-track`](./gitlab-track)   | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
+| [`gitlab-commit`](./gitlab-commit) | Committa le modifiche staged con messaggi convenzionali e traceabilità.                               | Disponibile |
+| [`gitlab-review`](./gitlab-review) | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                         | Disponibile |
 
 ## Installazione
 

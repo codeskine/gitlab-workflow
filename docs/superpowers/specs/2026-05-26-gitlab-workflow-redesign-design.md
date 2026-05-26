@@ -11,24 +11,24 @@ format, and enforce an explicit traceability chain from commit to issue to MR to
 
 ## 1. Plugin Rename
 
-| Current | New |
-| --- | --- |
+| Current                                  | New                         |
+| ---------------------------------------- | --------------------------- |
 | `"name": "gitlab-author"` (package.json) | `"name": "gitlab-workflow"` |
-| `.claude-plugin/plugin.json` name | `gitlab-workflow` |
-| `.cursor-plugin/plugin.json` name | `gitlab-workflow` |
-| README title and references | updated throughout |
+| `.claude-plugin/plugin.json` name        | `gitlab-workflow`           |
+| `.cursor-plugin/plugin.json` name        | `gitlab-workflow`           |
+| README title and references              | updated throughout          |
 
 ## 2. Skill Renames
 
 Skills are renamed to reflect their role in the development lifecycle, not just the artifact
 they create.
 
-| Current directory | New directory | New `name` frontmatter | Role |
-| --- | --- | --- | --- |
-| `skills/conventional-commit/` | `skills/gitlab-commit/` | `gitlab-commit` | Save progress with explicit issue reference |
-| `skills/gitlab-issue/` | `skills/gitlab-track/` | `gitlab-track` | Create and manage issue lifecycle |
-| `skills/gitlab-mr/` | `skills/gitlab-review/` | `gitlab-review` | Publish work for review |
-| `skills/gitlab-milestone/` | `skills/gitlab-plan/` | `gitlab-plan` | Plan sprints and releases |
+| Current directory             | New directory           | New `name` frontmatter | Role                                        |
+| ----------------------------- | ----------------------- | ---------------------- | ------------------------------------------- |
+| `skills/conventional-commit/` | `skills/gitlab-commit/` | `gitlab-commit`        | Save progress with explicit issue reference |
+| `skills/gitlab-issue/`        | `skills/gitlab-track/`  | `gitlab-track`         | Create and manage issue lifecycle           |
+| `skills/gitlab-mr/`           | `skills/gitlab-review/` | `gitlab-review`        | Publish work for review                     |
+| `skills/gitlab-milestone/`    | `skills/gitlab-plan/`   | `gitlab-plan`          | Plan sprints and releases                   |
 
 All SKILL.md frontmatter `name:` fields, `description:` cross-references (`→ See
 codeskine/gitlab-author-skills@<name>`), and internal relative links updated accordingly.
@@ -241,7 +241,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 }
 ```
 
-### `.codex-plugin/plugin.json` *(new)*
+### `.codex-plugin/plugin.json` _(new)_
 
 ```json
 {
@@ -309,16 +309,16 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 
 ## 7. Files Touched
 
-| File / directory | Change |
-| --- | --- |
-| `skills/conventional-commit/` | Renamed to `skills/gitlab-commit/` |
-| `skills/gitlab-issue/` | Renamed to `skills/gitlab-track/` |
-| `skills/gitlab-mr/` | Renamed to `skills/gitlab-review/` |
-| `skills/gitlab-milestone/` | Renamed to `skills/gitlab-plan/` |
-| All four `SKILL.md` files | Frontmatter, cross-references, workflow sections updated |
-| `skills/shared/references/quality-standard.md` | New shared quality criteria file |
-| `package.json` | `name`, `description`, `homepage`, `repository.url`, `keywords`, `prepack` script, `files` array updated |
-| `.claude-plugin/plugin.json` | Extended format; `name`, `skills`, `description`, `keywords` updated |
-| `.cursor-plugin/plugin.json` | Extended format; `name`, `skills` (add `gitlab-commit`), `description`, `keywords` updated |
-| `.codex-plugin/plugin.json` | **New file** — full extended manifest with all 4 skills |
-| `README.md` | Title, skill table, all name references updated |
+| File / directory                               | Change                                                                                                   |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `skills/conventional-commit/`                  | Renamed to `skills/gitlab-commit/`                                                                       |
+| `skills/gitlab-issue/`                         | Renamed to `skills/gitlab-track/`                                                                        |
+| `skills/gitlab-mr/`                            | Renamed to `skills/gitlab-review/`                                                                       |
+| `skills/gitlab-milestone/`                     | Renamed to `skills/gitlab-plan/`                                                                         |
+| All four `SKILL.md` files                      | Frontmatter, cross-references, workflow sections updated                                                 |
+| `skills/shared/references/quality-standard.md` | New shared quality criteria file                                                                         |
+| `package.json`                                 | `name`, `description`, `homepage`, `repository.url`, `keywords`, `prepack` script, `files` array updated |
+| `.claude-plugin/plugin.json`                   | Extended format; `name`, `skills`, `description`, `keywords` updated                                     |
+| `.cursor-plugin/plugin.json`                   | Extended format; `name`, `skills` (add `gitlab-commit`), `description`, `keywords` updated               |
+| `.codex-plugin/plugin.json`                    | **New file** — full extended manifest with all 4 skills                                                  |
+| `README.md`                                    | Title, skill table, all name references updated                                                          |

@@ -84,6 +84,7 @@ For the `{Changes}` section, include **5–20 line snippets** per significant po
 Set the MR **title** with a conventional commit prefix matching the branch intent: `feat`, `fix`, `refactor`, `docs`, etc.
 
 For the closing section of the MR description, use the aggregated issue list from step 2b:
+
 - Use `Closes #N` for branches prefixed `fix/` or `hotfix/` (issue will be closed on merge)
 - Use `Related to #N` for `feature/` branches (issue may remain open after merge)
 

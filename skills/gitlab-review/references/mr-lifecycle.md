@@ -17,7 +17,7 @@ flowchart LR
 
 ## Linked issue transitions
 
-When the MR is opened (ties to the issue lifecycle in `gitlab-issue` skill):
+When the MR is opened (ties to the issue lifecycle in `gitlab-track` skill):
 
 | MR event              | Issue transition       | glab command                                                                   |
 | --------------------- | ---------------------- | ------------------------------------------------------------------------------ |
@@ -51,4 +51,4 @@ Scoped labels (`workflow::*`) enforce a single active state per issue or MR.
 
 ## Cross-skill reference
 
-Issue lifecycle (upstream of MR): [gitlab-issue skill — references/issue-lifecycle.md](../../gitlab-issue/references/issue-lifecycle.md)
+Issue lifecycle (upstream of MR): [gitlab-track skill — references/issue-lifecycle.md](../../gitlab-track/references/issue-lifecycle.md)

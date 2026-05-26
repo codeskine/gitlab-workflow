@@ -12,28 +12,29 @@
 
 ## File Map
 
-| File | Action |
-|---|---|
-| `skills/conventional-commit/` | `git mv` → `skills/gitlab-commit/` |
-| `skills/gitlab-issue/` | `git mv` → `skills/gitlab-track/` |
-| `skills/gitlab-mr/` | `git mv` → `skills/gitlab-review/` |
-| `skills/gitlab-milestone/` | `git mv` → `skills/gitlab-plan/` |
-| `skills/gitlab-commit/SKILL.md` | Rename frontmatter + remove dir-scope logic + add quality gate |
-| `skills/gitlab-track/SKILL.md` | Rename frontmatter + milestone mandatory + transition branch options + quality gate |
-| `skills/gitlab-review/SKILL.md` | Rename frontmatter + commit-log Closes parsing + quality gate |
-| `skills/gitlab-plan/SKILL.md` | Rename frontmatter + quality gate only |
-| `skills/shared/references/quality-standard.md` | New shared quality criteria |
-| `package.json` | name, description, keywords, homepage, repository, files, prepack |
-| `.claude-plugin/plugin.json` | Extended format, new name/skills/keywords |
-| `.cursor-plugin/plugin.json` | Extended format, new name/skills/keywords, add gitlab-commit |
-| `.codex-plugin/plugin.json` | New file, full extended manifest |
-| `README.md` | Update title, skill table, all name references |
+| File                                           | Action                                                                              |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `skills/conventional-commit/`                  | `git mv` → `skills/gitlab-commit/`                                                  |
+| `skills/gitlab-issue/`                         | `git mv` → `skills/gitlab-track/`                                                   |
+| `skills/gitlab-mr/`                            | `git mv` → `skills/gitlab-review/`                                                  |
+| `skills/gitlab-milestone/`                     | `git mv` → `skills/gitlab-plan/`                                                    |
+| `skills/gitlab-commit/SKILL.md`                | Rename frontmatter + remove dir-scope logic + add quality gate                      |
+| `skills/gitlab-track/SKILL.md`                 | Rename frontmatter + milestone mandatory + transition branch options + quality gate |
+| `skills/gitlab-review/SKILL.md`                | Rename frontmatter + commit-log Closes parsing + quality gate                       |
+| `skills/gitlab-plan/SKILL.md`                  | Rename frontmatter + quality gate only                                              |
+| `skills/shared/references/quality-standard.md` | New shared quality criteria                                                         |
+| `package.json`                                 | name, description, keywords, homepage, repository, files, prepack                   |
+| `.claude-plugin/plugin.json`                   | Extended format, new name/skills/keywords                                           |
+| `.cursor-plugin/plugin.json`                   | Extended format, new name/skills/keywords, add gitlab-commit                        |
+| `.codex-plugin/plugin.json`                    | New file, full extended manifest                                                    |
+| `README.md`                                    | Update title, skill table, all name references                                      |
 
 ---
 
 ## Task 1: Rename skill directories
 
 **Files:**
+
 - Rename: `skills/conventional-commit/` → `skills/gitlab-commit/`
 - Rename: `skills/gitlab-issue/` → `skills/gitlab-track/`
 - Rename: `skills/gitlab-mr/` → `skills/gitlab-review/`
@@ -55,6 +56,7 @@ ls skills/
 ```
 
 Expected output:
+
 ```
 gitlab-commit
 gitlab-plan
@@ -62,6 +64,7 @@ gitlab-review
 gitlab-track
 shared
 ```
+
 (Note: `shared/` will be created in Task 3 — at this point only the four renamed dirs should appear.)
 
 - [ ] **Step 3: Commit**
@@ -76,6 +79,7 @@ git commit -m "refactor: rename skill directories to phase-oriented names"
 ## Task 2: Update package.json
 
 **Files:**
+
 - Modify: `package.json`
 
 - [ ] **Step 1: Replace the entire package.json content**
@@ -153,6 +157,7 @@ git commit -m "chore(package): rename to gitlab-workflow, update keywords and pa
 ## Task 3: Update plugin manifests
 
 **Files:**
+
 - Modify: `.claude-plugin/plugin.json`
 - Modify: `.cursor-plugin/plugin.json`
 - Create: `.codex-plugin/plugin.json`
@@ -275,6 +280,7 @@ git commit -m "chore(plugins): extend manifests to full format, add codex plugin
 ## Task 4: Create shared quality standard
 
 **Files:**
+
 - Create: `skills/shared/references/quality-standard.md`
 
 - [ ] **Step 1: Create the directory and file**
@@ -285,7 +291,7 @@ mkdir -p skills/shared/references
 
 Create `skills/shared/references/quality-standard.md`:
 
-````markdown
+```markdown
 ---
 title: Quality Standard for GitLab Workflow Artifacts
 ---
@@ -324,7 +330,7 @@ automatically where possible.
 - [ ] Title is consistent with project versioning or sprint naming (e.g. `v1.2.0`, `Sprint 5`, `2026-Q2`)
 - [ ] Due date is present
 - [ ] Description contains ≥ 2 sentences describing the goal
-````
+```
 
 - [ ] **Step 2: Commit**
 
@@ -338,6 +344,7 @@ git commit -m "feat(shared): add quality-standard.md shared across all skills"
 ## Task 5: Update gitlab-plan/SKILL.md
 
 **Files:**
+
 - Modify: `skills/gitlab-plan/SKILL.md`
 
 - [ ] **Step 1: Update frontmatter — name and cross-references**
@@ -365,10 +372,13 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - [ ] **Step 2: Update the H1 title**
 
 Replace:
+
 ```
 # GitLab milestone author
 ```
+
 With:
+
 ```
 # GitLab plan — milestone author
 ```
@@ -415,6 +425,7 @@ git commit -m "feat(gitlab-plan): rename from gitlab-milestone, add quality gate
 ## Task 6: Update gitlab-commit/SKILL.md
 
 **Files:**
+
 - Modify: `skills/gitlab-commit/SKILL.md`
 
 - [ ] **Step 1: Update frontmatter**
@@ -445,10 +456,13 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - [ ] **Step 2: Update H1 title**
 
 Replace:
+
 ```
 # GitLab conventional commit author
 ```
+
 With:
+
 ```
 # GitLab commit author
 ```
@@ -572,6 +586,7 @@ git commit -m "feat(gitlab-commit): rename, enforce #N scope, add quality gate"
 ## Task 7: Update gitlab-track/SKILL.md
 
 **Files:**
+
 - Modify: `skills/gitlab-track/SKILL.md`
 
 - [ ] **Step 1: Update frontmatter**
@@ -599,10 +614,13 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - [ ] **Step 2: Update H1 title**
 
 Replace:
+
 ```
 # GitLab issue author
 ```
+
 With:
+
 ```
 # GitLab track — issue author
 ```
@@ -685,6 +703,7 @@ git commit -m "feat(gitlab-track): rename, mandatory milestone, branch setup on 
 ## Task 8: Update gitlab-review/SKILL.md
 
 **Files:**
+
 - Modify: `skills/gitlab-review/SKILL.md`
 
 - [ ] **Step 1: Update frontmatter**
@@ -712,10 +731,13 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - [ ] **Step 2: Update H1 title**
 
 Replace:
+
 ```
 # GitLab merge request author
 ```
+
 With:
+
 ```
 # GitLab review — merge request author
 ```
@@ -724,12 +746,13 @@ With:
 
 Insert after step 2 (Explore git context) and before step 3 (Discover labels and milestone):
 
-```markdown
+````markdown
 ### 2b. Extract issue references from commit history
 
 ```bash
 git log <base-branch>...HEAD --format="%B"
 ```
+````
 
 Parse all commit message bodies for `Closes #\d+` and `Related to #\d+` patterns.
 Deduplicate the collected issue IDs. This list drives the closing section of the MR
@@ -740,7 +763,8 @@ presenting the draft:
 
 > "No issue references found in commit messages. The MR will have no Closes/Related to
 > links. Continue anyway? (yes / add manually / cancel)"
-```
+
+````
 
 - [ ] **Step 4: Update step 4 (Compose the draft) to use aggregated closing list**
 
@@ -753,7 +777,7 @@ For the closing section of the MR description, use the aggregated issue list fro
 - Use `Related to #N` for `feature/` branches (issue may remain open after merge)
 
 Do not guess or invent issue references — use only what was extracted from commit messages.
-```
+````
 
 - [ ] **Step 5: Add quality gate before the draft gate (step 5)**
 
@@ -797,6 +821,7 @@ git commit -m "feat(gitlab-review): rename, aggregate Closes #N from commits, ad
 ## Task 9: Update README.md
 
 **Files:**
+
 - Modify: `README.md`
 
 - [ ] **Step 1: Read the current README to identify all references to update**
@@ -811,26 +836,26 @@ Note every line number returned — each one needs updating.
 
 Apply these replacements throughout the file:
 
-| Find | Replace |
-|---|---|
-| `gitlab-author` | `gitlab-workflow` |
-| `gitlab-author-skills` | `gitlab-workflow` |
-| `conventional-commit` | `gitlab-commit` |
-| `gitlab-issue` | `gitlab-track` |
-| `gitlab-mr` | `gitlab-review` |
-| `gitlab-milestone` | `gitlab-plan` |
+| Find                             | Replace                     |
+| -------------------------------- | --------------------------- |
+| `gitlab-author`                  | `gitlab-workflow`           |
+| `gitlab-author-skills`           | `gitlab-workflow`           |
+| `conventional-commit`            | `gitlab-commit`             |
+| `gitlab-issue`                   | `gitlab-track`              |
+| `gitlab-mr`                      | `gitlab-review`             |
+| `gitlab-milestone`               | `gitlab-plan`               |
 | `codeskine/gitlab-author-skills` | `codeskine/gitlab-workflow` |
 
 - [ ] **Step 3: Update the skill table in README (if present) to reflect new names and roles**
 
 The skill table should read:
 
-| Skill | Trigger |
-|---|---|
-| `gitlab-plan` | Create or manage milestones |
-| `gitlab-track` | Create issues and manage lifecycle |
+| Skill           | Trigger                                 |
+| --------------- | --------------------------------------- |
+| `gitlab-plan`   | Create or manage milestones             |
+| `gitlab-track`  | Create issues and manage lifecycle      |
 | `gitlab-commit` | Commit staged changes with traceability |
-| `gitlab-review` | Create and publish merge requests |
+| `gitlab-review` | Create and publish merge requests       |
 
 - [ ] **Step 4: Verify no old names remain**
 
