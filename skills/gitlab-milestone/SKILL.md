@@ -1,89 +1,146 @@
 ---
 name: gitlab-milestone
-description: Applicare quando l'utente chiede di creare o aggiornare una milestone GitLab, pianificare uno sprint o una release, o raggruppare issue per un obiettivo condiviso.
+description:
+  "GitLab milestone author. Use when the user asks to create, update, or
+  close a milestone on GitLab, plan a sprint or release, or group issues under a shared
+  goal. Not for issue creation (→ See codeskine/gitlab-author-skills@gitlab-issue) or
+  merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)."
+user-invocable: true
+license: MIT
+compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
+metadata:
+  author: codeskine
+  version: "1.0.0"
+allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab milestone
+# GitLab milestone author
 
-Genera milestone GitLab strutturate e ben documentate in **italiano**, pronte per essere pubblicate tramite `glab milestone create`.
+**Modes:**
 
-> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `assets/milestone.md`.
+- **Create** — generate a new milestone and publish via `glab milestone create`
+- **Update** — edit title, dates, or description of an existing milestone via `glab milestone edit`
+- **Close / Reopen** — manage milestone lifecycle via `glab milestone close` or `glab milestone reopen`
 
-## Quando usare questa skill
+## Create workflow
 
-Attiva quando l'utente chiede di:
+### 1. Identify title and dates
 
-- creare una milestone su GitLab
-- pianificare uno sprint o una release
-- raggruppare issue per un obiettivo condiviso
+Title must be stated by the user or proposed by the skill and confirmed explicitly. Dates: infer
+from context (sprint naming, git tags, branch name); if unavailable, ask.
 
-## Workflow
+Determine scope: **project-level** (default) or **group-level** (add `--group <group-slug>` to
+every glab command).
 
-Segui questi passi nell'ordine:
+### 2. Explore context
 
-### 1. Identifica titolo e date
-
-Titolo sempre dichiarato dall'utente (o proposto dalla skill e confermato esplicitamente). Date: inferite dal contesto (sprint naming, tag git); se non disponibili, chiedi.
-
-### 2. Esplora il contesto
-
-**Estrazione da git:**
+**Git extraction (silent):**
 
 ```bash
-git log --oneline --since="30 days ago"   # commit recenti per capire lo scope
-git branch --show-current                  # branch corrente per inferire release/sprint
+git log --oneline --since="30 days ago"    # recent scope
+git branch --show-current                   # infer sprint/release target
+git tag --sort=-version:refname | head -5   # detect versioning scheme
 ```
 
-**Ricerca milestone esistenti e issue candidate:**
+**Existing milestones and candidate issues:**
 
 ```bash
-glab milestone list --state active         # evitare duplicati
-glab issue list --state opened             # issue aperte candidate alla milestone
+glab milestone list --state active          # avoid duplicates
+glab issue list --state opened              # candidate issues for post-creation assignment
 ```
 
-Usa branch name e tag git per inferire la release o lo sprint target.
+### 3. Compose the draft
 
-### 3. Componi la bozza
-
-Leggi `assets/milestone.md` e compila tutte le sezioni con il contesto estratto.
+Read `assets/milestone.md` and fill in all sections with extracted context. Section headings and
+prose follow the **user's active language** — do not hardcode any language.
 
 ### 4. Draft gate
 
-**NON pubblicare ancora.** Mostra la bozza completa in chat. Chiedi conferma esplicita:
+**Do not publish yet.** Present the complete draft in chat with all sections filled in. Include
+title and due date.
 
-> "Bozza pronta. Procedo a creare la milestone su GitLab con titolo '<titolo>', scadenza '<data>'? (si/modifiche/annulla)"
+Wait for explicit confirmation:
 
-Se l'utente chiede modifiche, applicale e rimostra la bozza. Ripeti finche' non e' approvata.
+> "Draft ready. Shall I create the milestone on GitLab with title '<title>', due date '<date>'?
+> (yes / changes / cancel)"
 
-### 5. Pubblica via glab
+If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-Dopo OK esplicito:
+### 5. Publish via glab
 
-1. Scrivi la bozza approvata su file temporaneo: `/tmp/milestone-<slug>.md` (slug = primi 5-7 token del titolo, kebab-case)
-2. Esegui:
+After explicit approval:
+
+1. Write the approved draft to a temp file: `/tmp/milestone-<slug>.md` (slug = first 5–7 tokens
+   of title, kebab-case)
+2. Run:
 
 ```bash
 glab milestone create \
-  --title "<titolo>" \
+  --title "<title>" \
   --description "$(cat /tmp/milestone-<slug>.md)" \
+  --start-date "<YYYY-MM-DD>" \
   --due-date "<YYYY-MM-DD>"
 ```
 
-3. Restituisci l'URL della milestone creata (o l'ID se l'URL non e' disponibile nell'output).
+For group-level milestones, add `--group <group-slug>`.
 
-**Anti-pattern da evitare:**
+Anti-patterns:
 
-- NON usare `--body`. Usa `--description`.
-- Per descrizioni con backtick o `$`, usa sempre `$(cat /tmp/file.md)`.
+- Do **not** use `--body`. Use `--description`.
+- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
 
-## Stile canonico delle milestone
+3. Return the created milestone URL (or ID if the URL is not available in the output).
 
-- Titoli di sezione **in italiano** (`## Obiettivo`, `## Deliverable`, `## Date`, ecc.)
-- Frasi tecniche dense e affermative. No emoji, no preamboli decorativi.
-- Riferimenti `#N` per le issue collegate.
-- Checklist `- [ ]` per deliverable e criteri di completamento.
-- Date sempre in formato `YYYY-MM-DD`.
+### 6. Post-creation: assign issues
 
-## Riferimenti
+If candidate issues were found in step 2, offer to assign them to the new milestone:
+
+```bash
+glab issue edit <N> --milestone "<title>"
+```
+
+Present the list and let the user confirm or exclude individual issues before running.
+
+## Update workflow
+
+Use when the user asks to extend a deadline, rename a milestone, or update its description.
+
+1. List active milestones to confirm the target:
+   ```bash
+   glab milestone list --state active
+   ```
+2. Present the planned changes for confirmation before executing.
+3. Apply the update:
+   ```bash
+   glab milestone edit <id> \
+     --title "<new-title>" \
+     --start-date "<YYYY-MM-DD>" \
+     --due-date "<YYYY-MM-DD>"
+   ```
+   Only pass flags for fields being changed.
+
+→ Full flag reference: [references/glab-milestone-commands.md](references/glab-milestone-commands.md)
+
+## Close / Reopen workflow
+
+Use when a sprint ends or a milestone needs to be reopened after closure.
+
+```bash
+glab milestone close <id>
+glab milestone reopen <id>
+```
+
+When closing, offer to transition remaining open issues to a backlog or next active milestone:
+
+```bash
+glab issue edit <N> --milestone "<next-milestone-title>"
+```
+
+→ Full lifecycle guide: [references/milestone-lifecycle.md](references/milestone-lifecycle.md)
+
+## References
 
 - Template: [assets/milestone.md](assets/milestone.md)
+- Full glab flag reference:
+  [references/glab-milestone-commands.md](references/glab-milestone-commands.md)
+- Milestone lifecycle: [references/milestone-lifecycle.md](references/milestone-lifecycle.md)

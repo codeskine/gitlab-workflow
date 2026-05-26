@@ -1,43 +1,31 @@
-<!--
-Template: milestone
-Istruzioni per chi compila (l'agente):
-- Mantieni i titoli di sezione esattamente come scritti qui (in italiano).
-- Sezioni obbligatorie: Obiettivo, Deliverable, Issue collegate, Date, Criteri di completamento.
-- Date in formato YYYY-MM-DD.
-- Checklist - [ ] per Deliverable e Criteri di completamento.
-- Niente preamboli, niente emoji, frasi tecniche dense e affermative.
+## {Objective}
 
-Rimuovi questo blocco di commento prima di pubblicare.
--->
-
-## Obiettivo
-
-<!-- 1-3 frasi: scope della milestone, perche' esiste, chi ne beneficia -->
+<!-- 1–3 sentences: scope of the milestone, why it exists, who benefits -->
 
 ---
 
-## Deliverable
+## {Deliverables}
 
-- [ ] <deliverable 1>
-- [ ] <deliverable 2>
-
----
-
-## Issue collegate
-
-- #<N> — <titolo issue>
-- #<N> — <titolo issue>
+- [ ] {deliverable 1}
+- [ ] {deliverable 2}
 
 ---
 
-## Date
+## {Linked issues}
 
-- Inizio: <YYYY-MM-DD>
-- Scadenza: <YYYY-MM-DD>
+- #{N} — {issue title}
+- #{N} — {issue title}
 
 ---
 
-## Criteri di completamento
+## {Dates}
 
-- [ ] <criterio 1>
-- [ ] <criterio 2>
+- {Start}: {YYYY-MM-DD}
+- {Due}: {YYYY-MM-DD}
+
+---
+
+## {Completion criteria}
+
+- [ ] {criterion 1}
+- [ ] {criterion 2}
