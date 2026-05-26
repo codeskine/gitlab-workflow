@@ -104,8 +104,8 @@ gitlab-review   →  git log base...HEAD --format="%B"
 
 ### Changes to `gitlab-track`
 
-- Create workflow: milestone selection is mandatory. If no active milestone fits, the skill
-  asks explicitly — never leaves the field empty silently.
+- Create workflow: milestone selection is optional. Suggest the most relevant active milestone
+  if one fits; if none fits (e.g. hotfix, out-of-sprint task), leave it empty without asking.
 - Transition workflow (`→ in dev`): after applying the label change, offer branch options:
   1. _"Create new branch `fix/N-short-title`?"_ (auto-derived from issue ID + title)
   2. _"Stay on current branch `<branch-name>`?"_
@@ -131,7 +131,7 @@ the draft — no output to the user, corrections applied automatically where pos
 - Title ≥ 5 words, not generic.
 - At least one code snippet if type is `bug` or `technical-debt`.
 - Labels: at least `type::*` + `workflow::ready`.
-- Active milestone assigned (never left empty — ask explicitly if none fits).
+- Milestone suggested if an active one fits; left empty without asking if none fits (e.g. hotfix).
 - No unfilled placeholders (`TBD`, `TODO`, `<...>`).
 
 **Commit (`gitlab-commit`)**

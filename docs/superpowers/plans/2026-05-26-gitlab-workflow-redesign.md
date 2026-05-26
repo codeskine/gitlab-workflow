@@ -618,9 +618,9 @@ Select the most relevant active milestone based on branch name, label, or issue 
 With:
 
 ```
-Select the most relevant active milestone based on branch name, label, or issue type. Milestone assignment is **mandatory** — never leave it empty silently. If no active milestone fits the issue, ask explicitly:
-
-> "No active milestone matches this issue. Which milestone should it be assigned to? (select from the list above, or 'none' to skip)"
+Select the most relevant active milestone based on branch name, label, or issue type. If a
+milestone fits, suggest it. If none fits (e.g. hotfix, out-of-sprint task), leave it empty
+without asking — not every issue belongs to a milestone.
 
 Suggest `workflow::ready` as the initial lifecycle label alongside the type label.
 ```
@@ -637,7 +637,6 @@ Before presenting the draft, verify:
 - Title ≥ 5 words and not generic (`Fix bug` alone fails; `Fix nil pointer in user handler` passes)
 - At least one fenced code snippet (5–20 lines) for `bug` and `technical-debt` types
 - Labels include at least `type::*` + `workflow::ready`
-- Milestone is assigned
 - No placeholder text (`TBD`, `TODO`, `<...>`) in any section
 
 Fix any violations automatically. Do not output the checklist to the user.
