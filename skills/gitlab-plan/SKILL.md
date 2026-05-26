@@ -1,10 +1,10 @@
 ---
-name: gitlab-milestone
+name: gitlab-plan
 description:
   "GitLab milestone author. Use when the user asks to create, update, or
   close a milestone on GitLab, plan a sprint or release, or group issues under a shared
-  goal. Not for issue creation (→ See codeskine/gitlab-author-skills@gitlab-issue) or
-  merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)."
+  goal. Not for issue creation (→ See codeskine/gitlab-workflow@gitlab-track) or
+  merge requests (→ See codeskine/gitlab-workflow@gitlab-review)."
 user-invocable: true
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
@@ -14,7 +14,7 @@ metadata:
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab milestone author
+# GitLab plan — milestone author
 
 **Modes:**
 
@@ -54,7 +54,19 @@ glab issue list --state opened              # candidate issues for post-creation
 Read `assets/milestone.md` and fill in all sections with extracted context. Section headings and
 prose follow the **user's active language** — do not hardcode any language.
 
-### 4. Draft gate
+### 4. Quality gate (silent)
+
+Before presenting the draft, verify:
+
+- Title is consistent with project versioning or sprint naming (e.g. `v1.2.0`, `Sprint 5`)
+- Due date is present
+- Description contains ≥ 2 sentences about the goal
+
+Fix any violations automatically. Do not output the checklist to the user.
+
+→ Full criteria: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
+
+### 5. Draft gate
 
 **Do not publish yet.** Present the complete draft in chat with all sections filled in. Include
 title and due date.
@@ -66,7 +78,7 @@ Wait for explicit confirmation:
 
 If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-### 5. Publish via glab
+### 6. Publish via glab
 
 After explicit approval:
 
@@ -91,7 +103,7 @@ Anti-patterns:
 
 3. Return the created milestone URL (or ID if the URL is not available in the output).
 
-### 6. Post-creation: assign issues
+### 7. Post-creation: assign issues
 
 If candidate issues were found in step 2, offer to assign them to the new milestone:
 
