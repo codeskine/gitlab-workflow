@@ -2,6 +2,16 @@
 
 Reference for mermaid diagrams to include in issues. Load only when you need to generate a diagram.
 
+## Contents
+
+- [Application Policy](#application-policy)
+- [Language Rules](#language-rules)
+- [Safe Mermaid Syntax](#safe-mermaid-syntax)
+- [Pattern 1 — sequenceDiagram for Multi-Actor Bug](#pattern-1--sequencediagram-for-multi-actor-bug)
+- [Pattern 2 — sequenceDiagram for Technical-Debt with Loop](#pattern-2--sequencediagram-for-technical-debt-with-loop)
+- [Pattern 3 — flowchart for Feature with Converging MVC](#pattern-3--flowchart-for-feature-with-converging-mvc)
+- [When NOT to Add a Diagram](#when-not-to-add-a-diagram)
+
 ## Application Policy
 
 | Issue type       | Pattern           | When to include                                                  |

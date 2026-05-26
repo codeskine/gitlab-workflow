@@ -1,5 +1,13 @@
 # Milestone lifecycle
 
+## Contents
+
+- [States](#states)
+- [Lifecycle transitions](#lifecycle-transitions)
+- [Integration with issue workflow labels](#integration-with-issue-workflow-labels)
+- [Project-level vs group-level milestones](#project-level-vs-group-level-milestones)
+- [Naming conventions](#naming-conventions)
+
 ## States
 
 | State    | Meaning                                             |

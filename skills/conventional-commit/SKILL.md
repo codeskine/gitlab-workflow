@@ -1,11 +1,13 @@
 ---
 name: conventional-commit
 description:
-  "GitLab commit author. Use when the user asks to create a commit, format
-  a git commit message, or finalize staged changes on a GitLab project. Formats messages
-  following Conventional Commits v1.0.0 with a GitLab issue reference extracted from
-  the branch name. Not for merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)
-  or issue creation (→ See codeskine/gitlab-author-skills@gitlab-issue)."
+  "GitLab commit author. Use when the user asks to create a commit, format a git
+  commit message, or finalize staged changes on a GitLab project. Also triggers when the
+  user says changes are done, work is complete, or signals readiness to save progress —
+  even without explicitly saying 'commit'. Formats messages following Conventional Commits
+  v1.0.0 with a GitLab issue reference extracted from the branch name. Not for merge
+  requests (→ See codeskine/gitlab-author-skills@gitlab-mr) or issue creation
+  (→ See codeskine/gitlab-author-skills@gitlab-issue)."
 user-invocable: false
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires git."
@@ -41,9 +43,15 @@ git log --oneline -5               # match the project's existing commit style
 | Branch pattern                         | type            | issue         |
 | -------------------------------------- | --------------- | ------------- |
 | `fix/123-description`                  | `fix`           | `#123`        |
+| `hotfix/123-description`               | `fix`           | `#123`        |
+| `bugfix/123-description`               | `fix`           | `#123`        |
 | `feature/456-name`                     | `feat`          | `#456`        |
 | `refactor/789-cleanup`                 | `refactor`      | `#789`        |
 | `docs/101-readme`                      | `docs`          | `#101`        |
+| `test/202-coverage`                    | `test`          | `#202`        |
+| `perf/303-caching`                     | `perf`          | `#303`        |
+| `build/404-deps`                       | `build`         | `#404`        |
+| `ci/505-pipeline`                      | `ci`            | `#505`        |
 | `chore/no-issue`                       | `chore`         | none          |
 | `123-description` (bare number prefix) | infer from diff | `#123`        |
 | `main` / `develop` / unrecognised      | infer from diff | ask user once |
@@ -80,7 +88,8 @@ Wait for explicit confirmation:
 
 > "Shall I commit with this message? (yes / edit / cancel)"
 
-If the user edits the message, re-present it before executing.
+If the user edits the message, re-present it before executing. If the edited message no
+longer follows conventional commit format, note the deviation and ask for confirmation.
 
 ### 6. Execute
 
@@ -94,6 +103,42 @@ EOF
 ```
 
 Return the short commit hash. Do not push.
+
+## Examples
+
+**Example 1 — bug fix on a `fix/` branch:**
+
+```
+Input:  branch fix/87-nil-pointer, changed pkg/api/handler.go
+Output:
+fix(api): handle nil pointer in user handler
+
+Closes #87
+```
+
+**Example 2 — feature with multiple changed areas:**
+
+```
+Input:  branch feature/42-oauth, changed src/auth/ and src/middleware/
+Output:
+feat(auth): implement OAuth2 login with Google
+
+- Add OAuth2 flow for Google provider
+- Update middleware to validate Bearer tokens
+
+Closes #42
+```
+
+**Example 3 — chore with no issue:**
+
+```
+Input:  branch chore/update-deps, changed package.json and go.mod
+Output:
+chore: update dependencies to latest patch versions
+```
+
+→ More examples and breaking change patterns:
+[references/conventional-commits.md](references/conventional-commits.md)
 
 ## References
 

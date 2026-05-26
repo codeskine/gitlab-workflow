@@ -1,5 +1,17 @@
 # glab mr — Full Command Reference
 
+## Contents
+
+- [Core create command](#core-create-command)
+- [Complete flag table — glab mr create](#complete-flag-table--glab-mr-create)
+- [Discovery commands](#discovery-commands)
+- [Editing an existing MR](#editing-an-existing-mr)
+- [Viewing an MR](#viewing-an-mr)
+- [Adding a comment](#adding-a-comment)
+- [Merging](#merging)
+- [Anti-patterns](#anti-patterns)
+- [Heredoc pattern](#heredoc-pattern)
+
 ## Core create command
 
 ```bash

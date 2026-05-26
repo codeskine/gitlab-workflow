@@ -23,8 +23,8 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 
 ## Supported types
 
-| Type             | Template                                                   | Default label          |
-| ---------------- | ---------------------------------------------------------- | ---------------------- |
+| Type             | Template                                             | Default label          |
+| ---------------- | ---------------------------------------------------- | ---------------------- |
 | `bug`            | [assets/bug.md](assets/bug.md)                       | `type::bug`            |
 | `feature`        | [assets/feature.md](assets/feature.md)               | `type::feature`        |
 | `technical-debt` | [assets/technical-debt.md](assets/technical-debt.md) | `type::technical-debt` |
@@ -76,14 +76,9 @@ Select the most relevant active milestone based on branch name, label, or issue 
 
 ### 5. Apply diagram policy
 
-| Issue type       | Default diagram   | When to include                                                  |
-| ---------------- | ----------------- | ---------------------------------------------------------------- |
-| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components        |
-| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                 |
-| `feature`        | `flowchart` (opt) | Only if the proposal already has a defined flow (convergent MVC) |
-| `documentation`  | None              | Never by default                                                 |
+Decide whether to include a diagram and which pattern to use, then generate it.
 
-Reusable mermaid patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
+→ Policy table and reusable patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
 
 ### 6. Draft gate
 

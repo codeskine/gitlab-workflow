@@ -2,6 +2,14 @@
 
 Spec: [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
 
+## Contents
+
+- [Format](#format)
+- [Types](#types)
+- [Breaking changes](#breaking-changes)
+- [GitLab issue footers](#gitlab-issue-footers)
+- [Complete examples](#complete-examples)
+
 ## Format
 
 ```
