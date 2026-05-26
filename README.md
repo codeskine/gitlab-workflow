@@ -1,4 +1,4 @@
-# gitlab-author-skills
+# gitlab-workflow
 
 Cursor Agent Skills per autorare artefatti GitLab (**issue**, **milestone**, **merge request**) con template in italiano, snippet di codice e diagrammi Mermaid quando rilevanti. Pubblicazione tramite [`glab`](https://gitlab.com/gitlab-org/cli).
 
@@ -6,11 +6,12 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 
 ## Sub-skill disponibili
 
-| Sub-skill                                | Scopo                                                                                                 | Stato       |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------- |
-| [`gitlab-issue`](./gitlab-issue)         | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| [`gitlab-milestone`](./gitlab-milestone) | Genera milestone con scope, deliverables e date target.                                               | Disponibile |
-| [`gitlab-mr`](./gitlab-mr)               | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                         | Disponibile |
+| Sub-skill                              | Scopo                                                                                                 | Stato       |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------- |
+| [`gitlab-plan`](./gitlab-plan)         | Genera milestone con scope, deliverables e date target.                                               | Disponibile |
+| [`gitlab-track`](./gitlab-track)       | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
+| [`gitlab-commit`](./gitlab-commit)     | Committa le modifiche staged con messaggi convenzionali e traceabilità.                               | Disponibile |
+| [`gitlab-review`](./gitlab-review)     | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                         | Disponibile |
 
 ## Installazione
 
@@ -18,23 +19,23 @@ Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://gith
 
 ```bash
 # Installazione globale (~/.cursor/skills/)
-npx gitlab-author install
+npx gitlab-workflow install
 
 # Solo nel repository corrente (./.cursor/skills/)
-npx gitlab-author install --project --force
+npx gitlab-workflow install --project --force
 
 # Solo una sub-skill specifica
-npx gitlab-author install --skill gitlab-issue
+npx gitlab-workflow install --skill gitlab-track
 
 # Elenco delle sub-skill disponibili
-npx gitlab-author list
+npx gitlab-workflow list
 ```
 
 ### Via npm install globale
 
 ```bash
-npm install -g gitlab-author
-gitlab-author install --force
+npm install -g gitlab-workflow
+gitlab-workflow install --force
 ```
 
 ### Opzioni `install`
@@ -49,7 +50,7 @@ gitlab-author install --force
 ## Struttura del repository
 
 ```
-gitlab-author-skills/
+gitlab-workflow/
 ├── SKILL.md                       # orchestratore di alto livello
 ├── VERSION
 ├── README.md
@@ -57,8 +58,8 @@ gitlab-author-skills/
 ├── SECURITY.md
 ├── .gitignore
 ├── .gitattributes
-├── package.json                   # name: gitlab-author, bin: gitlab-author
-├── gitlab-issue/                  # sub-skill: issue
+├── package.json                   # name: gitlab-workflow, bin: gitlab-workflow
+├── gitlab-track/                  # sub-skill: issue
 │   ├── SKILL.md
 │   ├── templates/
 │   │   ├── bug.md
@@ -67,11 +68,15 @@ gitlab-author-skills/
 │   │   └── technical-debt.md
 │   └── references/
 │       └── mermaid-diagrams.md
-├── gitlab-milestone/              # sub-skill: milestone
+├── gitlab-plan/                   # sub-skill: milestone
 │   ├── SKILL.md
 │   └── templates/
 │       └── milestone.md
-├── gitlab-mr/                     # sub-skill: merge request
+├── gitlab-commit/                 # sub-skill: conventional commit
+│   ├── SKILL.md
+│   └── templates/
+│       └── commit.md
+├── gitlab-review/                 # sub-skill: merge request
 │   ├── SKILL.md
 │   └── templates/
 │       └── mr.md
@@ -81,7 +86,7 @@ gitlab-author-skills/
 
 ## Esempi d'uso (post-installazione)
 
-Dopo `npx gitlab-author install`, in qualsiasi progetto aperto in Cursor:
+Dopo `npx gitlab-workflow install`, in qualsiasi progetto aperto in Cursor:
 
 ```
 "Crea una issue di tipo bug per il double-close del canale done in main.go"
@@ -119,9 +124,10 @@ Convenzioni trasversali a tutte le sub-skill:
 
 Dettagli per sub-skill:
 
-- [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
-- [`gitlab-milestone/SKILL.md`](./gitlab-milestone/SKILL.md)
-- [`gitlab-mr/SKILL.md`](./gitlab-mr/SKILL.md)
+- [`gitlab-plan/SKILL.md`](./gitlab-plan/SKILL.md)
+- [`gitlab-track/SKILL.md`](./gitlab-track/SKILL.md)
+- [`gitlab-commit/SKILL.md`](./gitlab-commit/SKILL.md)
+- [`gitlab-review/SKILL.md`](./gitlab-review/SKILL.md)
 
 ## Aggiungere una nuova sub-skill
 
@@ -130,7 +136,7 @@ Dettagli per sub-skill:
 1. Crea `gitlab-epic/SKILL.md` con frontmatter `name` e `description`
 2. Aggiungi eventuali `templates/` e `references/`
 3. Aggiungi `"gitlab-epic"` al campo `files` di `package.json`
-4. `npx gitlab-author list` mostrera' la nuova sub-skill
+4. `npx gitlab-workflow list` mostrera' la nuova sub-skill
 
 ## Licenza
 
