@@ -23,8 +23,8 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 
 ## Supported types
 
-| Type             | Template                                             | Default label          |
-| ---------------- | ---------------------------------------------------- | ---------------------- |
+| Type             | Template                                                   | Default label          |
+| ---------------- | ---------------------------------------------------------- | ---------------------- |
 | `bug`            | [assets/bug.md](assets/bug.md)                       | `type::bug`            |
 | `feature`        | [assets/feature.md](assets/feature.md)               | `type::feature`        |
 | `technical-debt` | [assets/technical-debt.md](assets/technical-debt.md) | `type::technical-debt` |
