@@ -1,10 +1,10 @@
 ---
-name: gitlab-mr
+name: gitlab-review
 description:
   "GitLab merge request author. Use when the user asks to create, draft,
   or publish a merge request on GitLab via glab. Applies to feature, bugfix, hotfix,
-  and refactor branches. Not for issue creation (→ See codeskine/gitlab-author-skills@gitlab-issue)
-  or milestones (→ See codeskine/gitlab-author-skills@gitlab-milestone)."
+  and refactor branches. Not for issue creation (→ See codeskine/gitlab-workflow@gitlab-track)
+  or milestones (→ See codeskine/gitlab-workflow@gitlab-plan)."
 user-invocable: true
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
@@ -14,7 +14,7 @@ metadata:
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab merge request author
+# GitLab review — merge request author
 
 **Modes:**
 
@@ -38,14 +38,6 @@ git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
 
 If still ambiguous, ask the user for the target branch explicitly.
 
-Extract issue reference from branch name:
-
-| Branch pattern     | Reference clause  |
-| ------------------ | ----------------- |
-| `fix/123-desc`     | `Closes #123`     |
-| `feature/456-name` | `Related to #456` |
-| no pattern         | omit              |
-
 **Guard:** if `git log <base>...HEAD --oneline` returns empty, warn the user and ask to verify the base branch before continuing.
 
 ### 2. Explore git context
@@ -57,6 +49,22 @@ git diff <base-branch>...HEAD
 ```
 
 If `--stat` shows >20 modified files, limit snippets to ≤3 significant change areas and add a note: "large diff: only critical points highlighted."
+
+### 2b. Extract issue references from commit history
+
+```bash
+git log <base-branch>...HEAD --format="%B"
+```
+
+Parse all commit message bodies for `Closes #\d+` and `Related to #\d+` patterns.
+Deduplicate the collected issue IDs. This list drives the closing section of the MR
+description.
+
+**If the list is empty** (no issue references found in any commit), warn the user before
+presenting the draft:
+
+> "No issue references found in commit messages. The MR will have no Closes/Related to
+> links. Continue anyway? (yes / add manually / cancel)"
 
 ### 3. Discover labels and milestone
 
@@ -75,6 +83,12 @@ For the `{Changes}` section, include **5–20 line snippets** per significant po
 
 Set the MR **title** with a conventional commit prefix matching the branch intent: `feat`, `fix`, `refactor`, `docs`, etc.
 
+For the closing section of the MR description, use the aggregated issue list from step 2b:
+- Use `Closes #N` for branches prefixed `fix/` or `hotfix/` (issue will be closed on merge)
+- Use `Related to #N` for `feature/` branches (issue may remain open after merge)
+
+Do not guess or invent issue references — use only what was extracted from commit messages.
+
 Determine mode:
 
 - **Draft MR**: user asked for WIP/Draft, or the branch is not ready to merge → include `--draft` at publish
@@ -82,7 +96,21 @@ Determine mode:
 
 Omit the `{Reviewer notes}` section if there are no design decisions or non-obvious choices to highlight.
 
-### 5. Draft gate
+### 5. Quality gate (silent)
+
+Before presenting the draft, verify:
+
+- At least one fenced code snippet per significant change area (5–20 lines, with `path/file.ext` line N citation)
+- `Closes #N` / `Related to #N` closing list is populated (warn if empty — see step 2b)
+- Labels are present
+- Milestone is present if the associated issue has a milestone
+- `{Reviewer notes}` section is omitted if there are no non-obvious design decisions
+
+Fix any violations automatically. Do not output the checklist to the user.
+
+→ Full criteria: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
+
+### 6. Draft gate
 
 **Do not publish yet.** Present the complete draft in chat with all sections filled in.
 
@@ -92,7 +120,7 @@ Wait for explicit confirmation:
 
 If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-### 6. Publish via glab
+### 7. Publish via glab
 
 After explicit approval:
 
@@ -130,7 +158,7 @@ Anti-patterns:
 
 → Full flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)
 
-### 7. Post-creation (optional)
+### 8. Post-creation (optional)
 
 If the MR closes or is related to an issue, update its workflow state:
 
