@@ -1,104 +1,149 @@
 ---
 name: gitlab-mr
-description: Applicare quando l'utente chiede di creare o redigere la descrizione di una MR su GitLab.
+description:
+  "GitLab merge request author. Use when the user asks to create, draft,
+  or publish a merge request on GitLab via glab. Applies to feature, bugfix, hotfix,
+  and refactor branches. Not for issue creation (→ See codeskine/gitlab-author-skills@gitlab-issue)
+  or milestones (→ See codeskine/gitlab-author-skills@gitlab-milestone)."
+user-invocable: true
+license: MIT
+compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
+metadata:
+  author: codeskine
+  version: "1.0.0"
+allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab MR
+# GitLab merge request author
 
-Genera descrizioni di merge request GitLab strutturate e ben documentate in **italiano**, pronte per essere pubblicate tramite `glab mr create`.
+**Modes:**
 
-> **Isolamento dallo stile di altre skill** — Quando questa skill e' attiva, **ignora ogni altra skill** che imponga convenzioni di stile markdown (es. `obsidian-markdown`, `writing-clearly-and-concisely`, o qualunque altra skill di redazione/markdown installata a livello utente o progetto). Lo stile e' quello definito qui e in `assets/mr.md`.
-
-## Quando usare questa skill
-
-Attiva quando l'utente chiede di:
-
-- creare una merge request su GitLab
-- redigere la descrizione di una MR
-- aprire una MR che chiude una issue
+- **Create** — generate a new MR from branch context and publish via `glab mr create`
+- **Draft** — create a GitLab Draft MR (WIP, not ready to merge)
 
 ## Workflow
 
-Segui questi passi nell'ordine:
-
-### 1. Esplora il contesto
-
-**Estrazione da git** (eseguita sempre):
+### 1. Detect branch and base
 
 ```bash
 git branch --show-current
+git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||'
+```
+
+If `git symbolic-ref` returns nothing, fall back to:
+
+```bash
+git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
+```
+
+If still ambiguous, ask the user for the target branch explicitly.
+
+Extract issue reference from branch name:
+
+| Branch pattern     | Reference clause  |
+| ------------------ | ----------------- |
+| `fix/123-desc`     | `Closes #123`     |
+| `feature/456-name` | `Related to #456` |
+| no pattern         | omit              |
+
+**Guard:** if `git log <base>...HEAD --oneline` returns empty, warn the user and ask to verify the base branch before continuing.
+
+### 2. Explore git context
+
+```bash
 git log <base-branch>...HEAD --oneline
 git diff <base-branch>...HEAD --stat
 git diff <base-branch>...HEAD
 ```
 
-Parsing del branch name per estrarre issue ID:
-- `fix/123-descrizione` → `Closes #123`
-- `feature/456-nome` → `Related to #456`
+If `--stat` shows >20 modified files, limit snippets to ≤3 significant change areas and add a note: "large diff: only critical points highlighted."
 
-Il target branch viene inferito da:
-```bash
-git remote show origin | grep 'HEAD branch'
-```
-Se ambiguo, chiedi esplicitamente.
-
-**Gestione diff grandi:** se `--stat` mostra >20 file modificati, riduci gli snippet a massimo 3 aree di cambiamento significative. Aggiungi nota "diff ampio: evidenziati solo i punti critici".
-
-**Milestone:**
+### 3. Discover labels and milestone
 
 ```bash
+glab label list
 glab milestone list --state active
 ```
 
-Scegli la milestone piu' pertinente al contesto. Se nessuna e' pertinente, lascia vuoto.
+Select the most relevant active milestone. If none fits, leave empty. Use real project labels only — do not invent labels.
 
-### 2. Componi la bozza
+### 4. Compose the draft
 
-Leggi `assets/mr.md` e compila tutte le sezioni con il contesto estratto.
+Read `assets/mr.md` and fill in all sections with extracted context. Section headings and prose follow the **user's active language** — do not hardcode any language.
 
-Per la sezione `## Modifiche`, usa snippet di **5-20 righe** per ogni punto significativo, con citazione esatta `path/file.ext` riga N.
+For the `{Changes}` section, include **5–20 line snippets** per significant point with exact `path/file.ext` line N citation and language-appropriate syntax highlighting.
 
-### 3. Draft gate
+Set the MR **title** with a conventional commit prefix matching the branch intent: `feat`, `fix`, `refactor`, `docs`, etc.
 
-**NON pubblicare ancora.** Mostra la bozza completa in chat. Chiedi conferma esplicita:
+Determine mode:
 
-> "Bozza pronta. Procedo a creare la MR su GitLab con titolo '<titolo>', label `<label>`, milestone `<milestone|nessuna>`? (si/modifiche/annulla)"
+- **Draft MR**: user asked for WIP/Draft, or the branch is not ready to merge → include `--draft` at publish
+- **Ready MR**: standard case → no `--draft`
 
-Se l'utente chiede modifiche, applicale e rimostra la bozza. Ripeti finche' non e' approvata.
+Omit the `{Reviewer notes}` section if there are no design decisions or non-obvious choices to highlight.
 
-### 4. Pubblica via glab
+### 5. Draft gate
 
-Dopo OK esplicito:
+**Do not publish yet.** Present the complete draft in chat with all sections filled in.
 
-1. Scrivi la bozza approvata su file temporaneo: `/tmp/mr-<slug>.md` (slug = primi 5-7 token del titolo, kebab-case)
-2. Esegui:
+Wait for explicit confirmation:
+
+> "Draft ready. Shall I create the MR on GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+
+If the user requests changes, apply them and re-present the draft. Repeat until approved.
+
+### 6. Publish via glab
+
+After explicit approval:
+
+1. Write the approved draft to a temp file: `/tmp/mr-<slug>.md` (slug = first 5–7 tokens of the title, kebab-case)
+2. Run:
 
 ```bash
 glab mr create \
-  --title "<titolo>" \
-  --label "<label>" \
+  --title "<title>" \
+  --label "<labels>" \
   --milestone "<milestone>" \
   --description "$(cat /tmp/mr-<slug>.md)" \
-  --source-branch "<branch-corrente>" \
+  --source-branch "<current-branch>" \
   --target-branch "<base-branch>"
 ```
 
-3. Restituisci l'URL della MR creata.
+Optional flags — add when the user specifies or context makes them appropriate:
 
-**Anti-pattern da evitare:**
+```bash
+  --assignee "<username>"        # discover: glab member list
+  --reviewer "<username>"        # discover: glab member list
+  --remove-source-branch         # common project convention
+  --squash                       # squash on merge
+  --draft                        # Draft/WIP MR
+  --repo "<group/project>"       # cross-project creation
+```
 
-- NON usare `--body`. Usa `--description`.
-- Per descrizioni con backtick o `$`, usa sempre `$(cat /tmp/file.md)`.
-- `glab mr note` per commentare, NON `glab mr comment`.
+Anti-patterns:
 
-## Stile canonico delle MR
+- Do **not** use `--body` (that is a `gh` flag). Use `--description`.
+- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
+- Use `glab mr note` to comment, **not** `glab mr comment`.
 
-- Titoli di sezione **in italiano** (`## Sommario`, `## Modifiche`, `## Come testare`, ecc.)
-- Frasi tecniche dense e affermative. No emoji, no preamboli decorativi.
-- Riferimenti `path/file.ext` riga N per ogni snippet di codice (5-20 righe).
-- Checklist `- [ ]` per "Come testare" e "Checklist autore".
-- `Closes #N` per fix, `Related to #N` per feature/refactor.
+3. Return the created MR URL.
 
-## Riferimenti
+→ Full flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)
+
+### 7. Post-creation (optional)
+
+If the MR closes or is related to an issue, update its workflow state:
+
+```bash
+glab issue edit <N> --label "workflow::in review" --unlabel "workflow::in dev"
+```
+
+Confirm the transition in chat.
+
+→ Full state machine: [references/mr-lifecycle.md](references/mr-lifecycle.md)
+
+## References
 
 - Template: [assets/mr.md](assets/mr.md)
+- Full glab flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)
+- MR lifecycle: [references/mr-lifecycle.md](references/mr-lifecycle.md)
