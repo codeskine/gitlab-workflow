@@ -301,8 +301,8 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 
 ### Validation criteria (all manifests)
 
-- `name`, `version`, `repository`, `homepage`, `author`, `license` identical across all three plugin files
-- `version` matches `package.json` `version` field
+- `name`, `version`, `description`, `repository`, `homepage`, `author`, `license` identical across all three plugin files and `package.json`
+- Canonical version: **`1.0.0-rc.1`** — current `.claude-plugin` and `.cursor-plugin` have `1.0.0` and must be corrected
 - `skills` array is `["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]` in all three
 - No platform has a subset of skills without explicit justification
 - `keywords` contains the platform-specific tag (`claude-code`, `cursor`, `codex`) plus the shared domain tags
@@ -317,8 +317,8 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 | `skills/gitlab-milestone/` | Renamed to `skills/gitlab-plan/` |
 | All four `SKILL.md` files | Frontmatter, cross-references, workflow sections updated |
 | `skills/shared/references/quality-standard.md` | New shared quality criteria file |
-| `package.json` | `name`, `prepack` script, `files` array updated |
-| `.claude-plugin/plugin.json` | `name`, `skills`, `description` updated |
-| `.cursor-plugin/plugin.json` | `name`, `skills` (add `gitlab-commit`), `description` updated |
-| `.codex-plugin/plugin.json` | **New file** — full manifest with all 4 skills |
+| `package.json` | `name`, `description`, `homepage`, `repository.url`, `keywords`, `prepack` script, `files` array updated |
+| `.claude-plugin/plugin.json` | Extended format; `name`, `version` (`1.0.0` → `1.0.0-rc.1`), `skills`, `description`, `keywords` updated |
+| `.cursor-plugin/plugin.json` | Extended format; `name`, `version` (`1.0.0` → `1.0.0-rc.1`), `skills` (add `gitlab-commit`), `description`, `keywords` updated |
+| `.codex-plugin/plugin.json` | **New file** — full extended manifest with all 4 skills |
 | `README.md` | Title, skill table, all name references updated |
