@@ -1,7 +1,25 @@
 {
-  "name": "gitlab-author-skills",
+  "name": "gitlab-workflow",
   "version": "1.0.0",
-  "description": "Cursor Agent Skills plugin for authoring GitLab artifacts (issues, milestones, merge requests) via the glab CLI.",
-  "skills": ["gitlab-issue", "gitlab-milestone", "gitlab-mr"],
-  "repository": "https://github.com/codeskine/gitlab-author-skills"
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "homepage": "https://github.com/codeskine/gitlab-workflow",
+  "repository": "https://github.com/codeskine/gitlab-workflow",
+  "author": { "name": "Stefano Veloccia" },
+  "license": "MIT",
+  "keywords": [
+    "cursor",
+    "cursor-plugin",
+    "gitlab",
+    "glab",
+    "gitlab-workflow",
+    "skills",
+    "ai-agent",
+    "agentic",
+    "conventional-commits",
+    "merge-request",
+    "milestone",
+    "issue-tracking",
+    "traceability"
+  ],
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]
 }

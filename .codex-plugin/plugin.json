@@ -7,8 +7,8 @@
   "author": { "name": "Stefano Veloccia" },
   "license": "MIT",
   "keywords": [
-    "claude-code",
-    "claude-code-plugin",
+    "codex",
+    "codex-plugin",
     "gitlab",
     "glab",
     "gitlab-workflow",
