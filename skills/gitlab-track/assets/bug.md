@@ -11,6 +11,21 @@
 
 ---
 
+## {Steps to reproduce}
+
+1. {step 1}
+2. {step 2}
+
+---
+
+## {Expected behavior}
+
+---
+
+## {Actual behavior}
+
+---
+
 ## {Impact}
 
 ---

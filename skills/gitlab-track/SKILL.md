@@ -157,11 +157,15 @@ Use when the user says "start working on #N", "lavora la issue #N", "resolve #N"
 2. Determine the current `workflow::` label.
 3. Look up the valid transition in [references/issue-lifecycle.md](references/issue-lifecycle.md).
 4. Warn if the requested transition is invalid (e.g. issue is already `workflow::in dev`).
-5. Apply the transition:
+5. Present the planned transition for confirmation before executing:
+
+   > "Shall I move issue #N from `<current-state>` to `<new-state>`? (yes / cancel)"
+
+6. Apply the transition on confirmation:
    ```bash
    glab issue edit <N> --label "<new-state>" --unlabel "<current-state>"
    ```
-6. Confirm the transition in chat.
+   Report the applied change in chat.
 7. **Branch setup (only when transitioning to `workflow::in dev`):** Offer two options:
 
    > "Ready to start development. How do you want to proceed?

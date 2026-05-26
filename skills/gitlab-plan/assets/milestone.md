@@ -1,6 +1,6 @@
 ## {Objective}
 
-<!-- 1–3 sentences: scope of the milestone, why it exists, who benefits -->
+{1–3 sentences: scope of the milestone, why it exists, who benefits}
 
 ---
 
