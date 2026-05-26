@@ -23,31 +23,29 @@ runtime. No language is hardcoded.
 
 ## Installation
 
-> **Note:** Marketplace listings are coming soon. In the meantime, install manually by cloning
-> the repository and pointing your agent's skills directory at `skills/`.
-
-```bash
-git clone https://github.com/codeskine/gitlab-workflow.git
-```
-
 ### Claude Code
 
-_Plugin marketplace listing coming soon._
-
-Until then, copy or symlink the `skills/` directory into your project's `.claude/plugins/`
-or configure it as a local plugin path.
+```bash
+claude plugins install @codeskine/gitlab-workflow
+```
 
 ### Cursor
 
-_Plugin marketplace listing coming soon._
+Copy the `skills/` directory into your project's `.cursor/skills/`:
 
-Until then, copy the `skills/` directory into your project's `.cursor/skills/`.
+```bash
+git clone https://github.com/codeskine/gitlab-workflow.git /tmp/gitlab-workflow
+cp -r /tmp/gitlab-workflow/skills .cursor/
+```
 
 ### Codex
 
-_Plugin marketplace listing coming soon._
+Copy the `skills/` directory into your project's `.codex/skills/`:
 
-Until then, copy the `skills/` directory into your project's `.codex/skills/`.
+```bash
+git clone https://github.com/codeskine/gitlab-workflow.git /tmp/gitlab-workflow
+cp -r /tmp/gitlab-workflow/skills .codex/
+```
 
 ## Available Skills
 
