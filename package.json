@@ -1,5 +1,5 @@
 {
-  "name": "gitlab-workflow",
+  "name": "@codeskine/gitlab-workflow",
   "version": "1.0.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "license": "MIT",
