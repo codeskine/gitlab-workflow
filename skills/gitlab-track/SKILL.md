@@ -1,10 +1,10 @@
 ---
-name: gitlab-issue
+name: gitlab-track
 description: "GitLab issue author. Use when the user asks to open a bug report,
   feature request, technical debt item, or documentation issue on GitLab via glab.
   Apply when the user says 'create an issue', 'report a bug', 'track tech debt',
-  or 'propose a feature'. Not for merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)
-  or milestones (→ See codeskine/gitlab-author-skills@gitlab-milestone)."
+  or 'propose a feature'. Not for merge requests (→ See codeskine/gitlab-workflow@gitlab-review)
+  or milestones (→ See codeskine/gitlab-workflow@gitlab-plan)."
 user-invocable: true
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
@@ -14,7 +14,7 @@ metadata:
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab issue author
+# GitLab track — issue author
 
 **Modes:**
 
@@ -72,7 +72,11 @@ glab label list              # discover real project labels before suggesting
 glab milestone list --state active
 ```
 
-Select the most relevant active milestone based on branch name, label, or issue type. If none fits, leave empty. Suggest `workflow::ready` as the initial lifecycle label alongside the type label.
+Select the most relevant active milestone based on branch name, label, or issue type. If a
+milestone fits, suggest it. If none fits (e.g. hotfix, out-of-sprint task), leave it empty
+without asking — not every issue belongs to a milestone.
+
+Suggest `workflow::ready` as the initial lifecycle label alongside the type label.
 
 ### 5. Apply diagram policy
 
@@ -80,7 +84,20 @@ Decide whether to include a diagram and which pattern to use, then generate it.
 
 → Policy table and reusable patterns: [references/mermaid-diagrams.md](references/mermaid-diagrams.md)
 
-### 6. Draft gate
+### 6. Quality gate (silent)
+
+Before presenting the draft, verify:
+
+- Title ≥ 5 words and not generic (`Fix bug` alone fails; `Fix nil pointer in user handler` passes)
+- At least one fenced code snippet (5–20 lines) for `bug` and `technical-debt` types
+- Labels include at least `type::*` + `workflow::ready`
+- No placeholder text (`TBD`, `TODO`, `<...>`) in any section
+
+Fix any violations automatically. Do not output the checklist to the user.
+
+→ Full criteria: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
+
+### 7. Draft gate
 
 **Do not publish yet.** Present the complete draft in chat with all template sections filled in. Include the proposed title and labels.
 
@@ -90,7 +107,7 @@ Wait for explicit confirmation:
 
 If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-### 7. Publish via glab
+### 8. Publish via glab
 
 After explicit approval:
 
@@ -145,6 +162,18 @@ Use when the user says "start working on #N", "lavora la issue #N", "resolve #N"
    glab issue edit <N> --label "<new-state>" --unlabel "<current-state>"
    ```
 6. Confirm the transition in chat.
+7. **Branch setup (only when transitioning to `workflow::in dev`):** Offer two options:
+
+   > "Ready to start development. How do you want to proceed?
+   > A) Create branch `<type>/N-<short-title>` (e.g. `fix/87-nil-pointer-handler`)
+   > B) Stay on current branch `<current-branch>`"
+
+   If option A: run `git checkout -b <branch-name>` and confirm the new branch in chat.
+   If option B: continue without branch change.
+
+   Branch name is auto-derived: type from issue label (`type::bug` → `fix`, `type::feature` →
+   `feature`, `type::technical-debt` → `refactor`, `type::documentation` → `docs`), N from
+   issue ID, short-title from the first 3–4 significant words of the issue title in kebab-case.
 
 Full state machine: [references/issue-lifecycle.md](references/issue-lifecycle.md)
 
