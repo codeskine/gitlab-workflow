@@ -163,41 +163,148 @@ content shared across all skills. Each SKILL.md links to it with a relative path
 
 ## 6. Platform Plugin Manifests
 
-All three platform plugin manifests must be consistent and include all four skills.
+All three platform plugin manifests use the extended format and must be consistent.
+Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separately by the author).
 
-### Target state for all manifests
+### Shared fields (identical across all platforms)
 
 ```json
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0",
-  "description": "<platform> Agent Skills plugin for managing the GitLab workflow (plan, track, commit, review) via the glab CLI.",
-  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"],
-  "repository": "https://github.com/codeskine/gitlab-author-skills"
+  "version": "1.0.0-rc.1",
+  "homepage": "https://github.com/codeskine/gitlab-workflow",
+  "repository": "https://github.com/codeskine/gitlab-workflow",
+  "author": { "name": "Stefano Veloccia" },
+  "license": "MIT",
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]
 }
 ```
 
-### Platform-specific notes
+### `.claude-plugin/plugin.json`
 
-| File | Status | Changes |
-| --- | --- | --- |
-| `.claude-plugin/plugin.json` | exists | `name` → `gitlab-workflow`; `skills` updated; `description` updated |
-| `.cursor-plugin/plugin.json` | exists — missing `gitlab-commit` | `name` → `gitlab-workflow`; add `gitlab-commit` to `skills`; `description` updated |
-| `.codex-plugin/plugin.json` | **new** | Create with full manifest; all 4 skills |
+```json
+{
+  "name": "gitlab-workflow",
+  "version": "1.0.0-rc.1",
+  "description": "Claude Code Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "homepage": "https://github.com/codeskine/gitlab-workflow",
+  "repository": "https://github.com/codeskine/gitlab-workflow",
+  "author": { "name": "Stefano Veloccia" },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "gitlab",
+    "glab",
+    "gitlab-workflow",
+    "skills",
+    "ai-agent",
+    "agentic",
+    "conventional-commits",
+    "merge-request",
+    "milestone",
+    "issue-tracking",
+    "traceability"
+  ],
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]
+}
+```
 
-### Validation criteria (all manifests)
+### `.cursor-plugin/plugin.json`
 
-- `name` is identical across all three files: `gitlab-workflow`
-- `version` matches `package.json` version field
-- `skills` array contains all four skill names in the same order: `["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]`
-- `repository` URL is present and identical across all three files
-- No platform has a subset of skills without explicit justification
+```json
+{
+  "name": "gitlab-workflow",
+  "version": "1.0.0-rc.1",
+  "description": "Cursor Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "homepage": "https://github.com/codeskine/gitlab-workflow",
+  "repository": "https://github.com/codeskine/gitlab-workflow",
+  "author": { "name": "Stefano Veloccia" },
+  "license": "MIT",
+  "keywords": [
+    "cursor",
+    "cursor-plugin",
+    "gitlab",
+    "glab",
+    "gitlab-workflow",
+    "skills",
+    "ai-agent",
+    "agentic",
+    "conventional-commits",
+    "merge-request",
+    "milestone",
+    "issue-tracking",
+    "traceability"
+  ],
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]
+}
+```
+
+### `.codex-plugin/plugin.json` *(new)*
+
+```json
+{
+  "name": "gitlab-workflow",
+  "version": "1.0.0-rc.1",
+  "description": "Codex Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+  "homepage": "https://github.com/codeskine/gitlab-workflow",
+  "repository": "https://github.com/codeskine/gitlab-workflow",
+  "author": { "name": "Stefano Veloccia" },
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "codex-plugin",
+    "gitlab",
+    "glab",
+    "gitlab-workflow",
+    "skills",
+    "ai-agent",
+    "agentic",
+    "conventional-commits",
+    "merge-request",
+    "milestone",
+    "issue-tracking",
+    "traceability"
+  ],
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]
+}
+```
 
 ### `package.json` changes
 
 - `name`: `gitlab-author` → `gitlab-workflow`
+- `description`: updated to reflect new scope
+- `homepage` and `repository.url`: updated to `gitlab-workflow`
+- `keywords`: aligned with plugin manifests (no platform-specific keywords here — `package.json` is npm-facing)
 - `files` array: add `.codex-plugin`
 - `prepack` script: update all four SKILL.md paths to new names
+
+```json
+"keywords": [
+  "claude-code",
+  "cursor",
+  "codex",
+  "agent-skill",
+  "gitlab",
+  "glab",
+  "gitlab-workflow",
+  "conventional-commits",
+  "merge-request",
+  "milestone",
+  "issue-tracking",
+  "traceability",
+  "ai-agent",
+  "agentic"
+]
+```
+
+### Validation criteria (all manifests)
+
+- `name`, `version`, `repository`, `homepage`, `author`, `license` identical across all three plugin files
+- `version` matches `package.json` `version` field
+- `skills` array is `["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]` in all three
+- No platform has a subset of skills without explicit justification
+- `keywords` contains the platform-specific tag (`claude-code`, `cursor`, `codex`) plus the shared domain tags
 
 ## 7. Files Touched
 
