@@ -171,7 +171,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 ```json
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
@@ -186,7 +186,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 ```json
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
@@ -216,7 +216,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 ```json
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
@@ -246,7 +246,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 ```json
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
@@ -302,7 +302,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 ### Validation criteria (all manifests)
 
 - `name`, `version`, `description`, `repository`, `homepage`, `author`, `license` identical across all three plugin files and `package.json`
-- Canonical version: **`1.0.0-rc.1`** — current `.claude-plugin` and `.cursor-plugin` have `1.0.0` and must be corrected
+- Canonical version: **`1.0.0`** across all files
 - `skills` array is `["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]` in all three
 - No platform has a subset of skills without explicit justification
 - `keywords` contains the platform-specific tag (`claude-code`, `cursor`, `codex`) plus the shared domain tags
@@ -318,7 +318,7 @@ Repository URLs use the new name `gitlab-workflow` (GitHub rename handled separa
 | All four `SKILL.md` files | Frontmatter, cross-references, workflow sections updated |
 | `skills/shared/references/quality-standard.md` | New shared quality criteria file |
 | `package.json` | `name`, `description`, `homepage`, `repository.url`, `keywords`, `prepack` script, `files` array updated |
-| `.claude-plugin/plugin.json` | Extended format; `name`, `version` (`1.0.0` → `1.0.0-rc.1`), `skills`, `description`, `keywords` updated |
-| `.cursor-plugin/plugin.json` | Extended format; `name`, `version` (`1.0.0` → `1.0.0-rc.1`), `skills` (add `gitlab-commit`), `description`, `keywords` updated |
+| `.claude-plugin/plugin.json` | Extended format; `name`, `skills`, `description`, `keywords` updated |
+| `.cursor-plugin/plugin.json` | Extended format; `name`, `skills` (add `gitlab-commit`), `description`, `keywords` updated |
 | `.codex-plugin/plugin.json` | **New file** — full extended manifest with all 4 skills |
 | `README.md` | Title, skill table, all name references updated |
