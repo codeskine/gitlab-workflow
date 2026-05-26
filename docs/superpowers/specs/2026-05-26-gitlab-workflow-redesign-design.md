@@ -161,7 +161,45 @@ the draft — no output to the user, corrections applied automatically where pos
 content shared across all skills. Each SKILL.md links to it with a relative path
 (`../shared/references/quality-standard.md`).
 
-## 6. Files Touched
+## 6. Platform Plugin Manifests
+
+All three platform plugin manifests must be consistent and include all four skills.
+
+### Target state for all manifests
+
+```json
+{
+  "name": "gitlab-workflow",
+  "version": "1.0.0",
+  "description": "<platform> Agent Skills plugin for managing the GitLab workflow (plan, track, commit, review) via the glab CLI.",
+  "skills": ["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"],
+  "repository": "https://github.com/codeskine/gitlab-author-skills"
+}
+```
+
+### Platform-specific notes
+
+| File | Status | Changes |
+| --- | --- | --- |
+| `.claude-plugin/plugin.json` | exists | `name` → `gitlab-workflow`; `skills` updated; `description` updated |
+| `.cursor-plugin/plugin.json` | exists — missing `gitlab-commit` | `name` → `gitlab-workflow`; add `gitlab-commit` to `skills`; `description` updated |
+| `.codex-plugin/plugin.json` | **new** | Create with full manifest; all 4 skills |
+
+### Validation criteria (all manifests)
+
+- `name` is identical across all three files: `gitlab-workflow`
+- `version` matches `package.json` version field
+- `skills` array contains all four skill names in the same order: `["gitlab-plan", "gitlab-track", "gitlab-commit", "gitlab-review"]`
+- `repository` URL is present and identical across all three files
+- No platform has a subset of skills without explicit justification
+
+### `package.json` changes
+
+- `name`: `gitlab-author` → `gitlab-workflow`
+- `files` array: add `.codex-plugin`
+- `prepack` script: update all four SKILL.md paths to new names
+
+## 7. Files Touched
 
 | File / directory | Change |
 | --- | --- |
@@ -172,6 +210,7 @@ content shared across all skills. Each SKILL.md links to it with a relative path
 | All four `SKILL.md` files | Frontmatter, cross-references, workflow sections updated |
 | `skills/shared/references/quality-standard.md` | New shared quality criteria file |
 | `package.json` | `name`, `prepack` script, `files` array updated |
-| `.claude-plugin/plugin.json` | `name` updated |
-| `.cursor-plugin/plugin.json` | `name` updated |
+| `.claude-plugin/plugin.json` | `name`, `skills`, `description` updated |
+| `.cursor-plugin/plugin.json` | `name`, `skills` (add `gitlab-commit`), `description` updated |
+| `.codex-plugin/plugin.json` | **New file** — full manifest with all 4 skills |
 | `README.md` | Title, skill table, all name references updated |
