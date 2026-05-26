@@ -1,149 +1,119 @@
 # gitlab-workflow
 
-Cursor Agent Skills per autorare artefatti GitLab (**issue**, **milestone**, **merge request**) con template in italiano, snippet di codice e diagrammi Mermaid quando rilevanti. Pubblicazione tramite [`glab`](https://gitlab.com/gitlab-org/cli).
+AI Agent Skills for managing the complete GitLab workflow — plan milestones,
+track issues, commit with traceability, and open merge requests via the [`glab`](https://gitlab.com/gitlab-org/cli) CLI.
 
-Layout multi-skill ispirato a [`vince-winkintel/gitlab-cli-skills`](https://github.com/vince-winkintel/gitlab-cli-skills): ogni sub-skill e' una directory a livello root del repository con il proprio `SKILL.md`.
+## Quickstart
 
-## Sub-skill disponibili
+Install for your agent: [Claude Code](#claude-code) · [Cursor](#cursor) · [Codex](#codex)
 
-| Sub-skill                          | Scopo                                                                                                 | Stato       |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------- |
-| [`gitlab-plan`](./gitlab-plan)     | Genera milestone con scope, deliverables e date target.                                               | Disponibile |
-| [`gitlab-track`](./gitlab-track)   | Genera issue (bug, documentation, technical-debt, feature) con template italiani + snippet + mermaid. | Disponibile |
-| [`gitlab-commit`](./gitlab-commit) | Committa le modifiche staged con messaggi convenzionali e traceabilità.                               | Disponibile |
-| [`gitlab-review`](./gitlab-review) | Redige descrizioni di merge request con riferimenti a issue e diff sintetico.                         | Disponibile |
+## How it works
 
-## Installazione
+When you ask your agent to open an issue, create a milestone, commit staged changes, or draft a
+merge request, `gitlab-workflow` activates automatically. It reads the codebase, pulls relevant
+context, and builds a complete artifact draft — title, labels, milestone, code snippets with
+exact `path/file.ext:line` citations, and Mermaid diagrams where the policy calls for them.
 
-### Via npx (consigliata)
+Before running a single `glab` command, the agent shows you the full draft and waits for
+explicit approval. If you request changes, it applies them and re-presents. Only when you
+confirm does it publish to GitLab.
 
-```bash
-# Installazione globale (~/.cursor/skills/)
-npx gitlab-workflow install
+Artifacts are language-agnostic: section headings and prose follow your active language at
+runtime. No language is hardcoded.
 
-# Solo nel repository corrente (./.cursor/skills/)
-npx gitlab-workflow install --project --force
+## Installation
 
-# Solo una sub-skill specifica
-npx gitlab-workflow install --skill gitlab-track
-
-# Elenco delle sub-skill disponibili
-npx gitlab-workflow list
-```
-
-### Via npm install globale
+> **Note:** Marketplace listings are coming soon. In the meantime, install manually by cloning
+> the repository and pointing your agent's skills directory at `skills/`.
 
 ```bash
-npm install -g gitlab-workflow
-gitlab-workflow install --force
+git clone https://github.com/codeskine/gitlab-workflow.git
 ```
 
-### Opzioni `install`
+### Claude Code
 
-| Opzione          | Effetto                                                         |
-| ---------------- | --------------------------------------------------------------- |
-| `--project`      | Destinazione: `./.cursor/skills/` invece di `~/.cursor/skills/` |
-| `--skill <nome>` | Installa solo la sub-skill indicata (default: tutte)            |
-| `--force`        | Sovrascrive le directory di destinazione se esistono            |
-| `-h`, `--help`   | Mostra l'aiuto                                                  |
+_Plugin marketplace listing coming soon._
 
-## Struttura del repository
+Until then, copy or symlink the `skills/` directory into your project's `.claude/plugins/`
+or configure it as a local plugin path.
 
-```
-gitlab-workflow/
-├── SKILL.md                       # orchestratore di alto livello
-├── VERSION
-├── README.md
-├── LICENSE
-├── SECURITY.md
-├── .gitignore
-├── .gitattributes
-├── package.json                   # name: gitlab-workflow, bin: gitlab-workflow
-├── gitlab-track/                  # sub-skill: issue
-│   ├── SKILL.md
-│   ├── templates/
-│   │   ├── bug.md
-│   │   ├── documentation.md
-│   │   ├── feature.md
-│   │   └── technical-debt.md
-│   └── references/
-│       └── mermaid-diagrams.md
-├── gitlab-plan/                   # sub-skill: milestone
-│   ├── SKILL.md
-│   └── templates/
-│       └── milestone.md
-├── gitlab-commit/                 # sub-skill: conventional commit
-│   ├── SKILL.md
-│   └── templates/
-│       └── commit.md
-├── gitlab-review/                 # sub-skill: merge request
-│   ├── SKILL.md
-│   └── templates/
-│       └── mr.md
-└── scripts/
-    └── install.js                 # CLI di installazione (bin npm) con discovery
-```
+### Cursor
 
-## Esempi d'uso (post-installazione)
+_Plugin marketplace listing coming soon._
 
-Dopo `npx gitlab-workflow install`, in qualsiasi progetto aperto in Cursor:
+Until then, copy the `skills/` directory into your project's `.cursor/skills/`.
+
+### Codex
+
+_Plugin marketplace listing coming soon._
+
+Until then, copy the `skills/` directory into your project's `.codex/skills/`.
+
+## Available Skills
+
+| Skill                                     | Scope                                                              | Example trigger                                          |
+| ----------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------- |
+| [`gitlab-plan`](./skills/gitlab-plan)     | Creates milestones with scope, deliverables, and target dates      | "Create a milestone for the 2.1 release"                 |
+| [`gitlab-track`](./skills/gitlab-track)   | Opens issues: bug, feature, technical debt, documentation          | "Open a bug for the double-close in main.go"             |
+| [`gitlab-commit`](./skills/gitlab-commit) | Commits staged changes with conventional messages and traceability | "Commit the staged changes"                              |
+| [`gitlab-review`](./skills/gitlab-review) | Drafts merge request descriptions with issue references and diffs  | "Write the MR description for this branch and close #42" |
+
+## Usage Examples
+
+After installing, open any project in your agent and try these prompts:
 
 ```
-"Crea una issue di tipo bug per il double-close del canale done in main.go"
-"Apri un debito tecnico per le allocazioni ripetute in AzureClientController"
-"Proponi una feature per migliorare l'onboarding CI"
-"Crea una issue di documentazione per il feature flag X introdotto da !224136"
-"Crea una milestone per la release 2.1 con le issue aperte del componente auth"
-"Scrivi la descrizione della MR per questo branch e chiudi la issue #42"
+"Open a bug for the double-close on the done channel in main.go"
+"Track technical debt for repeated allocations in AzureClientController"
+"Propose a feature to improve CI onboarding"
+"Create a documentation issue for feature flag X introduced in !224136"
+"Create a milestone for the 2.1 release using the open issues from the auth component"
+"Write the MR description for this branch and close issue #42"
 ```
 
-L'agente:
+The agent:
 
-1. Identifica il tipo di artefatto e di sub-skill da attivare
-2. Carica solo il template corrispondente
-3. Esplora il codice e inserisce snippet 5-20 righe con riferimenti `file:riga`
-4. Aggiunge un diagramma Mermaid se la policy lo prevede
-5. Mostra la bozza e chiede conferma esplicita (draft gate)
-6. Pubblica con il comando `glab` appropriato (`issue create`, `mr create`, ecc.)
+1. Identifies the artifact type and activates the matching skill
+2. Loads only the relevant template
+3. Explores the codebase and inserts 5–20 line code snippets with `file:line` references
+4. Adds a Mermaid diagram when the skill policy calls for one
+5. Presents the full draft and waits for explicit confirmation (draft gate)
+6. Publishes with the appropriate `glab` command (`issue create`, `mr create`, etc.)
 
-## Requisiti
+## Artifact Style
 
-- **Node.js >= 18** per lo script di installazione
-- **[`glab`](https://gitlab.com/gitlab-org/cli)** autenticato (`brew install glab && glab auth login`)
-- **Cursor** con supporto Agent Skills
+Conventions applied across all skills:
 
-## Stile degli artefatti generati
+- Dense, affirmative technical prose — no emoji, no filler preambles
+- `path/file.ext` line N citation for every snippet
+- `- [ ]` checklists for activities and requirements
+- Mermaid diagrams for flows and component relationships where relevant
 
-Convenzioni trasversali a tutte le sub-skill:
+Section headings and prose follow your active language at runtime.
 
-- Titoli sezione **in italiano** (`## Descrizione`, `## Impatto`, `## File coinvolti`, ecc.)
-- Frasi tecniche dense e affermative, senza emoji ne' preamboli
-- Riferimenti `path/file.ext` riga N per ogni snippet
-- Checklist `- [ ]` per attivita' / requisiti
-- Nessuna riga "Aprire una Merge Request" nelle attivita' della issue (l'MR e' fuori scope della issue stessa)
+## Requirements
 
-Dettagli per sub-skill:
+- **[`glab`](https://gitlab.com/gitlab-org/cli)** authenticated (`brew install glab && glab auth login`)
+- **Agent with skills support** — Claude Code, Cursor, or Codex
 
-- [`gitlab-plan/SKILL.md`](./gitlab-plan/SKILL.md)
-- [`gitlab-track/SKILL.md`](./gitlab-track/SKILL.md)
-- [`gitlab-commit/SKILL.md`](./gitlab-commit/SKILL.md)
-- [`gitlab-review/SKILL.md`](./gitlab-review/SKILL.md)
+## Contributing
 
-## Aggiungere una nuova sub-skill
+### Adding a new sub-skill
 
-`scripts/install.js` rileva automaticamente le sub-skill via discovery: ogni directory a livello root del repository che contiene un file `SKILL.md` viene installata. Per aggiungere, ad esempio, `gitlab-epic`:
+1. Create `skills/<name>/SKILL.md` with all required frontmatter fields (see [CLAUDE.md](./CLAUDE.md))
+2. Add `assets/<type>.md` templates for each artifact type the skill handles
+3. Optionally add `references/` for detailed documentation
+4. Add `"<name>"` to the `skills` array in `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`, and `.codex-plugin/plugin.json`
+5. Run the description quality check: contains `GitLab`, has "Use when" trigger clause, no over-triggering patterns
 
-1. Crea `gitlab-epic/SKILL.md` con frontmatter `name` e `description`
-2. Aggiungi eventuali `templates/` e `references/`
-3. Aggiungi `"gitlab-epic"` al campo `files` di `package.json`
-4. `npx gitlab-workflow list` mostrera' la nuova sub-skill
+### Modifying an existing skill
 
-## Licenza
+After changes:
+
+1. Increment `metadata.version` in the changed `SKILL.md`
+2. Bump `version` in `package.json`
+3. Format: `npx prettier --write "**/*.md"`
+
+## License
 
 [MIT](./LICENSE)
-
-## Riferimenti
-
-- Layout ispirato a [`vince-winkintel/gitlab-cli-skills`](https://github.com/vince-winkintel/gitlab-cli-skills)
-- Template ufficiali GitLab issues: [`.gitlab/issue_templates/`](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/issue_templates)
-- Template ufficiali GitLab MR: [`.gitlab/merge_request_templates/`](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/merge_request_templates)
