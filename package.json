@@ -30,7 +30,7 @@
     ".cursor-plugin"
   ],
   "scripts": {
-    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-issue/SKILL.md','skills/gitlab-milestone/SKILL.md','skills/gitlab-mr/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-issue/SKILL.md','skills/gitlab-milestone/SKILL.md','skills/gitlab-mr/SKILL.md','skills/conventional-commit/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
   },
   "repository": {
     "type": "git",
