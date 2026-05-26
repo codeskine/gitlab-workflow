@@ -1,22 +1,26 @@
 {
-  "name": "gitlab-author",
-  "version": "1.0.0-rc.1",
-  "description": "Claude Code / Cursor Agent Skills plugin for authoring GitLab artifacts (issues, milestones, merge requests) via the glab CLI.",
+  "name": "gitlab-workflow",
+  "version": "1.0.0",
+  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "license": "MIT",
+  "author": {
+    "name": "Stefano Veloccia"
+  },
   "keywords": [
-    "cursor",
-    "cursor-skill",
     "claude-code",
+    "cursor",
+    "codex",
     "agent-skill",
-    "agent-skills",
     "gitlab",
     "glab",
-    "issue",
-    "milestone",
+    "gitlab-workflow",
+    "conventional-commits",
     "merge-request",
-    "mr",
-    "issue-templates",
-    "markdown"
+    "milestone",
+    "issue-tracking",
+    "traceability",
+    "ai-agent",
+    "agentic"
   ],
   "engines": {
     "node": ">=18"
@@ -27,17 +31,18 @@
     "LICENSE",
     "skills",
     ".claude-plugin",
-    ".cursor-plugin"
+    ".cursor-plugin",
+    ".codex-plugin"
   ],
   "scripts": {
-    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-issue/SKILL.md','skills/gitlab-milestone/SKILL.md','skills/gitlab-mr/SKILL.md','skills/conventional-commit/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-plan/SKILL.md','skills/gitlab-track/SKILL.md','skills/gitlab-commit/SKILL.md','skills/gitlab-review/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codeskine/gitlab-author-skills.git"
+    "url": "git+https://github.com/codeskine/gitlab-workflow.git"
   },
-  "homepage": "https://github.com/codeskine/gitlab-author-skills#readme",
+  "homepage": "https://github.com/codeskine/gitlab-workflow#readme",
   "bugs": {
-    "url": "https://github.com/codeskine/gitlab-author-skills/issues"
+    "url": "https://github.com/codeskine/gitlab-workflow/issues"
   }
 }

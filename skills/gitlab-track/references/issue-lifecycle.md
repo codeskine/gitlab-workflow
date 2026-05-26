@@ -12,7 +12,7 @@ flowchart LR
 
     created --> ready
     ready -->|"start working on #N"| indev
-    indev -->|"create MR for #N\n(gitlab-mr skill)"| inreview
+    indev -->|"create MR for #N\n(gitlab-review skill)"| inreview
     inreview -->|"resolve #N"| complete
     indev -->|"resolve #N\n(skip review)"| complete
 ```
@@ -36,7 +36,7 @@ workflow:
             - "create MR for #N"
             - "crea una MR per la issue #N"
           to: "workflow::in review"
-          glab: "handled by gitlab-mr skill"
+          glab: "handled by gitlab-review skill"
         - triggers:
             - "resolve #N (skip review)"
             - "chiudi direttamente #N"
@@ -59,7 +59,7 @@ workflow:
 | -------------------------- | --------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------ |
 | "create an issue"          | —                     | `workflow::ready`            | Applied at creation alongside `type::*`                                                                |
 | "start working on #N"      | `workflow::ready`     | `workflow::in dev`           | `glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'`                             |
-| "create MR for #N"         | `workflow::in dev`    | `workflow::in review`        | Handled by `gitlab-mr` skill                                                                           |
+| "create MR for #N"         | `workflow::in dev`    | `workflow::in review`        | Handled by `gitlab-review` skill                                                                       |
 | "resolve #N"               | `workflow::in review` | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N` |
 | "resolve #N" (skip review) | `workflow::in dev`    | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N`    |
 | "close #N"                 | any                   | `workflow::complete` + close | Same as "resolve" for current state                                                                    |

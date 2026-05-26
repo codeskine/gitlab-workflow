@@ -1,23 +1,23 @@
 ---
-name: conventional-commit
+name: gitlab-commit
 description:
   "GitLab commit author. Use when the user asks to create a commit, format a git
   commit message, or finalize staged changes on a GitLab project. Also triggers when the
   user says changes are done, work is complete, or signals readiness to save progress —
   even without explicitly saying 'commit'. Formats messages following Conventional Commits
-  v1.0.0 with a GitLab issue reference extracted from the branch name. Not for merge
-  requests (→ See codeskine/gitlab-author-skills@gitlab-mr) or issue creation
-  (→ See codeskine/gitlab-author-skills@gitlab-issue)."
+  v1.0.0 with the GitLab issue ID as scope, extracted from the branch name. Not for merge
+  requests (→ See codeskine/gitlab-workflow@gitlab-review) or issue creation
+  (→ See codeskine/gitlab-workflow@gitlab-track)."
 user-invocable: false
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires git."
 metadata:
   author: codeskine
-  version: "1.0.0-rc.1"
+  version: "1.0.0"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab conventional commit author
+# GitLab commit author
 
 ## Workflow
 
@@ -60,13 +60,20 @@ If no issue ID is found in the branch, ask the user once:
 
 > "Which GitLab issue does this commit reference? (enter #N or 'none')"
 
-### 4. Infer scope
+**Scope rule:** The scope in the commit message is always `#N` — the issue ID extracted above. It is never a directory name or module path. If no issue ID exists, the scope is omitted entirely.
 
-Take the top-level directory of the most-changed path in `--staged --stat`. Skip generic
-wrapper directories (`pkg/`, `src/`, `internal/`, `lib/`) and use the next meaningful
-segment instead. Examples: `skills/gitlab-issue/` → `gitlab-issue`; `src/auth/` → `auth`;
-`pkg/api/handler.go` → `api`. If changes span more than two unrelated directories, omit
-the scope.
+### 4. Quality gate (silent)
+
+Before presenting the draft, verify:
+
+- Scope = `#N` is present if branch has an issue ID (never a directory name)
+- Title ≤ 72 characters
+- Footer `Closes #N` or `Related to #N` is present when issue ID exists
+- No placeholder text (`TBD`, `TODO`, `<...>`) in body
+
+Fix any violations automatically. Do not output the checklist to the user.
+
+→ Full criteria: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
 
 ### 5. Draft gate
 
@@ -75,7 +82,7 @@ the scope.
 Format:
 
 ```
-<type>(<scope>): <description>
+<type>(#N): <description>
 
 <optional body>
 
@@ -97,7 +104,7 @@ longer follows conventional commit format, note the deviation and ask for confir
 
 ```bash
 git commit -m "$(cat <<'EOF'
-<type>(<scope>): <description>
+<type>(#N): <description>
 
 Closes #N
 EOF
@@ -113,7 +120,7 @@ Return the short commit hash. Do not push.
 ```
 Input:  branch fix/87-nil-pointer, changed pkg/api/handler.go
 Output:
-fix(api): handle nil pointer in user handler
+fix(#87): handle nil pointer in user handler
 
 Closes #87
 ```
@@ -123,7 +130,7 @@ Closes #87
 ```
 Input:  branch feature/42-oauth, changed src/auth/ and src/middleware/
 Output:
-feat(auth): implement OAuth2 login with Google
+feat(#42): implement OAuth2 login with Google
 
 - Add OAuth2 flow for Google provider
 - Update middleware to validate Bearer tokens
