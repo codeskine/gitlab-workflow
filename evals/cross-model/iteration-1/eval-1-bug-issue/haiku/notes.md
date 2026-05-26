@@ -3,6 +3,7 @@
 ## Test Environment Context
 
 This evaluation was executed in a simulated environment where:
+
 - The real codebase (`pkg/api/handler.go`) does not exist on disk
 - Git history exists but is from the actual gitlab-author-skills repository
 - File reads were simulated with plausible Go code showing the described bug pattern
@@ -10,51 +11,64 @@ This evaluation was executed in a simulated environment where:
 ## Workflow Steps Executed
 
 ### Step 1: Identify issue type
+
 ✅ **Completed** — User specified "bug issue" in the prompt.
 
 ### Step 2: Load template
+
 ✅ **Completed** — Read `skills/gitlab-issue/assets/bug.md`.
-   - Template provides structure with Description, Impact, Related issues, Files affected, Activities sections
-   - Template is language-neutral (uses placeholders like `{Description}`)
+
+- Template provides structure with Description, Impact, Related issues, Files affected, Activities sections
+- Template is language-neutral (uses placeholders like `{Description}`)
 
 ### Step 3: Explore context
+
 ⚠️ **Partially skipped**
-   - Git log retrieved successfully: 20 recent commits from actual repository
-   - Git blame simulation not executed: The referenced file `pkg/api/handler.go` does not exist (test environment rule)
-   - Code exploration: Simulated realistic Go code showing the nil pointer panic pattern
-   - Codebase exploration: Did not use Glob/Grep as the file path was specified in the prompt
+
+- Git log retrieved successfully: 20 recent commits from actual repository
+- Git blame simulation not executed: The referenced file `pkg/api/handler.go` does not exist (test environment rule)
+- Code exploration: Simulated realistic Go code showing the nil pointer panic pattern
+- Codebase exploration: Did not use Glob/Grep as the file path was specified in the prompt
 
 ### Step 4: Discover labels and milestone
+
 ⚠️ **Skipped** — Per test environment rules, did not execute `glab label list` or `glab milestone list`
-   - Rationale: glab CLI commands would fail against a non-existent GitLab project
-   - Default label would be `type::bug` per SKILL.md specification
-   - No milestone suggested (none specified in the prompt, no active milestones to discover)
+
+- Rationale: glab CLI commands would fail against a non-existent GitLab project
+- Default label would be `type::bug` per SKILL.md specification
+- No milestone suggested (none specified in the prompt, no active milestones to discover)
 
 ### Step 5: Apply diagram policy
+
 ⚠️ **Decision: No diagram included**
-   - Reasoning per `references/mermaid-diagrams.md`:
-     - This is an isolated bug on a single actor (the HTTP handler ServeHTTP method)
-     - Not a multi-actor race condition or sequence of events requiring sequenceDiagram
-     - Policy: "Isolated bug on a single actor / pure function → no diagram"
-   - Diagram pattern would not add clarity beyond code snippet
+
+- Reasoning per `references/mermaid-diagrams.md`:
+  - This is an isolated bug on a single actor (the HTTP handler ServeHTTP method)
+  - Not a multi-actor race condition or sequence of events requiring sequenceDiagram
+  - Policy: "Isolated bug on a single actor / pure function → no diagram"
+- Diagram pattern would not add clarity beyond code snippet
 
 ### Step 6: Draft gate
+
 ✅ **Completed** — Full draft presented in output.md
-   - Includes:
-     - Clear title: "Nil pointer panic in handler.go when user_id header is missing"
-     - Complete description with reproduction steps
-     - Fenced Go code block with `path/file.ext line N` citation
-     - Impact section with severity, affected endpoints, current vs. expected behavior
-     - Files affected list
-     - Checklist of activities (test cases, documentation, fix validation)
-   - Proposed labels: `type::bug`, `workflow::ready`
-   - Milestone: None
+
+- Includes:
+  - Clear title: "Nil pointer panic in handler.go when user_id header is missing"
+  - Complete description with reproduction steps
+  - Fenced Go code block with `path/file.ext line N` citation
+  - Impact section with severity, affected endpoints, current vs. expected behavior
+  - Files affected list
+  - Checklist of activities (test cases, documentation, fix validation)
+- Proposed labels: `type::bug`, `workflow::ready`
+- Milestone: None
 
 ### Step 7: Publish via glab
+
 ❌ **Skipped** — Per test environment rules: "Do NOT run any `glab` commands. Stop at the draft gate and output the complete draft."
-   - Skipped `glab issue create` command
-   - Skipped temp file generation (`/tmp/issue-bug-*.md`)
-   - Skipped URL return
+
+- Skipped `glab issue create` command
+- Skipped temp file generation (`/tmp/issue-bug-*.md`)
+- Skipped URL return
 
 ## Ambiguities & Decisions
 

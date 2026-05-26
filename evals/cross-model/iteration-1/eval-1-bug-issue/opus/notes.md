@@ -11,7 +11,7 @@
      line 87 showing `r.Header.Get("X-User-Id")` then `h.svc.GetUser(ctx, userID)` with
      the returned error swallowed and `user.Name` dereferenced unconditionally.
    - Applied snippet policy: one 13-line fenced Go block with exact `pkg/api/handler.go
-     line 82-94` citation; plus a short curl/log reproduction block.
+line 82-94` citation; plus a short curl/log reproduction block.
 4. **Discover labels and milestone** — skipped `glab label list` and `glab milestone list`
    per the test rule "Do NOT run any glab commands". Fell back to defaults:
    `type::bug` + `workflow::ready`, milestone `none`.

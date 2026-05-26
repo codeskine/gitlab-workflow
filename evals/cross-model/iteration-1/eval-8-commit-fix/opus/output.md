@@ -8,12 +8,12 @@
 
 ## Extracted metadata
 
-| Field | Value         | Source                                                      |
-| ----- | ------------- | ----------------------------------------------------------- |
-| type  | `fix`         | Branch prefix `fix/` → `fix`                                |
-| issue | `#87`         | Branch segment `87-nil-pointer` → issue `#87`               |
-| scope | `api`         | Top-level dir of `pkg/api/handler.go` → `api`               |
-| footer| `Closes #87`  | Branch prefix is `fix` and this commit resolves the issue   |
+| Field  | Value        | Source                                                    |
+| ------ | ------------ | --------------------------------------------------------- |
+| type   | `fix`        | Branch prefix `fix/` → `fix`                              |
+| issue  | `#87`        | Branch segment `87-nil-pointer` → issue `#87`             |
+| scope  | `api`        | Top-level dir of `pkg/api/handler.go` → `api`             |
+| footer | `Closes #87` | Branch prefix is `fix` and this commit resolves the issue |
 
 ## Proposed commit message (draft gate)
 

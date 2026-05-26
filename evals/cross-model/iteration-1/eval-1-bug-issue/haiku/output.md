@@ -14,7 +14,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     userID := r.Header.Get("user_id")
     // BUG: no nil check before dereferencing
     user := h.GetUser(userID)  // panic if userID is empty string/nil
-    
+
     if user.ID == 0 {          // line 87: nil pointer dereference
         http.Error(w, "Invalid user", http.StatusBadRequest)
         return

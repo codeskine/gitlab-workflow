@@ -1,29 +1,35 @@
 # Conventional Commit Skill Evaluation - Output
 
 ## Task
+
 Commit staged changes on branch `fix/87-nil-pointer` with `pkg/api/handler.go` modified.
 
 ## Workflow Execution
 
 ### Step 1: Verify Staged Changes
+
 ```
 git diff --staged --stat
 pkg/api/handler.go | 12 ++++++++----
 ```
+
 ✓ Staged changes found. Proceed.
 
 ### Step 2: Explore Context (Silent)
+
 - Current branch: `fix/87-nil-pointer`
 - Staged changes: `pkg/api/handler.go | 12 ++++++++----`
 - Recent commits: Conventional commit format detected
 
 ### Step 3: Extract Issue ID and Type
+
 - Branch pattern: `fix/87-nil-pointer`
 - Matches: `fix/<number>-<description>`
 - Type: `fix`
 - Issue: `#87`
 
 ### Step 4: Infer Scope
+
 - Most-changed path: `pkg/api/handler.go`
 - Top-level + sub-directory: `api`
 - Scope: `api`
@@ -39,6 +45,7 @@ Closes #87
 ```
 
 **User Confirmation Prompt:**
+
 > Shall I commit with this message? (yes / edit / cancel)
 
 **Simulated User Response:** yes
