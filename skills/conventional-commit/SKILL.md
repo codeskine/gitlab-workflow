@@ -62,9 +62,11 @@ If no issue ID is found in the branch, ask the user once:
 
 ### 4. Infer scope
 
-Take the top-level directory of the most-changed path in `--staged --stat`. Examples:
-`skills/gitlab-issue/` → `gitlab-issue`; `src/auth/` → `auth`. If changes span more than
-two unrelated directories, omit the scope.
+Take the top-level directory of the most-changed path in `--staged --stat`. Skip generic
+wrapper directories (`pkg/`, `src/`, `internal/`, `lib/`) and use the next meaningful
+segment instead. Examples: `skills/gitlab-issue/` → `gitlab-issue`; `src/auth/` → `auth`;
+`pkg/api/handler.go` → `api`. If changes span more than two unrelated directories, omit
+the scope.
 
 ### 5. Draft gate
 
