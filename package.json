@@ -1,6 +1,6 @@
 {
   "name": "gitlab-author",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Claude Code / Cursor Agent Skills plugin for authoring GitLab artifacts (issues, milestones, merge requests) via the glab CLI.",
   "license": "MIT",
   "keywords": [

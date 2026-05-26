@@ -49,6 +49,7 @@ Structure and conventions adapted from [`samber/cc-skills-golang` CLAUDE.md](htt
 ### Project Overview
 
 One paragraph. Covers:
+
 - What the plugin does: authors GitLab artifacts (issue, milestone, MR) with structured templates, published via `glab`.
 - Dual audience: users who install the skills into their projects, contributors who extend or improve the plugin.
 - Open-source goal: high-quality, standardized GitLab workflow integration for agentic development.
@@ -77,15 +78,15 @@ Single pointer: "All skills MUST conform to the [Agent Skills specification](htt
 
 Required fields table — **no `openclaw` block**:
 
-| Field | Required | Constraints |
-|---|---|---|
-| `name` | Spec-required | 1–64 chars. Lowercase `a-z`, digits, hyphens. Must match parent directory name. |
-| `description` | Spec-required | 1–1024 chars. Must include "Use when" or "Apply when" trigger clause. Must contain the word `GitLab`. |
-| `license` | Project-required | `MIT` |
-| `compatibility` | Project-required | Base: `Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated.` |
-| `metadata` | Project-required | `author` (string) + `version` (semver `a.b.c`). No `openclaw` block. |
-| `user-invocable` | Project-required | Boolean. `true` for slash-command skills, `false` for contextual auto-trigger. |
-| `allowed-tools` | Project-required | Space-delimited list. See Allowed Tools section. |
+| Field            | Required         | Constraints                                                                                           |
+| ---------------- | ---------------- | ----------------------------------------------------------------------------------------------------- |
+| `name`           | Spec-required    | 1–64 chars. Lowercase `a-z`, digits, hyphens. Must match parent directory name.                       |
+| `description`    | Spec-required    | 1–1024 chars. Must include "Use when" or "Apply when" trigger clause. Must contain the word `GitLab`. |
+| `license`        | Project-required | `MIT`                                                                                                 |
+| `compatibility`  | Project-required | Base: `Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated.`        |
+| `metadata`       | Project-required | `author` (string) + `version` (semver `a.b.c`). No `openclaw` block.                                  |
+| `user-invocable` | Project-required | Boolean. `true` for slash-command skills, `false` for contextual auto-trigger.                        |
+| `allowed-tools`  | Project-required | Space-delimited list. See Allowed Tools section.                                                      |
 
 Example frontmatter block included (using a `gitlab-example` placeholder skill).
 
@@ -113,10 +114,10 @@ Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 
 Skill-specific extras table:
 
-| Extra tool | When to add |
-|---|---|
-| `WebFetch` | Skills that fetch external docs or resources |
-| `WebSearch` | Skills requiring research or discovery |
+| Extra tool  | When to add                                  |
+| ----------- | -------------------------------------------- |
+| `WebFetch`  | Skills that fetch external docs or resources |
+| `WebSearch` | Skills requiring research or discovery       |
 
 ### Skill Body
 
@@ -131,6 +132,7 @@ Four project-invariants, all mandatory:
 4. **No duplication** — Workflow logic (steps, conditions, commands) lives exclusively in `SKILL.md`. Structure and content shape live exclusively in `templates/`. Never repeat SKILL.md instructions inside template files.
 
 Token budgets (same limits as reference):
+
 - ~100 tokens per description (loaded at startup).
 - < 2,500 tokens per SKILL.md (project recommendation).
 - < 5,000 tokens per SKILL.md (spec limit).
@@ -145,6 +147,7 @@ Three subsections:
 **Working in worktrees** — All implementation work MUST happen in a git worktree under `.claude/worktrees/`. Never work directly on the checked-out branch. Propose a branch name before starting, run `git worktree list` to check for reusable worktrees covering the same skill.
 
 **Adding a new sub-skill** — Checklist:
+
 1. Create `<name>/SKILL.md` with correct frontmatter (all project-required fields).
 2. Create `<name>/templates/<type>.md` for each artifact type.
 3. Optionally create `<name>/references/` for deep documentation.
@@ -153,6 +156,7 @@ Three subsections:
 6. Run description quality check (contains `GitLab`, has trigger clause, no over-triggering patterns).
 
 **After updating a skill** — Checklist:
+
 1. Format with `npx prettier --write "**/*.md"`.
 2. Measure token counts for description, SKILL.md, and full directory.
 3. Increment `metadata.version` in the changed SKILL.md.
@@ -162,10 +166,10 @@ Three subsections:
 
 ## Decisions
 
-| Decision | Choice | Rationale |
-|---|---|---|
-| `openclaw` metadata | Excluded | Not required; adds tokens without value for this project scope |
-| Language of artifacts | Language-agnostic | Templates define structure; language controlled at runtime |
-| Skill location | Root-level directories | Matches current layout; no `skills/` wrapper needed |
-| Evaluation framework | Excluded from v1 | Out of scope for initial CLAUDE.md; can be added later |
-| Plugin config files | `package.json` only | No `.claude-plugin/` needed until multi-platform plugin manifest is required |
+| Decision              | Choice                 | Rationale                                                                    |
+| --------------------- | ---------------------- | ---------------------------------------------------------------------------- |
+| `openclaw` metadata   | Excluded               | Not required; adds tokens without value for this project scope               |
+| Language of artifacts | Language-agnostic      | Templates define structure; language controlled at runtime                   |
+| Skill location        | Root-level directories | Matches current layout; no `skills/` wrapper needed                          |
+| Evaluation framework  | Excluded from v1       | Out of scope for initial CLAUDE.md; can be added later                       |
+| Plugin config files   | `package.json` only    | No `.claude-plugin/` needed until multi-platform plugin manifest is required |

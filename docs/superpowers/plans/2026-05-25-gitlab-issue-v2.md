@@ -12,22 +12,23 @@
 
 ## File map
 
-| File | Action |
-|------|--------|
-| `SKILL.md` (root) | Modify — frontmatter + English description |
-| `gitlab-issue/SKILL.md` | Full rewrite |
-| `gitlab-issue/references/issue-lifecycle.md` | Create (new) |
-| `gitlab-issue/references/glab-issue-commands.md` | Create (new) |
-| `gitlab-issue/templates/bug.md` | Modify — remove HTML comments, language-neutral headings |
-| `gitlab-issue/templates/feature.md` | Modify — same |
-| `gitlab-issue/templates/technical-debt.md` | Modify — same |
-| `gitlab-issue/templates/documentation.md` | Modify — same |
+| File                                             | Action                                                   |
+| ------------------------------------------------ | -------------------------------------------------------- |
+| `SKILL.md` (root)                                | Modify — frontmatter + English description               |
+| `gitlab-issue/SKILL.md`                          | Full rewrite                                             |
+| `gitlab-issue/references/issue-lifecycle.md`     | Create (new)                                             |
+| `gitlab-issue/references/glab-issue-commands.md` | Create (new)                                             |
+| `gitlab-issue/templates/bug.md`                  | Modify — remove HTML comments, language-neutral headings |
+| `gitlab-issue/templates/feature.md`              | Modify — same                                            |
+| `gitlab-issue/templates/technical-debt.md`       | Modify — same                                            |
+| `gitlab-issue/templates/documentation.md`        | Modify — same                                            |
 
 ---
 
 ### Task 1: Root SKILL.md — frontmatter compliance
 
 **Files:**
+
 - Modify: `SKILL.md` (root)
 
 - [ ] **Step 1: Replace the frontmatter**
@@ -37,7 +38,8 @@ Replace the existing frontmatter block (lines 1–4 of the current file) with th
 ```yaml
 ---
 name: gitlab-author-skills
-description: "GitLab artifact author. Use when the user asks to create or publish
+description:
+  "GitLab artifact author. Use when the user asks to create or publish
   an issue, milestone, or merge request on GitLab via glab. Routes to the correct
   sub-skill: gitlab-issue for issues, gitlab-milestone for milestones,
   gitlab-mr for merge requests."
@@ -58,11 +60,11 @@ Replace everything after the `## Sub-skill disponibili` section with:
 ```markdown
 ## Available sub-skills
 
-| Sub-skill                                    | Purpose                                                                           | Status    |
-|----------------------------------------------|-----------------------------------------------------------------------------------|-----------|
-| [`gitlab-issue`](./gitlab-issue)             | Bug reports, feature requests, technical debt, documentation issues.              | Available |
-| [`gitlab-milestone`](./gitlab-milestone)     | Milestone with scope, deliverables and target dates.                              | Available |
-| [`gitlab-mr`](./gitlab-mr)                   | Merge request descriptions with issue references and diff summary.                | Available |
+| Sub-skill                                | Purpose                                                              | Status    |
+| ---------------------------------------- | -------------------------------------------------------------------- | --------- |
+| [`gitlab-issue`](./gitlab-issue)         | Bug reports, feature requests, technical debt, documentation issues. | Available |
+| [`gitlab-milestone`](./gitlab-milestone) | Milestone with scope, deliverables and target dates.                 | Available |
+| [`gitlab-mr`](./gitlab-mr)               | Merge request descriptions with issue references and diff summary.   | Available |
 
 Cross-cutting conventions (draft gate, snippet policy, language-agnostic templates, no duplication) are defined in [CLAUDE.md](../CLAUDE.md).
 ```
@@ -93,13 +95,14 @@ git commit -m "docs(skill): update root SKILL.md frontmatter to CLAUDE.md standa
 ### Task 2: gitlab-issue/SKILL.md — full rewrite
 
 **Files:**
+
 - Modify: `gitlab-issue/SKILL.md`
 
 - [ ] **Step 1: Write the new SKILL.md**
 
 Replace the entire file content with:
 
-```markdown
+````markdown
 ---
 name: gitlab-issue
 description: "GitLab issue author. Use when the user asks to open a bug report,
@@ -119,17 +122,18 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 # GitLab issue author
 
 **Modes:**
+
 - **Create** — generate a new issue from context and publish via `glab issue create`
 - **Transition** — change the lifecycle state of an existing issue via `glab issue edit`
 
 ## Supported types
 
-| Type             | Template                                                      | Default label          |
-|------------------|---------------------------------------------------------------|------------------------|
-| `bug`            | [templates/bug.md](templates/bug.md)                         | `type::bug`            |
-| `feature`        | [templates/feature.md](templates/feature.md)                 | `type::feature`        |
-| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md)   | `type::technical-debt` |
-| `documentation`  | [templates/documentation.md](templates/documentation.md)     | `type::documentation`  |
+| Type             | Template                                                   | Default label          |
+| ---------------- | ---------------------------------------------------------- | ---------------------- |
+| `bug`            | [templates/bug.md](templates/bug.md)                       | `type::bug`            |
+| `feature`        | [templates/feature.md](templates/feature.md)               | `type::feature`        |
+| `technical-debt` | [templates/technical-debt.md](templates/technical-debt.md) | `type::technical-debt` |
+| `documentation`  | [templates/documentation.md](templates/documentation.md)   | `type::documentation`  |
 
 Default labels are starting points. Override with `--label` when the project uses different scoped labels.
 
@@ -137,7 +141,7 @@ Default labels are starting points. Override with `--label` when the project use
 
 ### 1. Identify the issue type
 
-The user must specify the type in the prompt (e.g. *"create a bug issue for..."*, *"open a technical debt on..."*). If missing, ask once:
+The user must specify the type in the prompt (e.g. _"create a bug issue for..."_, _"open a technical debt on..."_). If missing, ask once:
 
 > "What type of issue do you want to open? bug / feature / technical-debt / documentation"
 
@@ -153,6 +157,7 @@ Read only `templates/<type>.md` for the chosen type.
 git log --oneline -20        # recent work area
 git diff HEAD                # files and symbols involved
 ```
+````
 
 For `bug` or `technical-debt`, also run:
 
@@ -178,9 +183,9 @@ Select the most relevant active milestone based on branch name, label, or issue 
 ### 5. Apply diagram policy
 
 | Issue type       | Default diagram   | When to include                                                  |
-|------------------|-------------------|------------------------------------------------------------------|
-| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components       |
-| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                |
+| ---------------- | ----------------- | ---------------------------------------------------------------- |
+| `bug`            | `sequenceDiagram` | If the issue involves ≥2 actors / goroutines / components        |
+| `technical-debt` | `sequenceDiagram` | If it describes a call chain or problematic flow                 |
 | `feature`        | `flowchart` (opt) | Only if the proposal already has a defined flow (convergent MVC) |
 | `documentation`  | None              | Never by default                                                 |
 
@@ -220,6 +225,7 @@ Optional flags (use when the user specifies):
 ```
 
 Anti-patterns:
+
 - Do **not** use `--body` (that is a `gh` flag, not `glab`). Use `--description`.
 - For descriptions with backticks or `$`, use `$(cat /tmp/file.md)` or heredoc with single-quoted delimiter `<< 'EOF'`.
 - Use `glab issue note` to comment, **not** `glab issue comment`.
@@ -259,13 +265,14 @@ Full state machine: [references/issue-lifecycle.md](references/issue-lifecycle.m
 - Issue lifecycle: [references/issue-lifecycle.md](references/issue-lifecycle.md)
 - Full glab flag reference: [references/glab-issue-commands.md](references/glab-issue-commands.md)
 - Templates: [templates/bug.md](templates/bug.md), [templates/feature.md](templates/feature.md), [templates/technical-debt.md](templates/technical-debt.md), [templates/documentation.md](templates/documentation.md)
-```
+
+````
 
 - [ ] **Step 2: Verify frontmatter fields**
 
 ```bash
 grep "^name:\|^description:\|^license:\|^user-invocable:\|^allowed-tools:\|^compatibility:\|^  author:\|^  version:" gitlab-issue/SKILL.md
-```
+````
 
 Expected: all 8 fields present.
 
@@ -298,11 +305,12 @@ git commit -m "docs(skill): rewrite gitlab-issue SKILL.md — CLAUDE.md complian
 ### Task 3: Create references/issue-lifecycle.md
 
 **Files:**
+
 - Create: `gitlab-issue/references/issue-lifecycle.md`
 
 - [ ] **Step 1: Write the file**
 
-```markdown
+````markdown
 # Issue Lifecycle
 
 ## State machine
@@ -321,6 +329,7 @@ flowchart LR
     inreview -->|"resolve #N"| complete
     indev -->|"resolve #N\n(skip review)"| complete
 ```
+````
 
 ## YAML state machine (agent-parseable)
 
@@ -358,14 +367,14 @@ workflow:
 
 ## Transition table
 
-| User says | From state | To state | glab command |
-|-----------|------------|----------|--------------|
-| "create an issue" | — | `workflow::ready` | Applied at creation alongside `type::*` |
-| "start working on #N" / "lavora la issue #N" | `workflow::ready` | `workflow::in dev` | `glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'` |
-| "create MR for #N" | `workflow::in dev` | `workflow::in review` | Handled by `gitlab-mr` skill |
-| "resolve #N" / "risolvi #N" | `workflow::in review` | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N` |
-| "resolve #N" (skip review) | `workflow::in dev` | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N` |
-| "close #N" / "chiudi #N" | any | `workflow::complete` + close | Same as "resolve" for current state |
+| User says                                    | From state            | To state                     | glab command                                                                                           |
+| -------------------------------------------- | --------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------ |
+| "create an issue"                            | —                     | `workflow::ready`            | Applied at creation alongside `type::*`                                                                |
+| "start working on #N" / "lavora la issue #N" | `workflow::ready`     | `workflow::in dev`           | `glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'`                             |
+| "create MR for #N"                           | `workflow::in dev`    | `workflow::in review`        | Handled by `gitlab-mr` skill                                                                           |
+| "resolve #N" / "risolvi #N"                  | `workflow::in review` | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N` |
+| "resolve #N" (skip review)                   | `workflow::in dev`    | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N`    |
+| "close #N" / "chiudi #N"                     | any                   | `workflow::complete` + close | Same as "resolve" for current state                                                                    |
 
 ## Issue Board setup
 
@@ -379,7 +388,8 @@ glab label create "workflow::complete"  --color "#5BC0DE" --description "Done, i
 ```
 
 These four labels map directly to four Issue Board columns (GitLab → Project → Plan → Issue Boards). Scoped labels (`workflow::*`) enforce a single active state per issue.
-```
+
+````
 
 - [ ] **Step 2: Verify**
 
@@ -388,7 +398,7 @@ test -f gitlab-issue/references/issue-lifecycle.md && echo "file exists"
 grep "mermaid" gitlab-issue/references/issue-lifecycle.md
 grep "workflow:" gitlab-issue/references/issue-lifecycle.md
 grep "glab label create" gitlab-issue/references/issue-lifecycle.md
-```
+````
 
 All four expected to match.
 
@@ -404,11 +414,12 @@ git commit -m "docs(skill): add issue-lifecycle reference — mermaid + YAML sta
 ### Task 4: Create references/glab-issue-commands.md
 
 **Files:**
+
 - Create: `gitlab-issue/references/glab-issue-commands.md`
 
 - [ ] **Step 1: Write the file**
 
-```markdown
+````markdown
 # glab issue — Full Command Reference
 
 ## Core create command
@@ -420,22 +431,23 @@ glab issue create \
   --milestone "<milestone>" \
   --description "$(cat /tmp/issue.md)"
 ```
+````
 
 ## Complete flag table — `glab issue create`
 
-| Flag | Value | When to use |
-|------|-------|-------------|
-| `--title` | string | Required. Issue title. |
-| `--label` | comma-separated | Labels to apply. Comma-separate multiple: `"type::bug,workflow::ready"`. |
-| `--milestone` | string | Milestone title or ID. |
-| `--description` | string or `$(cat file)` | Issue body. Prefer `$(cat /tmp/file.md)` for multi-line content. |
-| `--assignee` | username | Assign to a project member. Discover members first (see below). |
-| `--confidential` | flag (no value) | Mark issue as confidential (visible only to project members). |
-| `--weight` | integer | Issue weight (1–10 or project-defined range). |
-| `--due-date` | YYYY-MM-DD | Due date for the issue. |
-| `--related-issue-id` | integer | Link to a related issue at creation time. |
-| `--link-type` | `relates_to` \| `blocks` \| `is_blocked_by` | Type of relationship link (default: `relates_to`). |
-| `--repo` | group/project | Cross-project creation. Requires authentication for the target project. |
+| Flag                 | Value                                       | When to use                                                              |
+| -------------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
+| `--title`            | string                                      | Required. Issue title.                                                   |
+| `--label`            | comma-separated                             | Labels to apply. Comma-separate multiple: `"type::bug,workflow::ready"`. |
+| `--milestone`        | string                                      | Milestone title or ID.                                                   |
+| `--description`      | string or `$(cat file)`                     | Issue body. Prefer `$(cat /tmp/file.md)` for multi-line content.         |
+| `--assignee`         | username                                    | Assign to a project member. Discover members first (see below).          |
+| `--confidential`     | flag (no value)                             | Mark issue as confidential (visible only to project members).            |
+| `--weight`           | integer                                     | Issue weight (1–10 or project-defined range).                            |
+| `--due-date`         | YYYY-MM-DD                                  | Due date for the issue.                                                  |
+| `--related-issue-id` | integer                                     | Link to a related issue at creation time.                                |
+| `--link-type`        | `relates_to` \| `blocks` \| `is_blocked_by` | Type of relationship link (default: `relates_to`).                       |
+| `--repo`             | group/project                               | Cross-project creation. Requires authentication for the target project.  |
 
 ## Discovery commands
 
@@ -471,12 +483,12 @@ glab issue close <issue-id>
 
 ## Anti-patterns
 
-| Wrong | Correct | Why |
-|-------|---------|-----|
-| `--body "..."` | `--description "..."` | `--body` is a GitHub CLI (`gh`) flag; `glab` uses `--description` |
-| Inline description with backticks | `--description "$(cat /tmp/file.md)"` | Shell expansion breaks on backticks and unquoted `$` |
-| `glab issue comment <id>` | `glab issue note <id> --message "..."` | `comment` is not a valid `glab issue` subcommand |
-| `--description "multi\nline"` | Write to file, use `$(cat file)` | Shell quoting fails on embedded newlines |
+| Wrong                             | Correct                                | Why                                                               |
+| --------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
+| `--body "..."`                    | `--description "..."`                  | `--body` is a GitHub CLI (`gh`) flag; `glab` uses `--description` |
+| Inline description with backticks | `--description "$(cat /tmp/file.md)"`  | Shell expansion breaks on backticks and unquoted `$`              |
+| `glab issue comment <id>`         | `glab issue note <id> --message "..."` | `comment` is not a valid `glab issue` subcommand                  |
+| `--description "multi\nline"`     | Write to file, use `$(cat file)`       | Shell quoting fails on embedded newlines                          |
 
 ## Heredoc pattern
 
@@ -494,7 +506,8 @@ glab issue create \
   --label "type::bug,workflow::ready" \
   --description "$(cat /tmp/issue-bug-slug.md)"
 ```
-```
+
+````
 
 - [ ] **Step 2: Verify**
 
@@ -503,7 +516,7 @@ test -f gitlab-issue/references/glab-issue-commands.md && echo "file exists"
 grep "\-\-assignee\|\-\-confidential\|\-\-weight\|\-\-due-date\|\-\-repo" gitlab-issue/references/glab-issue-commands.md
 grep "Anti-patterns" gitlab-issue/references/glab-issue-commands.md
 grep "glab label list\|glab member list" gitlab-issue/references/glab-issue-commands.md
-```
+````
 
 All expected to match.
 
@@ -519,13 +532,14 @@ git commit -m "docs(skill): add glab-issue-commands reference — full flag inve
 ### Task 5: Clean templates/bug.md
 
 **Files:**
+
 - Modify: `gitlab-issue/templates/bug.md`
 
 - [ ] **Step 1: Replace entire file content**
 
 Remove all `<!-- ... -->` blocks and replace Italian headings with language-neutral `{Placeholder}` markers. Keep structure: subsections, code block shape, mermaid shape, checklist.
 
-```markdown
+````markdown
 ## {Description}
 
 ### 1. {Subsection title}
@@ -534,6 +548,7 @@ Remove all `<!-- ... -->` blocks and replace Italian headings with language-neut
 // path/to/file.ext line N
 {relevant code}
 ```
+````
 
 ```mermaid
 sequenceDiagram
@@ -571,13 +586,14 @@ sequenceDiagram
 - [ ] {action 1}
 - [ ] {action 2}
 - [ ] {Add / update unit tests}
-```
+
+````
 
 - [ ] **Step 2: Verify — no Italian, no HTML comments**
 
 ```bash
 grep "<!--" gitlab-issue/templates/bug.md
-```
+````
 
 Expected: no output.
 
@@ -599,6 +615,7 @@ git commit -m "docs(template): clean bug.md — remove HTML comments, language-n
 ### Task 6: Clean templates/feature.md
 
 **Files:**
+
 - Modify: `gitlab-issue/templates/feature.md`
 
 - [ ] **Step 1: Replace entire file content**
@@ -705,11 +722,12 @@ git commit -m "docs(template): clean feature.md — remove HTML comments, langua
 ### Task 7: Clean templates/technical-debt.md
 
 **Files:**
+
 - Modify: `gitlab-issue/templates/technical-debt.md`
 
 - [ ] **Step 1: Replace entire file content**
 
-```markdown
+````markdown
 ## {Description}
 
 ### {Section 1: Methods involved}
@@ -720,6 +738,7 @@ git commit -m "docs(template): clean feature.md — remove HTML comments, langua
 // current code
 {relevant code}
 ```
+````
 
 ### {Section 2: Current call chain} (optional)
 
@@ -756,13 +775,14 @@ sequenceDiagram
 - [ ] {refactor action 1}
 - [ ] {Maintain compatibility with interface X}
 - [ ] {Add unit tests to verify new behavior}
-```
+
+````
 
 - [ ] **Step 2: Verify — no Italian, no HTML comments**
 
 ```bash
 grep "<!--" gitlab-issue/templates/technical-debt.md
-```
+````
 
 Expected: no output.
 
@@ -784,6 +804,7 @@ git commit -m "docs(template): clean technical-debt.md — remove HTML comments,
 ### Task 8: Clean templates/documentation.md
 
 **Files:**
+
 - Modify: `gitlab-issue/templates/documentation.md`
 
 - [ ] **Step 1: Replace entire file content**

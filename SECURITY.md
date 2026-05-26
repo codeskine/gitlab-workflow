@@ -23,6 +23,7 @@ Questo pacchetto di skill:
 - Non legge ne' modifica credenziali. Si appoggia all'autenticazione esistente di `glab` (`~/.config/glab-cli/config.yml`)
 
 Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare i workflow descritti in:
+
 - [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
 - [`gitlab-milestone/SKILL.md`](./gitlab-milestone/SKILL.md)
 - [`gitlab-mr/SKILL.md`](./gitlab-mr/SKILL.md)

@@ -1,54 +1,38 @@
-<!--
-Template: merge request
-Istruzioni per chi compila (l'agente):
-- Mantieni i titoli di sezione esattamente come scritti qui (in italiano).
-- Sezioni obbligatorie: Sommario, Modifiche, Issue collegate, Come testare, Checklist autore.
-- Sezione opzionale: Note al reviewer (solo se ci sono decisioni di design da evidenziare).
-- Snippet codice 5-20 righe con riferimento path/file.ext riga N.
-- Checklist - [ ] per Come testare e Checklist autore.
-- Niente preamboli, niente emoji, frasi tecniche dense e affermative.
-
-Rimuovi questo blocco di commento prima di pubblicare.
--->
-
-## Sommario
-
-<!-- 1-3 frasi: cosa fa questa MR e perche' -->
+## {Summary}
 
 ---
 
-## Modifiche
+## {Changes}
 
-<!-- Elenco puntato per componente/file + snippet 5-20 righe sui punti significativi -->
+- `{component/file}`: {change description}
 
-- <componente/file>: <descrizione modifica>
-
----
-
-## Issue collegate
-
-<!-- Closes #N se il branch indica un fix; Related to #N altrimenti -->
-
-- Closes #<N>
+```{lang}
+// path/to/file.ext line N
+{relevant code}
+```
 
 ---
 
-## Come testare
+## {Linked issues}
 
-- [ ] <passo 1>
-- [ ] <passo 2>
-- [ ] <passo 3>
+- {Closes #N | Related to #N}
 
 ---
 
-## Checklist autore
+## {How to test}
 
-- [ ] Test aggiunti o aggiornati
-- [ ] Documentazione aggiornata se necessario
-- [ ] Nessun breaking change non documentato
+- [ ] {step 1}
+- [ ] {step 2}
+- [ ] {step 3}
 
 ---
 
-## Note al reviewer
+## {Author checklist}
 
-<!-- Sezione opzionale: solo se ci sono decisioni di design da evidenziare -->
+- [ ] {Tests added or updated}
+- [ ] {Documentation updated if needed}
+- [ ] {No undocumented breaking changes}
+
+---
+
+## {Reviewer notes}
