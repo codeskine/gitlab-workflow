@@ -34,8 +34,9 @@ claude plugins install @codeskine/gitlab-workflow
 Copy the `skills/` directory into your project's `.cursor/skills/`:
 
 ```bash
+rm -rf /tmp/gitlab-workflow
 git clone https://github.com/codeskine/gitlab-workflow.git /tmp/gitlab-workflow
-cp -r /tmp/gitlab-workflow/skills .cursor/
+mkdir -p .cursor/skills && cp -r /tmp/gitlab-workflow/skills/. .cursor/skills/
 ```
 
 ### Codex
@@ -43,8 +44,9 @@ cp -r /tmp/gitlab-workflow/skills .cursor/
 Copy the `skills/` directory into your project's `.codex/skills/`:
 
 ```bash
+rm -rf /tmp/gitlab-workflow
 git clone https://github.com/codeskine/gitlab-workflow.git /tmp/gitlab-workflow
-cp -r /tmp/gitlab-workflow/skills .codex/
+mkdir -p .codex/skills && cp -r /tmp/gitlab-workflow/skills/. .codex/skills/
 ```
 
 ## Available Skills
