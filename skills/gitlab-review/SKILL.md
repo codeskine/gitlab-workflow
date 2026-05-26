@@ -50,7 +50,7 @@ git diff <base-branch>...HEAD
 
 If `--stat` shows >20 modified files, limit snippets to ≤3 significant change areas and add a note: "large diff: only critical points highlighted."
 
-### 2b. Extract issue references from commit history
+### 3. Extract issue references from commit history
 
 ```bash
 git log <base-branch>...HEAD --format="%B"
@@ -58,15 +58,10 @@ git log <base-branch>...HEAD --format="%B"
 
 Parse all commit message bodies for `Closes #\d+` and `Related to #\d+` patterns.
 Deduplicate the collected issue IDs. This list drives the closing section of the MR
-description.
+description. If the list is empty, the quality gate will surface the warning before
+the draft is presented — no early interrupt here.
 
-**If the list is empty** (no issue references found in any commit), warn the user before
-presenting the draft:
-
-> "No issue references found in commit messages. The MR will have no Closes/Related to
-> links. Continue anyway? (yes / add manually / cancel)"
-
-### 3. Discover labels and milestone
+### 4. Discover labels and milestone
 
 ```bash
 glab label list
@@ -75,7 +70,7 @@ glab milestone list --state active
 
 Select the most relevant active milestone. If none fits, leave empty. Use real project labels only — do not invent labels.
 
-### 4. Compose the draft
+### 5. Compose the draft
 
 Read `assets/mr.md` and fill in all sections with extracted context. Section headings and prose follow the **user's active language** — do not hardcode any language.
 
@@ -83,7 +78,7 @@ For the `{Changes}` section, include **5–20 line snippets** per significant po
 
 Set the MR **title** with a conventional commit prefix matching the branch intent: `feat`, `fix`, `refactor`, `docs`, etc.
 
-For the closing section of the MR description, use the aggregated issue list from step 2b:
+For the closing section of the MR description, use the aggregated issue list from step 3:
 
 - Use `Closes #N` for branches prefixed `fix/` or `hotfix/` (issue will be closed on merge)
 - Use `Related to #N` for `feature/` branches (issue may remain open after merge)
@@ -97,12 +92,12 @@ Determine mode:
 
 Omit the `{Reviewer notes}` section if there are no design decisions or non-obvious choices to highlight.
 
-### 5. Quality gate (silent)
+### 6. Quality gate (silent)
 
 Before presenting the draft, verify:
 
 - At least one fenced code snippet per significant change area (5–20 lines, with `path/file.ext` line N citation)
-- `Closes #N` / `Related to #N` closing list is populated (warn if empty — see step 2b)
+- `Closes #N` / `Related to #N` closing list is populated (warn if empty — see step 3)
 - Labels are present
 - Milestone is present if the associated issue has a milestone
 - `{Reviewer notes}` section is omitted if there are no non-obvious design decisions
@@ -111,7 +106,7 @@ Fix any violations automatically. Do not output the checklist to the user.
 
 → Full criteria: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
 
-### 6. Draft gate
+### 7. Draft gate
 
 **Do not publish yet.** Present the complete draft in chat with all sections filled in.
 
@@ -121,7 +116,7 @@ Wait for explicit confirmation:
 
 If the user requests changes, apply them and re-present the draft. Repeat until approved.
 
-### 7. Publish via glab
+### 8. Publish via glab
 
 After explicit approval:
 
@@ -159,15 +154,18 @@ Anti-patterns:
 
 → Full flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)
 
-### 8. Post-creation (optional)
+### 9. Post-creation (optional)
 
-If the MR closes or is related to an issue, update its workflow state:
+If the MR closes or is related to an issue, offer to update its workflow state. Before
+running the command, confirm with the user:
+
+> "Shall I move issue #N from workflow::in dev to workflow::in review? (yes / skip)"
+
+On confirmation:
 
 ```bash
 glab issue edit <N> --label "workflow::in review" --unlabel "workflow::in dev"
 ```
-
-Confirm the transition in chat.
 
 → Full state machine: [references/mr-lifecycle.md](references/mr-lifecycle.md)
 

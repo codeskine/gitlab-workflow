@@ -1,9 +1,9 @@
 {
-  "plugin": "gitlab-author-skills",
+  "plugin": "gitlab-workflow",
   "evals": [
     {
       "id": 1,
-      "skill": "gitlab-issue",
+      "skill": "gitlab-track",
       "type": "bug",
       "prompt": "Create a bug issue for a nil pointer panic in pkg/api/handler.go line 87 that happens when the user_id header is missing from the request. The handler calls GetUser() without checking the header first.",
       "expected_output": "A GitLab issue draft of type bug with: title describing the nil pointer, fenced code snippet from pkg/api/handler.go around line 87, label type::bug and workflow::ready, proposed milestone if one is active, draft gate confirmation before any glab command.",
@@ -11,7 +11,7 @@
     },
     {
       "id": 2,
-      "skill": "gitlab-issue",
+      "skill": "gitlab-track",
       "type": "feature",
       "prompt": "I want to open a feature request on GitLab: add support for exporting reports as PDF in the dashboard. Users have been requesting this in the support channel.",
       "expected_output": "A GitLab issue draft of type feature with sections matching the feature template (Summary, Problem to solve, Proposal, MVC, Acceptance criteria), label type::feature, draft gate confirmation before publishing.",
@@ -19,7 +19,7 @@
     },
     {
       "id": 3,
-      "skill": "gitlab-issue",
+      "skill": "gitlab-track",
       "type": "technical-debt",
       "prompt": "Track some tech debt: the auth middleware in internal/middleware/auth.go duplicates token validation logic that already exists in pkg/token/validator.go. We should consolidate.",
       "expected_output": "A GitLab issue draft of type technical-debt with a sequence diagram if the call chain has >=2 actors, exact file:line citations, label type::technical-debt, draft gate confirmation.",
@@ -27,7 +27,7 @@
     },
     {
       "id": 4,
-      "skill": "gitlab-milestone",
+      "skill": "gitlab-plan",
       "type": "create",
       "prompt": "Create a milestone for our next release: v2.1.0 shipping on 2025-07-15. It should include the OAuth2 feature (#42), the nil pointer fix (#87), and the tech debt cleanup (#33).",
       "expected_output": "A GitLab milestone draft with Objective, Deliverables checklist, Linked issues (#42, #87, #33), Dates (start inferred or asked, due 2025-07-15), Completion criteria. Draft gate confirmation before glab milestone create.",
@@ -35,7 +35,7 @@
     },
     {
       "id": 5,
-      "skill": "gitlab-milestone",
+      "skill": "gitlab-plan",
       "type": "update",
       "prompt": "The v2.1.0 milestone deadline needs to move to 2025-07-30, the team needs two more weeks.",
       "expected_output": "Skill lists active milestones, identifies v2.1.0, presents the planned change (due-date only), confirms, then runs glab milestone edit <id> --due-date 2025-07-30.",
@@ -43,7 +43,7 @@
     },
     {
       "id": 6,
-      "skill": "gitlab-mr",
+      "skill": "gitlab-review",
       "type": "create",
       "prompt": "I'm on branch feature/42-oauth. Open a merge request targeting main. The branch adds OAuth2 Google login across src/auth/ and updates the middleware.",
       "expected_output": "MR draft with conventional commit title (feat(auth): ...), Changes section with 5-20 line snippets from src/auth/ and middleware files with file:line citations, Linked issues (Related to #42 or Closes #42), How to test checklist, Author checklist. Draft gate confirmation before glab mr create.",
@@ -51,7 +51,7 @@
     },
     {
       "id": 7,
-      "skill": "gitlab-mr",
+      "skill": "gitlab-review",
       "type": "draft",
       "prompt": "Create a draft MR for my branch fix/87-nil-pointer — the fix is not ready yet, I just want to get the CI running.",
       "expected_output": "MR draft with --draft flag set, title fix(api): ..., Closes #87 footer, draft gate confirmation, glab mr create command includes --draft.",
@@ -59,7 +59,7 @@
     },
     {
       "id": 8,
-      "skill": "conventional-commit",
+      "skill": "gitlab-commit",
       "type": "fix-branch",
       "prompt": "I'm on branch fix/87-nil-pointer and I've staged changes in pkg/api/handler.go. Commit the fix.",
       "expected_output": "Skill verifies staged changes, proposes message: fix(api): <description>\\n\\nCloses #87, shows draft gate, executes git commit with heredoc pattern, returns commit hash.",
@@ -67,7 +67,7 @@
     },
     {
       "id": 9,
-      "skill": "conventional-commit",
+      "skill": "gitlab-commit",
       "type": "implicit-trigger",
       "prompt": "Ok, I'm done with the OAuth2 changes on feature/42-oauth. Everything looks good.",
       "expected_output": "Skill auto-triggers on implicit 'done' signal, checks staged changes, proposes feat(auth): <description>\\n\\nCloses #42, draft gate, executes on confirmation.",
@@ -75,7 +75,7 @@
     },
     {
       "id": 10,
-      "skill": "conventional-commit",
+      "skill": "gitlab-commit",
       "type": "no-issue-branch",
       "prompt": "Commit my changes — I'm on branch chore/update-deps, staged go.mod and package.json.",
       "expected_output": "Skill proposes chore: <description> with no issue footer (chore branch, no number), draft gate, executes on confirmation.",

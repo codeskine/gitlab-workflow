@@ -121,7 +121,11 @@ Use when the user asks to extend a deadline, rename a milestone, or update its d
    ```bash
    glab milestone list --state active
    ```
-2. Present the planned changes for confirmation before executing.
+2. Present the planned changes for explicit confirmation before executing:
+
+   > "Shall I update milestone '<title>' (ID <id>): <summary of changes, e.g. due-date → YYYY-MM-DD>?
+   > (yes / changes / cancel)"
+
 3. Apply the update:
    ```bash
    glab milestone edit <id> \
@@ -136,6 +140,29 @@ Use when the user asks to extend a deadline, rename a milestone, or update its d
 ## Close / Reopen workflow
 
 Use when a sprint ends or a milestone needs to be reopened after closure.
+
+### 1. Identify the target milestone
+
+```bash
+glab milestone list --state active
+```
+
+If the user did not specify a milestone by name or ID, confirm the target before proceeding.
+
+### 2. Confirmation gate
+
+**Do not close or reopen yet.** Present the planned action in chat and wait for explicit approval.
+
+For close:
+
+> "Shall I close milestone '<title>' (ID <id>)? Open issues will not be closed automatically.
+> (yes / cancel)"
+
+For reopen:
+
+> "Shall I reopen milestone '<title>' (ID <id>)? (yes / cancel)"
+
+### 3. Execute
 
 ```bash
 glab milestone close <id>

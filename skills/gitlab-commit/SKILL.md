@@ -14,7 +14,7 @@ compatibility: "Designed for Claude Code or similar AI coding agents. Requires g
 metadata:
   author: codeskine
   version: "1.0.0"
-allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
+allowed-tools: Read Edit Write Glob Grep Bash(git:*) Agent AskUserQuestion
 ---
 
 # GitLab commit author

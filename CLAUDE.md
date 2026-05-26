@@ -22,6 +22,7 @@ skills/               # Claude Code skill definitions
     assets/           # Optional: templates, resources, linter configs (.golangci.yml, etc.)
 .claude-plugin/       # Plugin metadata and configuration
 .cursor-plugin/       # Plugin metadata and configuration (version must match .claude-plugin/plugin.json)
+.codex-plugin/        # Plugin metadata and configuration (version must match .claude-plugin/plugin.json)
 ```
 
 ## Agent Skills Specification
@@ -98,8 +99,13 @@ description: "GitLab merge request author. Use when the user asks to create or d
 
 ```yaml
 # Good — clear boundary between sub-skills
-description: "...Not for merge requests (→ See codeskine/gitlab-author-skills@gitlab-mr)."
+description: "...Not for merge requests (→ See codeskine/gitlab-workflow@gitlab-review)."
 ```
+
+The cross-reference format is `→ See <npm-package-name>@<skill-name>`, where the package
+name matches the `"name"` field in `.claude-plugin/plugin.json`. Use it in the description
+whenever two skills share overlapping trigger phrases — it tells the model exactly where to
+route the request instead.
 
 ## Allowed Tools
 
@@ -190,11 +196,10 @@ reusing it.
 ### Adding a new sub-skill
 
 1. Create `<name>/SKILL.md` with all project-required frontmatter fields.
-2. Create `<name>/templates/<type>.md` for each artifact type the skill handles.
+2. Create `<name>/assets/<type>.md` for each artifact type the skill handles.
 3. Optionally create `<name>/references/` for deep documentation.
-4. Update the sub-skill routing table in the root `SKILL.md`.
-5. Add `"<name>"` to the `files` array in `package.json`.
-6. Run the description quality check: contains `GitLab`, has "Use when" trigger clause,
+4. Add `"<name>"` to the `skills` array in `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`, and `.codex-plugin/plugin.json`.
+5. Run the description quality check: contains `GitLab`, has "Use when" trigger clause,
    no over-triggering patterns, no `openclaw` block.
 
 ### After updating a skill
