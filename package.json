@@ -1,6 +1,6 @@
 {
   "name": "@codeskine/gitlab-workflow",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "license": "MIT",
   "author": {
@@ -35,7 +35,7 @@
     ".codex-plugin"
   ],
   "scripts": {
-    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-plan/SKILL.md','skills/gitlab-track/SKILL.md','skills/gitlab-commit/SKILL.md','skills/gitlab-review/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
+    "prepack": "node -e \"const fs=require('fs');for(const p of ['skills/gitlab-plan/SKILL.md','skills/gitlab-track/SKILL.md','skills/gitlab-commit/SKILL.md','skills/gitlab-review/SKILL.md','skills/gitlab-story/SKILL.md','VERSION']){if(!fs.existsSync(p)){console.error('Missing '+p);process.exit(1)}}\""
   },
   "repository": {
     "type": "git",
