@@ -36,3 +36,11 @@ automatically where possible.
 - [ ] Title is consistent with project versioning or sprint naming (e.g. `v1.2.0`, `Sprint 5`, `2026-Q2`)
 - [ ] Due date is present
 - [ ] Description contains ≥ 2 sentences describing the goal
+
+## Story / Epic (`gitlab-story`)
+
+- [ ] Type is `epic` or `story` → label is `type::epic` or `type::story`
+- [ ] Label `workflow::ready` is present on the parent issue
+- [ ] Children table header `| # | Title | Type | Status | MR |` is present in the description
+- [ ] No placeholder `—` in `Title` or `Type` columns when data rows exist
+- [ ] No unfilled placeholders (`TBD`, `TODO`, `<...>`) in any section
