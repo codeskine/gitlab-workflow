@@ -1,5 +1,8 @@
 # gitlab-workflow
 
+[![GitHub Stars](https://img.shields.io/github/stars/codeskine/gitlab-workflow?style=flat-square)](https://github.com/codeskine/gitlab-workflow/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/codeskine/gitlab-workflow?style=flat-square)](https://github.com/codeskine/gitlab-workflow/network/members)
+
 AI Agent Skills for managing the complete GitLab workflow — plan milestones, track issues,
 commit with traceability, open merge requests, and manage story/epic hierarchies via the
 [`glab`](https://gitlab.com/gitlab-org/cli) CLI.
