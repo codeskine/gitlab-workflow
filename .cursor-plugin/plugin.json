@@ -1,6 +1,6 @@
 {
   "name": "gitlab-workflow",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
   "homepage": "https://github.com/codeskine/gitlab-workflow",
   "repository": "https://github.com/codeskine/gitlab-workflow",
@@ -28,6 +28,7 @@
     "gitlab-plan",
     "gitlab-track",
     "gitlab-commit",
-    "gitlab-review"
+    "gitlab-review",
+    "gitlab-story"
   ]
 }
