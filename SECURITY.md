@@ -18,17 +18,20 @@ Riceverai una risposta entro 7 giorni lavorativi.
 
 Questo pacchetto di skill:
 
-- Esegue `glab issue create`, `glab milestone create` o `glab mr create` con il contenuto preparato dall'agente, **solo dopo conferma esplicita** dell'utente (draft gate)
-- Scrive file temporanei in `/tmp/issue-<tipo>-<slug>.md`, `/tmp/milestone-<slug>.md`, `/tmp/mr-<slug>.md`
-- Non legge ne' modifica credenziali. Si appoggia all'autenticazione esistente di `glab` (`~/.config/glab-cli/config.yml`)
+- Esegue comandi `glab` (`glab issue create`, `glab milestone create`, `glab mr create`, `glab issue update`, `glab issue link`) con il contenuto preparato dall'agente, **solo dopo conferma esplicita** dell'utente (draft gate)
+- Scrive file temporanei in `/tmp/issue-<tipo>-<slug>.md`, `/tmp/milestone-<slug>.md`, `/tmp/mr-<slug>.md`, `/tmp/story-<slug>.md`
+- Non legge né modifica credenziali. Si appoggia all'autenticazione esistente di `glab` (`~/.config/glab-cli/config.yml`)
+- Non esegue push automatici né crea branch senza conferma
 
 Prima di esecuzioni automatiche in contesti CI/CD o agenti non supervisionati, revisionare i workflow descritti in:
 
-- [`gitlab-issue/SKILL.md`](./gitlab-issue/SKILL.md)
-- [`gitlab-milestone/SKILL.md`](./gitlab-milestone/SKILL.md)
-- [`gitlab-mr/SKILL.md`](./gitlab-mr/SKILL.md)
+- [`skills/gitlab-plan/SKILL.md`](./skills/gitlab-plan/SKILL.md)
+- [`skills/gitlab-track/SKILL.md`](./skills/gitlab-track/SKILL.md)
+- [`skills/gitlab-commit/SKILL.md`](./skills/gitlab-commit/SKILL.md)
+- [`skills/gitlab-review/SKILL.md`](./skills/gitlab-review/SKILL.md)
+- [`skills/gitlab-story/SKILL.md`](./skills/gitlab-story/SKILL.md)
 
 ## Dipendenze
 
-- [`glab`](https://gitlab.com/gitlab-org/cli) — CLI ufficiale GitLab. Aggiornare regolarmente.
-- Node.js >= 18 per lo script di installazione `scripts/install.js`.
+- [`glab`](https://gitlab.com/gitlab-org/cli) >= 1.40 — CLI ufficiale GitLab. Aggiornare regolarmente.
+- Git >= 2.30
