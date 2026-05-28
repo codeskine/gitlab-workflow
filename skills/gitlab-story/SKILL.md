@@ -84,7 +84,9 @@ If the user requests changes, apply them and re-present. Repeat until approved.
 
 1. Write the approved draft to `/tmp/story-<slug>.md`
    (slug = first 5–7 tokens of the title, kebab-case)
-2. Run:
+2. Run the appropriate command based on type:
+
+**For type `story`:**
 
 ```bash
 glab issue create \
@@ -94,7 +96,17 @@ glab issue create \
   --description "$(cat /tmp/story-<slug>.md)"
 ```
 
-Use `--label "type::epic,workflow::ready"` when type is `epic`. Return the created issue URL.
+**For type `epic`:**
+
+```bash
+glab issue create \
+  --title "<title>" \
+  --label "type::epic,workflow::ready" \
+  --milestone "<milestone>" \
+  --description "$(cat /tmp/story-<slug>.md)"
+```
+
+Return the created issue URL.
 
 Anti-patterns:
 
@@ -132,8 +144,8 @@ glab issue create \
   --description "<one-paragraph description>"
 ```
 
-Retrieve the IID and URL from the output. The user can enrich the issue later with
-`gitlab-track`.
+Retrieve the IID and URL from the output. Keep the description minimal — the user can
+enrich this child issue with full content later using `gitlab-track`.
 
 ### 3. Link each child to the parent
 
