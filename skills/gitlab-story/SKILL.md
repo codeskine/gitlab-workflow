@@ -1,6 +1,7 @@
 ---
 name: gitlab-story
-description: "GitLab story and epic author. Use when the user asks to create a story,
+description:
+  "GitLab story and epic author. Use when the user asks to create a story,
   epic, or parent issue on GitLab, add child issues to an existing story or epic,
   sync child issue status in a parent description table, or link a merge request to
   a parent issue. Not for leaf issues (bug, feature, tech-debt →
@@ -11,7 +12,7 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.0.0"
+  version: "1.1.0"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
