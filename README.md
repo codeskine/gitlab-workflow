@@ -1,3 +1,5 @@
+![gitlab-workflow](assets/images/headers.png)
+
 # gitlab-workflow
 
 AI Agent Skills for managing the complete GitLab workflow — plan milestones, track issues,
