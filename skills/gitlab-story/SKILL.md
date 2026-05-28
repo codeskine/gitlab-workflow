@@ -25,6 +25,10 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - **Sync** — refresh the children table with current issue state from GitLab
 - **Link-MR** — attach a merge request reference to a parent issue
 
+**Update pattern** (Add-Child, Sync, Link-MR): after draft gate approval, write the
+updated description to `/tmp/story-<slug>.md` then run:
+`glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"`
+
 ## Create workflow
 
 ### 1. Identify type and title
@@ -78,30 +82,16 @@ Fix violations automatically. Do not output the checklist.
 > labels `<labels>`, milestone `<milestone|none>`?
 > (yes / changes / cancel)"
 
-If the user requests changes, apply them and re-present. Repeat until approved.
-
 ### 6. Publish
 
 1. Write the approved draft to `/tmp/story-<slug>.md`
    (slug = first 5–7 tokens of the title, kebab-case)
-2. Run the appropriate command based on type:
-
-**For type `story`:**
+2. Run (`<type>` = `story` or `epic`):
 
 ```bash
 glab issue create \
   --title "<title>" \
-  --label "type::story,workflow::ready" \
-  --milestone "<milestone>" \
-  --description "$(cat /tmp/story-<slug>.md)"
-```
-
-**For type `epic`:**
-
-```bash
-glab issue create \
-  --title "<title>" \
-  --label "type::epic,workflow::ready" \
+  --label "type::<type>,workflow::ready" \
   --milestone "<milestone>" \
   --description "$(cat /tmp/story-<slug>.md)"
 ```
@@ -153,8 +143,6 @@ enrich this child issue with full content later using `gitlab-track`.
 glab issue link <child-id> --target-id <parent-id> --link-type relates_to
 ```
 
-Run for each child.
-
 ### 4. Read current parent and build updated description
 
 ```bash
@@ -167,19 +155,15 @@ Parse the current description:
 - Append one new row per child using the format in
   [references/children-table.md](references/children-table.md)
 
-Write the full updated description to `/tmp/story-<slug>.md`.
-
 ### 5. Draft gate
 
 Present the updated children table only. Wait for confirmation:
 
 > "Shall I update issue #<parent-id> ('<parent-title>') to add <N> child issue(s)? (yes / changes / cancel)"
 
-### 6. Publish update
+### 6. Publish
 
-```bash
-glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"
-```
+→ Update pattern.
 
 ## Sync workflow
 
@@ -212,19 +196,15 @@ Reconstruct each row in original order with updated `Status`.
 
 → Status mapping: [references/children-table.md](references/children-table.md)
 
-Write the full updated description to `/tmp/story-<slug>.md`.
-
 ### 5. Draft gate
 
 Show a before/after comparison of the table rows that changed. Wait for confirmation:
 
 > "Shall I sync the children table for issue #<parent-id> ('<parent-title>')? (yes / cancel)"
 
-### 6. Publish update
+### 6. Publish
 
-```bash
-glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"
-```
+→ Update pattern.
 
 ## Link-MR workflow
 
@@ -250,8 +230,6 @@ Each commit object has a `.message` field. Parse all `Closes #(\d+)` and
 
 ### 3. Update the parent description
 
-Read the current parent description:
-
 ```bash
 glab issue view <parent-id> --output json
 ```
@@ -263,19 +241,15 @@ Apply two changes:
 2. **MR column in table:** for each child issue found in step 2, set its `MR` column to
    `!<mr-id>`. Rows not referenced by the MR keep their existing `MR` value.
 
-Write the full updated description to `/tmp/story-<slug>.md`.
-
 ### 4. Draft gate
 
 Present the full updated description. Wait for confirmation:
 
 > "Shall I update issue #<parent-id> ('<parent-title>') to reference MR !<mr-id>? (yes / changes / cancel)"
 
-### 5. Publish update
+### 5. Publish
 
-```bash
-glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"
-```
+→ Update pattern.
 
 ## References
 
