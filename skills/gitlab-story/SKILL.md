@@ -74,7 +74,7 @@ Fix violations automatically. Do not output the checklist.
 **Do not publish yet.** Present the complete draft in chat with title and labels.
 
 > "Draft ready. Shall I create this story on GitLab with title '<title>',
-> labels `type::story,workflow::ready`, milestone `<milestone|none>`?
+> labels `<labels>`, milestone `<milestone|none>`?
 > (yes / changes / cancel)"
 
 If the user requests changes, apply them and re-present. Repeat until approved.
@@ -94,6 +94,12 @@ glab issue create \
 ```
 
 Use `--label "type::epic,workflow::ready"` when type is `epic`. Return the created issue URL.
+
+Anti-patterns:
+
+- Do **not** use `--body` (that is a `gh` flag). Use `--description`.
+- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
+- Use `glab issue note` to comment, **not** `glab issue comment`.
 
 ## Add-Child workflow
 
@@ -167,7 +173,7 @@ glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"
 ### 1. Identify the parent
 
 User provides parent ID, or infer from current branch using the `fix/N-` / `feature/N-`
-pattern (defined in `gitlab-commit`). If ambiguous, ask once.
+pattern (defined in `gitlab-track`). If ambiguous, ask once.
 
 ### 2. Read the parent
 
