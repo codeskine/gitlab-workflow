@@ -42,7 +42,7 @@ sequenceDiagram
     A->>GL: glab label list + milestone list
     A-->>Dev: Draft story — approve?
     Dev->>A: yes
-    A->>GL: glab issue create (type::story)
+    A->>GL: glab issue create (kind::story)
     GL-->>A: issue #10
     A-->>Dev: ✓ Story #10 created
 
@@ -227,7 +227,7 @@ message bodies parsed for `Closes #N` / `Related to #N` patterns.
 
 **What it produces:**
 
-Parent issue with `type::story` or `type::epic` label, a structured description, and a live
+Parent issue with `kind::story` or `kind::epic` label, a structured description, and a live
 markdown children table tracking all child issues:
 
 ```
@@ -251,8 +251,8 @@ Child issues are linked to the parent via `glab issue link --link-type relates_t
 **Simulates Scrum hierarchy on GitLab Free:**
 
 ```
-epic (type::epic)
-└── story (type::story)
+epic (kind::epic)
+└── story (kind::story)
     ├── feature issue #11  (type::feature, workflow::in dev, MR !5)
     └── feature issue #12  (type::feature, workflow::ready)
 ```

@@ -66,7 +66,7 @@ Initialize the children table with the header and a single placeholder row:
 
 Before presenting the draft, verify:
 
-- Type is `epic` or `story` → mapped to label `type::epic` or `type::story`
+- Type is `epic` or `story` → mapped to label `kind::epic` or `kind::story`
 - Children table header is present and correctly formatted
 - No unfilled placeholders (`TBD`, `TODO`, `<...>`) in any section
 
@@ -91,7 +91,7 @@ Fix violations automatically. Do not output the checklist.
 ```bash
 glab issue create \
   --title "<title>" \
-  --label "type::<type>,workflow::ready" \
+  --label "kind::<type>,workflow::ready" \
   --milestone "<milestone>" \
   --description "$(cat /tmp/story-<slug>.md)"
 ```

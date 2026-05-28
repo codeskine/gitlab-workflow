@@ -39,7 +39,7 @@ automatically where possible.
 
 ## Story / Epic (`gitlab-story`)
 
-- [ ] Type is `epic` or `story` → label is `type::epic` or `type::story`
+- [ ] Type is `epic` or `story` → label is `kind::epic` or `kind::story`
 - [ ] Label `workflow::ready` is present on the parent issue
 - [ ] Children table header `| # | Title | Type | Status | MR |` is present in the description
 - [ ] No placeholder `—` in `Title` or `Type` columns when data rows exist
