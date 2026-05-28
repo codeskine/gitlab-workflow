@@ -1,5 +1,3 @@
-![gitlab-workflow](assets/images/headers.png)
-
 # gitlab-workflow
 
 AI Agent Skills for managing the complete GitLab workflow — plan milestones, track issues,
@@ -7,6 +5,8 @@ commit with traceability, open merge requests, and manage story/epic hierarchies
 [`glab`](https://gitlab.com/gitlab-org/cli) CLI.
 
 ## Quickstart
+
+![gitlab-workflow](assets/images/headers.png)
 
 Install for your agent: [Claude Code](#claude-code) · [Cursor](#cursor) · [Codex](#codex)
 
