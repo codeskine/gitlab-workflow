@@ -154,7 +154,7 @@ Write the full updated description to `/tmp/story-<slug>.md`.
 
 Present the updated children table only. Wait for confirmation:
 
-> "Shall I update issue #<parent-id> to add <N> child issue(s)? (yes / changes / cancel)"
+> "Shall I update issue #<parent-id> ('<parent-title>') to add <N> child issue(s)? (yes / changes / cancel)"
 
 ### 6. Publish update
 
@@ -199,7 +199,7 @@ Write the full updated description to `/tmp/story-<slug>.md`.
 
 Show a before/after comparison of the table rows that changed. Wait for confirmation:
 
-> "Shall I sync the children table for issue #<parent-id>? (yes / cancel)"
+> "Shall I sync the children table for issue #<parent-id> ('<parent-title>')? (yes / cancel)"
 
 ### 6. Publish update
 
@@ -250,7 +250,7 @@ Write the full updated description to `/tmp/story-<slug>.md`.
 
 Present the full updated description. Wait for confirmation:
 
-> "Shall I update issue #<parent-id> to reference MR !<mr-id>? (yes / changes / cancel)"
+> "Shall I update issue #<parent-id> ('<parent-title>') to reference MR !<mr-id>? (yes / changes / cancel)"
 
 ### 5. Publish update
 
