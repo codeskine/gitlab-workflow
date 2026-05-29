@@ -1,59 +1,40 @@
 {
-  "name": "gitlab-workflow",
-  "version": "1.1.1",
-  "displayName": "GitLab Workflow",
-  "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
-  "homepage": "https://github.com/codeskine/gitlab-workflow",
-  "repository": "https://github.com/codeskine/gitlab-workflow",
-  "author": { "name": "Stefano Veloccia" },
-  "license": "MIT",
-  "category": "DevOps",
-  "keywords": [
-    "claude-code",
-    "claude-code-plugin",
-    "gitlab",
-    "glab",
-    "gitlab-workflow",
-    "skills",
-    "ai-agent",
-    "agentic",
-    "conventional-commits",
-    "merge-request",
-    "milestone",
-    "issue-tracking",
-    "traceability"
-  ],
-  "compatibility": "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated.",
-  "skills": [
+  "name": "codeskine",
+  "owner": {
+    "name": "Stefano Veloccia",
+    "email": "stefano.veloccia@sourcesense.com"
+  },
+  "plugins": [
     {
-      "name": "gitlab-plan",
-      "displayName": "GitLab Plan",
-      "description": "GitLab milestone author. Use when the user asks to create, update, or close a milestone on GitLab, plan a sprint or release, or group issues under a shared goal.",
-      "userInvocable": true
-    },
-    {
-      "name": "gitlab-track",
-      "displayName": "GitLab Track",
-      "description": "GitLab issue author. Use when the user asks to open a bug report, feature request, technical debt item, or documentation issue on GitLab via glab.",
-      "userInvocable": true
-    },
-    {
-      "name": "gitlab-commit",
-      "displayName": "GitLab Commit",
-      "description": "GitLab commit author. Use when the user asks to create a commit, format a git commit message, or finalize staged changes on a GitLab project. Formats messages following Conventional Commits v1.0.0 with the GitLab issue ID as scope.",
-      "userInvocable": false
-    },
-    {
-      "name": "gitlab-review",
-      "displayName": "GitLab Review",
-      "description": "GitLab merge request author. Use when the user asks to create, draft, or publish a merge request on GitLab via glab.",
-      "userInvocable": true
-    },
-    {
-      "name": "gitlab-story",
-      "displayName": "GitLab Story",
-      "description": "GitLab story and epic author. Use when the user asks to create a story, epic, or parent issue on GitLab, add child issues to an existing story or epic, sync child issue status in a parent description table, or link a merge request to a parent issue.",
-      "userInvocable": true
+      "name": "gitlab-workflow",
+      "description": "AI Agent Skills for managing the GitLab workflow — plan milestones, track issues, commit with traceability, and open merge requests via the glab CLI.",
+      "source": {
+        "source": "github",
+        "repo": "codeskine/gitlab-workflow"
+      },
+      "author": {
+        "name": "Stefano Veloccia",
+        "email": "stefano.veloccia@sourcesense.com"
+      },
+      "homepage": "https://github.com/codeskine/gitlab-workflow",
+      "repository": "https://github.com/codeskine/gitlab-workflow",
+      "license": "MIT",
+      "keywords": [
+        "claude-code",
+        "claude-code-plugin",
+        "gitlab",
+        "glab",
+        "gitlab-workflow",
+        "skills",
+        "ai-agent",
+        "agentic",
+        "conventional-commits",
+        "merge-request",
+        "milestone",
+        "issue-tracking",
+        "traceability"
+      ],
+      "category": "DevOps"
     }
   ]
 }
