@@ -76,11 +76,32 @@ Fix violations automatically. Do not output the checklist.
 
 ### 5. Draft gate
 
-**Do not publish yet.** Present the complete draft in chat with title and labels.
+**Create `docs/gitlab/` if missing:**
 
-> "Draft ready. Shall I create this story on GitLab with title '<title>',
-> labels `<labels>`, milestone `<milestone|none>`?
-> (yes / changes / cancel)"
+```bash
+mkdir -p docs/gitlab
+```
+
+Write the draft to `docs/gitlab/YYYY-MM-DD-<slug>.md` (slug = first 5–7 tokens of the title, kebab-case). Use today's date for `YYYY-MM-DD`. Set `kind` to `story` or `epic` to match the artifact type — omit the `type` field:
+
+```markdown
+---
+kind: <story|epic>
+title: "<title>"
+labels: "<labels>"
+milestone: "<milestone or empty>"
+status: draft
+created_at: <YYYY-MM-DD>
+---
+
+<body>
+```
+
+**Do not publish yet.** Present the confirmation in chat referencing the file path:
+
+> "Draft saved to `docs/gitlab/<YYYY-MM-DD-slug>.md`. Open it for a full review, then confirm: publish to GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+
+If the user requests changes, update the file in `docs/gitlab/` and re-present. Repeat until approved.
 
 ### 6. Publish
 
