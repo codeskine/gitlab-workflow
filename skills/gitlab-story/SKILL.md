@@ -105,16 +105,25 @@ If the user requests changes, update the file in `docs/gitlab/` and re-present. 
 
 ### 6. Publish
 
-1. Write the approved draft to `/tmp/story-<slug>.md`
-   (slug = first 5–7 tokens of the title, kebab-case)
-2. Run (`<type>` = `story` or `epic`):
+1. Strip the YAML frontmatter and publish:
 
 ```bash
+awk 'BEGIN{n=0} /^---$/{n++; next} n==2{print}' \
+  docs/gitlab/YYYY-MM-DD-<slug>.md > /tmp/story-body-<slug>.md
+
 glab issue create \
   --title "<title>" \
   --label "kind::<type>,workflow::ready" \
   --milestone "<milestone>" \
-  --description "$(cat /tmp/story-<slug>.md)"
+  --description "$(cat /tmp/story-body-<slug>.md)"
+```
+
+2. After `glab` returns the issue URL, update `docs/gitlab/YYYY-MM-DD-<slug>.md` frontmatter in-place — replace `status: draft` with:
+
+```yaml
+status: published
+gitlab_url: <returned-url>
+published_at: <YYYY-MM-DD>
 ```
 
 Return the created issue URL.
