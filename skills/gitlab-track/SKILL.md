@@ -10,7 +10,7 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.0.0"
+  version: "1.2.0"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
@@ -99,27 +99,57 @@ Fix any violations automatically. Do not output the checklist to the user.
 
 ### 7. Draft gate
 
-**Do not publish yet.** Present the complete draft in chat with all template sections filled in. Include the proposed title and labels.
+**Create `docs/gitlab/` if missing:**
 
-Wait for explicit confirmation:
+```bash
+mkdir -p docs/gitlab
+```
 
-> "Draft ready. Shall I create the issue on GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+Write the draft to `docs/gitlab/YYYY-MM-DD-<slug>.md` (slug = first 5–7 tokens of the title, kebab-case). Use today's date for `YYYY-MM-DD`:
 
-If the user requests changes, apply them and re-present the draft. Repeat until approved.
+```markdown
+---
+kind: issue
+type: <type>
+title: "<title>"
+labels: "<labels>"
+milestone: "<milestone or empty>"
+status: draft
+created_at: <YYYY-MM-DD>
+---
+
+<body>
+```
+
+**Do not publish yet.** Present the confirmation in chat referencing the file path:
+
+> "Draft saved to `docs/gitlab/<YYYY-MM-DD-slug>.md`. Open it for a full review, then confirm: publish to GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+
+If the user requests changes, update the file in `docs/gitlab/` and re-present. Repeat until approved.
 
 ### 8. Publish via glab
 
 After explicit approval:
 
-1. Write the approved draft to a temp file: `/tmp/issue-<type>-<slug>.md` (slug = first 5–7 tokens of the title, kebab-case)
-2. Run:
+1. Strip the YAML frontmatter and publish:
 
 ```bash
+awk 'BEGIN{n=0} /^---$/{n++; next} n==2{print}' \
+  docs/gitlab/YYYY-MM-DD-<slug>.md > /tmp/issue-body-<slug>.md
+
 glab issue create \
   --title "<title>" \
   --label "<type-label>,workflow::ready" \
   --milestone "<milestone>" \
-  --description "$(cat /tmp/issue-<type>-<slug>.md)"
+  --description "$(cat /tmp/issue-body-<slug>.md)"
+```
+
+2. After `glab` returns the issue URL, update `docs/gitlab/YYYY-MM-DD-<slug>.md` frontmatter in-place — replace `status: draft` with:
+
+```yaml
+status: published
+gitlab_url: <returned-url>
+published_at: <YYYY-MM-DD>
 ```
 
 Optional flags (use when the user specifies):
