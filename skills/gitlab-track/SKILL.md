@@ -123,7 +123,7 @@ created_at: <YYYY-MM-DD>
 
 **Do not publish yet.** Present the confirmation in chat referencing the file path:
 
-> "Draft salvato in `docs/gitlab/<YYYY-MM-DD-slug>.md`. Aprilo per una review completa, poi confermami: pubblica su GitLab con titolo '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+> "Draft saved to `docs/gitlab/<YYYY-MM-DD-slug>.md`. Open it for a full review, then confirm: publish to GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
 
 If the user requests changes, update the file in `docs/gitlab/` and re-present. Repeat until approved.
 
