@@ -1,0 +1,21 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Planning",
+      "description": "Skills for scoping and structuring GitLab work before writing code.",
+      "skills": ["gitlab-plan", "gitlab-story"]
+    },
+    {
+      "title": "Execution",
+      "description": "Skills for tracking progress and committing changes with traceability.",
+      "skills": ["gitlab-track", "gitlab-commit"]
+    },
+    {
+      "title": "Review",
+      "description": "Skills for authoring and publishing GitLab merge requests.",
+      "skills": ["gitlab-review"]
+    }
+  ]
+}
