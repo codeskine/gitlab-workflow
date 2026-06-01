@@ -3,11 +3,6 @@
   "notGrouped": "bottom",
   "groupings": [
     {
-      "title": "Orchestrator",
-      "description": "Entry point — routes any GitLab request to the right skill.",
-      "skills": ["gitlab-workflow"]
-    },
-    {
       "title": "Planning",
       "description": "Skills for scoping and structuring GitLab work before writing code.",
       "skills": ["gitlab-plan", "gitlab-story"]
