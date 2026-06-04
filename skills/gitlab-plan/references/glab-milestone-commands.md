@@ -1,5 +1,7 @@
 # glab milestone — command reference
 
+→ See also: [../../shared/references/glab-command-index.md](../../shared/references/glab-command-index.md) for anti-patterns and heredoc pattern.
+
 ## Create
 
 ```bash
@@ -66,10 +68,3 @@ glab issue edit <issue-id> --milestone "<milestone-title>"
 ```bash
 glab issue list --milestone "<title>" --state opened
 ```
-
-## Anti-patterns
-
-- Do **not** use `--body`. Use `--description`.
-- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)` or a heredoc with a
-  single-quoted delimiter `<< 'EOF'`.
-- `glab milestone` operates on the current project unless `--group` is specified.
