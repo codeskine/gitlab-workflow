@@ -1,4 +1,4 @@
-→ See also: [../shared/references/glab-command-index.md](../shared/references/glab-command-index.md) for discovery commands, anti-patterns, and heredoc pattern.
+→ See also: [../../shared/references/glab-command-index.md](../../shared/references/glab-command-index.md) for discovery commands, anti-patterns, and heredoc pattern.
 
 ## Create
 
