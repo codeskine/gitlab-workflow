@@ -15,10 +15,10 @@ presenting a draft to the user:
 ```bash
 glab label list                          # Discover project labels
 glab milestone list --state active       # Active milestones only
-glab milestone list --state all          # All milestones (closed + active)
-glab member list                         # Project members (for --assignee / --reviewer)
-glab issue list --state opened           # Open issues (for context/linking)
-glab mr list --state opened              # Open merge requests
+glab milestone list                      # All milestones (closed + active)
+glab api "projects/:fullpath/members"    # Project members (for --assignee / --reviewer)
+glab issue list --opened                 # Open issues (for context/linking)
+glab mr list                             # Open merge requests (defaults to open)
 ```
 
 To find a milestone ID by title:
