@@ -128,12 +128,6 @@ published_at: <YYYY-MM-DD>
 
 Return the created issue URL.
 
-Anti-patterns:
-
-- Do **not** use `--body` (that is a `gh` flag). Use `--description`.
-- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
-- Use `glab issue note` to comment, **not** `glab issue comment`.
-
 ## Add-Child workflow
 
 ### 1. Identify parent and children
@@ -286,3 +280,4 @@ Present the full updated description. Wait for confirmation:
 - Template: [assets/story.md](assets/story.md)
 - Children table spec: [references/children-table.md](references/children-table.md)
 - Quality standard: [../shared/references/quality-standard.md](../shared/references/quality-standard.md)
+- glab commands: [references/glab-story-commands.md](references/glab-story-commands.md)
