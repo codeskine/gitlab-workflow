@@ -173,12 +173,6 @@ Optional flags — add when the user specifies or context makes them appropriate
   --repo "<group/project>"       # cross-project creation
 ```
 
-Anti-patterns:
-
-- Do **not** use `--body` (that is a `gh` flag). Use `--description`.
-- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
-- Use `glab mr note` to comment, **not** `glab mr comment`.
-
 3. Return the created MR URL.
 
 → Full flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)

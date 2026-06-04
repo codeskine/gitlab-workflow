@@ -96,11 +96,6 @@ glab milestone create \
 
 For group-level milestones, add `--group <group-slug>`.
 
-Anti-patterns:
-
-- Do **not** use `--body`. Use `--description`.
-- For descriptions with backticks or `$`, always use `$(cat /tmp/file.md)`.
-
 3. Return the created milestone URL (or ID if the URL is not available in the output).
 
 ### 7. Post-creation: assign issues
