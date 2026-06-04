@@ -17,7 +17,7 @@ glab label list                          # Discover project labels
 glab milestone list --state active       # Active milestones only
 glab milestone list                      # All milestones (closed + active)
 glab api "projects/:fullpath/members"    # Project members (for --assignee / --reviewer)
-glab issue list --opened                 # Open issues (for context/linking)
+glab issue list                          # Open issues — defaults to open if --closed not used
 glab mr list                             # Open merge requests (defaults to open)
 ```
 
