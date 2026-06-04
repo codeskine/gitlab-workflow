@@ -1,16 +1,15 @@
 # glab mr — Full Command Reference
 
+→ See also: [../../shared/references/glab-command-index.md](../../shared/references/glab-command-index.md) for discovery commands, anti-patterns, and heredoc pattern.
+
 ## Contents
 
 - [Core create command](#core-create-command)
 - [Complete flag table — glab mr create](#complete-flag-table--glab-mr-create)
-- [Discovery commands](#discovery-commands)
 - [Editing an existing MR](#editing-an-existing-mr)
 - [Viewing an MR](#viewing-an-mr)
 - [Adding a comment](#adding-a-comment)
 - [Merging](#merging)
-- [Anti-patterns](#anti-patterns)
-- [Heredoc pattern](#heredoc-pattern)
 
 ## Core create command
 
@@ -40,21 +39,6 @@ glab mr create \
 | `--remove-source-branch` | flag (no value)         | Delete source branch after merge (common project convention).                 |
 | `--squash`               | flag (no value)         | Squash commits when merging.                                                  |
 | `--repo`                 | group/project           | Cross-project creation. Requires authentication for the target project.       |
-
-## Discovery commands
-
-Run before suggesting labels, assignees, reviewers, or milestones:
-
-```bash
-# Discover project labels
-glab label list
-
-# Discover project members (for --assignee / --reviewer)
-glab member list
-
-# List open MRs (for context)
-glab mr list --state opened
-```
 
 ## Editing an existing MR
 
@@ -90,30 +74,4 @@ glab mr merge <id> \
   --squash \
   --remove-source-branch \
   --rebase
-```
-
-## Anti-patterns
-
-| Wrong                             | Correct                               | Why                                                               |
-| --------------------------------- | ------------------------------------- | ----------------------------------------------------------------- |
-| `--body "..."`                    | `--description "..."`                 | `--body` is a GitHub CLI (`gh`) flag; `glab` uses `--description` |
-| Inline description with backticks | `--description "$(cat /tmp/file.md)"` | Shell expansion breaks on backticks and unquoted `$`              |
-| `glab mr comment <id>`            | `glab mr note <id> --message "..."`   | `comment` is not a valid `glab mr` subcommand                     |
-| `--description "multi\nline"`     | Write to file, use `$(cat file)`      | Shell quoting fails on embedded newlines                          |
-
-## Heredoc pattern
-
-Use when the description contains backticks, `$` variables, or multi-line content:
-
-```bash
-cat << 'EOF' > /tmp/mr-feat-my-feature.md
-## {Summary}
-
-Content with `backticks` and $variables is safe inside a single-quoted heredoc.
-EOF
-
-glab mr create \
-  --title "feat(scope): my feature" \
-  --label "type::feature,workflow::review" \
-  --description "$(cat /tmp/mr-feat-my-feature.md)"
 ```
