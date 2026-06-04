@@ -37,7 +37,6 @@ Pass only flags for the fields being changed. `<id>` is the numeric milestone ID
 ```bash
 glab milestone list --state active      # active milestones
 glab milestone list --state closed      # closed milestones
-glab milestone list --state all         # all milestones
 glab milestone list --output json       # machine-readable, includes IDs
 ```
 

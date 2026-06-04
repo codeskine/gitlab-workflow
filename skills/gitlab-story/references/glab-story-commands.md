@@ -1,3 +1,5 @@
+# glab issue — Story / Epic Command Reference
+
 → See also: [../../shared/references/glab-command-index.md](../../shared/references/glab-command-index.md) for discovery commands, anti-patterns, and heredoc pattern.
 
 ## Create
