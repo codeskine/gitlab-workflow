@@ -160,12 +160,6 @@ Optional flags (use when the user specifies):
   --repo "<group/project>"     # cross-project creation
 ```
 
-Anti-patterns:
-
-- Do **not** use `--body` (that is a `gh` flag, not `glab`). Use `--description`.
-- For descriptions with backticks or `$`, use `$(cat /tmp/file.md)` or heredoc with single-quoted delimiter `<< 'EOF'`.
-- Use `glab issue note` to comment, **not** `glab issue comment`.
-
 3. Return the created issue URL.
 
 **Post-creation:** If the user mentioned related issues, link them:
