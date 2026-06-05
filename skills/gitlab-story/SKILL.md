@@ -12,7 +12,7 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.2.0"
+  version: "1.3.0"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
@@ -66,7 +66,7 @@ Initialize the children table with the header and a single placeholder row:
 
 Before presenting the draft, verify:
 
-- Type is `epic` or `story` → mapped to label `kind::epic` or `kind::story`
+- Type is `epic` or `story` → correct `kind::*` label applied (→ See [shared/references/label-registry.md](../shared/references/label-registry.md))
 - Children table header is present and correctly formatted
 - No unfilled placeholders (`TBD`, `TODO`, `<...>`) in any section
 

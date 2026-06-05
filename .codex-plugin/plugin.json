@@ -29,6 +29,7 @@
     "gitlab-track",
     "gitlab-commit",
     "gitlab-review",
-    "gitlab-story"
+    "gitlab-story",
+    "gitlab-setup"
   ]
 }

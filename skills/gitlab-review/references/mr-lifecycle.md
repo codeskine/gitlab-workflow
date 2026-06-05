@@ -38,16 +38,7 @@ GitLab also accepts removing Draft via the web UI by clicking "Mark as ready."
 
 ## MR Board setup
 
-Create the `workflow::` labels in the project (run once per project — shared with the issue board):
-
-```bash
-glab label create "workflow::ready"      --color "#428BCA" --description "Issue defined, ready to be picked up"
-glab label create "workflow::in dev"     --color "#F0AD4E" --description "Actively being worked on"
-glab label create "workflow::in review"  --color "#5CB85C" --description "MR open, waiting for merge"
-glab label create "workflow::complete"   --color "#5BC0DE" --description "Done, issue closed"
-```
-
-Scoped labels (`workflow::*`) enforce a single active state per issue or MR.
+→ See [shared/references/label-registry.md](../../shared/references/label-registry.md) for label definitions and `glab label create` commands.
 
 ## Cross-skill reference
 

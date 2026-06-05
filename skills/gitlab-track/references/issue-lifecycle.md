@@ -66,13 +66,4 @@ workflow:
 
 ## Issue Board setup
 
-Create the four `workflow::` labels in the project (run once per project):
-
-```bash
-glab label create "workflow::ready"     --color "#428BCA" --description "Issue defined, ready to be picked up"
-glab label create "workflow::in dev"    --color "#F0AD4E" --description "Actively being worked on"
-glab label create "workflow::in review" --color "#5CB85C" --description "MR open, waiting for merge"
-glab label create "workflow::complete"  --color "#5BC0DE" --description "Done, issue closed"
-```
-
-These four labels map directly to four Issue Board columns (GitLab → Project → Plan → Issue Boards). Scoped labels (`workflow::*`) enforce a single active state per issue.
+→ See [shared/references/label-registry.md](../../shared/references/label-registry.md) for label definitions and `glab label create` commands.
