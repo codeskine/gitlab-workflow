@@ -3,6 +3,11 @@
   "notGrouped": "bottom",
   "groupings": [
     {
+      "title": "Setup",
+      "description": "Skills for initializing a GitLab project with the required labels and configuration.",
+      "skills": ["gitlab-setup"]
+    },
+    {
       "title": "Planning",
       "description": "Skills for scoping and structuring GitLab work before writing code.",
       "skills": ["gitlab-plan", "gitlab-story"]
