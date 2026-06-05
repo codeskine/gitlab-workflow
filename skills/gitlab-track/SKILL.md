@@ -23,14 +23,14 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 
 ## Supported types
 
-| Type             | Template                                             | Default label          |
-| ---------------- | ---------------------------------------------------- | ---------------------- |
-| `bug`            | [assets/bug.md](assets/bug.md)                       | `type::bug`            |
-| `feature`        | [assets/feature.md](assets/feature.md)               | `type::feature`        |
-| `technical-debt` | [assets/technical-debt.md](assets/technical-debt.md) | `type::technical-debt` |
-| `documentation`  | [assets/documentation.md](assets/documentation.md)   | `type::documentation`  |
+| Type             | Template                                             |
+| ---------------- | ---------------------------------------------------- |
+| `bug`            | [assets/bug.md](assets/bug.md)                       |
+| `feature`        | [assets/feature.md](assets/feature.md)               |
+| `technical-debt` | [assets/technical-debt.md](assets/technical-debt.md) |
+| `documentation`  | [assets/documentation.md](assets/documentation.md)   |
 
-Default labels are starting points. Override with `--label` when the project uses different scoped labels.
+→ See [shared/references/label-registry.md](../shared/references/label-registry.md) for default labels and colors.
 
 ## Create workflow
 
