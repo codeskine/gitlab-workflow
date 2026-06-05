@@ -12,7 +12,7 @@ automatically where possible.
 
 - [ ] Title ≥ 5 words and not generic (e.g. "Fix bug" alone fails; "Fix nil pointer in user handler" passes)
 - [ ] At least one fenced code snippet (5–20 lines) for `bug` and `technical-debt` issue types
-- [ ] Labels include at least `type::*` + `workflow::ready`
+- [ ] Labels include at least one `type::*` label and `workflow::ready` (→ See [label-registry.md](label-registry.md))
 - [ ] Milestone suggested if an active one fits; left empty without asking if none fits (e.g. hotfix)
 - [ ] No unfilled placeholders: `TBD`, `TODO`, `<...>`
 
@@ -39,7 +39,7 @@ automatically where possible.
 
 ## Story / Epic (`gitlab-story`)
 
-- [ ] Type is `epic` or `story` → label is `kind::epic` or `kind::story`
+- [ ] Type is `epic` or `story` → correct `kind::*` label applied (→ See [label-registry.md](label-registry.md))
 - [ ] Label `workflow::ready` is present on the parent issue
 - [ ] Children table header `| # | Title | Type | Status | MR |` is present in the description
 - [ ] No placeholder `—` in `Title` or `Type` columns when data rows exist
