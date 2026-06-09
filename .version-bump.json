@@ -1,0 +1,13 @@
+{
+  "$comment": "Plugin-level version declarations kept in sync by scripts/bump-version.sh. Per-skill metadata.version values in skills/*/SKILL.md are intentionally independent and are NOT managed here — bump them manually when a skill changes.",
+  "files": [
+    { "path": "VERSION", "type": "raw" },
+    { "path": "package.json", "field": "version" },
+    { "path": ".claude-plugin/plugin.json", "field": "version" },
+    { "path": ".cursor-plugin/plugin.json", "field": "version" },
+    { "path": ".codex-plugin/plugin.json", "field": "version" }
+  ],
+  "audit": {
+    "exclude": ["SKILL.md", "package-lock.json", "CHANGELOG.md", ".claude"]
+  }
+}

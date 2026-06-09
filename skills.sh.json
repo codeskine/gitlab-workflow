@@ -5,7 +5,7 @@
     {
       "title": "Setup",
       "description": "Skills for initializing a GitLab project with the required labels and configuration.",
-      "skills": ["gitlab-setup"]
+      "skills": ["gitlab-init"]
     },
     {
       "title": "Planning",

@@ -12,11 +12,11 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.3.0"
+  version: "1.3.1"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab story — epic and story hierarchy author
+**Personas:** You are a product manager. You focus on organizing work at a strategic level and preparing high-level stories and epics for future specialization into detailed user stories.
 
 **Modes:**
 
@@ -25,9 +25,11 @@ allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQ
 - **Sync** — refresh the children table with current issue state from GitLab
 - **Link-MR** — attach a merge request reference to a parent issue
 
-**Update pattern** (Add-Child, Sync, Link-MR): after draft gate approval, write the
-updated description to `/tmp/story-<slug>.md` then run:
-`glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"`
+> **Update pattern** (Add-Child, Sync, Link-MR): after draft gate approval, write the
+> updated description to `/tmp/story-<slug>.md` then run:
+> `glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"`
+
+# GitLab story — epic and story hierarchy author
 
 ## Create workflow
 
@@ -99,7 +101,7 @@ created_at: <YYYY-MM-DD>
 
 **Do not publish yet.** Present the confirmation in chat referencing the file path:
 
-> "Draft saved to `docs/gitlab/<YYYY-MM-DD-slug>.md`. Open it for a full review, then confirm: publish to GitLab with title '<title>', labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
+> "Draft saved to `docs/gitlab/<YYYY-MM-DD-slug>.md`. Open it for a full review, then confirm: publish to GitLab with title `<title>`, labels `<labels>`, milestone `<milestone|none>`? (yes / changes / cancel)"
 
 If the user requests changes, update the file in `docs/gitlab/` and re-present. Repeat until approved.
 
@@ -163,8 +165,12 @@ enrich this child issue with full content later using `gitlab-track`.
 
 ### 3. Link each child to the parent
 
+glab has no `issue link` subcommand — use the REST API (`link_type`: `relates_to` | `blocks` | `is_blocked_by`):
+
 ```bash
-glab issue link <child-id> --target-id <parent-id> --link-type relates_to
+glab api --method POST "projects/:id/issues/<child-iid>/links" \
+  -f target_project_id="$(glab api projects/:id --jq .id)" \
+  -f target_issue_iid=<parent-iid> -f link_type=relates_to
 ```
 
 ### 4. Read current parent and build updated description

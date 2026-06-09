@@ -29,7 +29,7 @@ workflow:
         - "pick up #N"
       transitions:
         - to: "workflow::in dev"
-          glab: "glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'"
+          glab: "glab issue update N --label 'workflow::in dev' --unlabel 'workflow::ready'"
     - label: "workflow::in dev"
       transitions:
         - triggers:
@@ -41,7 +41,7 @@ workflow:
             - "resolve #N (skip review)"
             - "chiudi direttamente #N"
           to: "workflow::complete"
-          glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N"
+          glab: "glab issue update N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N"
     - label: "workflow::in review"
       transitions:
         - triggers:
@@ -50,19 +50,19 @@ workflow:
             - "close #N"
             - "chiudi #N"
           to: "workflow::complete"
-          glab: "glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N"
+          glab: "glab issue update N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N"
 ```
 
 ## Transition table
 
-| User says                  | From state            | To state                     | glab command                                                                                           |
-| -------------------------- | --------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------ |
-| "create an issue"          | —                     | `workflow::ready`            | Applied at creation alongside `type::*`                                                                |
-| "start working on #N"      | `workflow::ready`     | `workflow::in dev`           | `glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::ready'`                             |
-| "create MR for #N"         | `workflow::in dev`    | `workflow::in review`        | Handled by `gitlab-review` skill                                                                       |
-| "resolve #N"               | `workflow::in review` | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N` |
-| "resolve #N" (skip review) | `workflow::in dev`    | `workflow::complete` + close | `glab issue edit N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N`    |
-| "close #N"                 | any                   | `workflow::complete` + close | Same as "resolve" for current state                                                                    |
+| User says                  | From state            | To state                     | glab command                                                                                             |
+| -------------------------- | --------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------- |
+| "create an issue"          | —                     | `workflow::ready`            | Applied at creation alongside `type::*`                                                                  |
+| "start working on #N"      | `workflow::ready`     | `workflow::in dev`           | `glab issue update N --label 'workflow::in dev' --unlabel 'workflow::ready'`                             |
+| "create MR for #N"         | `workflow::in dev`    | `workflow::in review`        | Handled by `gitlab-review` skill                                                                         |
+| "resolve #N"               | `workflow::in review` | `workflow::complete` + close | `glab issue update N --label 'workflow::complete' --unlabel 'workflow::in review' && glab issue close N` |
+| "resolve #N" (skip review) | `workflow::in dev`    | `workflow::complete` + close | `glab issue update N --label 'workflow::complete' --unlabel 'workflow::in dev' && glab issue close N`    |
+| "close #N"                 | any                   | `workflow::complete` + close | Same as "resolve" for current state                                                                      |
 
 ## Issue Board setup
 

@@ -38,15 +38,15 @@ next sprint. Recommended sequence:
 
 1. List remaining open issues:
    ```bash
-   glab issue list --milestone "<title>" --state opened
+   glab issue list --milestone "<title>"
    ```
 2. Move unfinished issues to the next milestone or backlog:
    ```bash
-   glab issue edit <N> --milestone "<next-milestone-title>"
+   glab issue update <N> --milestone "<next-milestone-title>"
    ```
 3. Close the milestone:
    ```bash
-   glab milestone close <id>
+   glab milestone edit <id> --state close
    ```
 
 ## Project-level vs group-level milestones

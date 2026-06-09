@@ -10,17 +10,19 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.2.0"
+  version: "1.2.1"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab plan — milestone author
+**Persona:** You are a product-focused team member (Product Owner, Product Manager, or Project Manager). You define and maintain milestones so that work is grouped into time‑boxed goals and progress across issues and merge requests is easy to track.
 
 **Modes:**
 
 - **Create** — generate a new milestone and publish via `glab milestone create`
 - **Update** — edit title, dates, or description of an existing milestone via `glab milestone edit`
-- **Close / Reopen** — manage milestone lifecycle via `glab milestone close` or `glab milestone reopen`
+- **Close / Reopen** — manage milestone lifecycle via `glab milestone edit --state close` or `glab milestone edit --state activate`
+
+# GitLab plan — milestone author
 
 ## Create workflow
 
@@ -37,7 +39,7 @@ every glab command).
 **Git extraction (silent):**
 
 ```bash
-git log --oneline --since="30 days ago"    # recent scope
+git log --oneline --since="30 days ago"     # recent scope
 git branch --show-current                   # infer sprint/release target
 git tag --sort=-version:refname | head -5   # detect versioning scheme
 ```
@@ -46,7 +48,7 @@ git tag --sort=-version:refname | head -5   # detect versioning scheme
 
 ```bash
 glab milestone list --state active          # avoid duplicates
-glab issue list --state opened              # candidate issues for post-creation assignment
+glab issue list                             # candidate issues (open by default) for post-creation assignment
 ```
 
 ### 3. Compose the draft
@@ -103,7 +105,7 @@ For group-level milestones, add `--group <group-slug>`.
 If candidate issues were found in step 2, offer to assign them to the new milestone:
 
 ```bash
-glab issue edit <N> --milestone "<title>"
+glab issue update <N> --milestone "<title>"
 ```
 
 Present the list and let the user confirm or exclude individual issues before running.
@@ -139,10 +141,12 @@ Use when a sprint ends or a milestone needs to be reopened after closure.
 ### 1. Identify the target milestone
 
 ```bash
-glab milestone list --state active
+glab milestone list --state active            # add --group <group-id> for group-level milestones
 ```
 
 If the user did not specify a milestone by name or ID, confirm the target before proceeding.
+Milestone IDs are not shown in the default text output — add `--show-id`, or use
+`--output json` and filter by title.
 
 ### 2. Confirmation gate
 
@@ -160,14 +164,14 @@ For reopen:
 ### 3. Execute
 
 ```bash
-glab milestone close <id>
-glab milestone reopen <id>
+glab milestone edit <id> --state close       # close
+glab milestone edit <id> --state activate    # reopen
 ```
 
 When closing, offer to transition remaining open issues to a backlog or next active milestone:
 
 ```bash
-glab issue edit <N> --milestone "<next-milestone-title>"
+glab issue update <N> --milestone "<next-milestone-title>"
 ```
 
 → Full lifecycle guide: [references/milestone-lifecycle.md](references/milestone-lifecycle.md)
