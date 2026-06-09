@@ -30,21 +30,24 @@ glab milestone edit <id> \
 ```
 
 Pass only flags for the fields being changed. `<id>` is the numeric milestone ID from
-`glab milestone list`.
+`glab milestone list --show-id` (or `--output json`).
 
 ## List
 
 ```bash
 glab milestone list --state active      # active milestones
 glab milestone list --state closed      # closed milestones
+glab milestone list --show-id           # text output including numeric IDs
 glab milestone list --output json       # machine-readable, includes IDs
 ```
 
 ## Close / Reopen
 
+There is no `close`/`reopen` subcommand. Use `edit --state`, which accepts `close` or `activate`:
+
 ```bash
-glab milestone close <id>
-glab milestone reopen <id>
+glab milestone edit <id> --state close       # close a milestone
+glab milestone edit <id> --state activate    # reopen a closed milestone
 ```
 
 ## Common patterns
@@ -59,11 +62,11 @@ glab milestone list --state active --output json | \
 **Assign an issue to a milestone:**
 
 ```bash
-glab issue edit <issue-id> --milestone "<milestone-title>"
+glab issue update <issue-id> --milestone "<milestone-title>"
 ```
 
 **List open issues in a milestone:**
 
 ```bash
-glab issue list --milestone "<title>" --state opened
+glab issue list --milestone "<title>"        # open by default; use --closed or --all to widen
 ```

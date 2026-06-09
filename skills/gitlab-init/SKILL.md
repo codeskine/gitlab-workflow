@@ -1,18 +1,19 @@
 ---
-name: gitlab-setup
-description: "GitLab project setup. Use when the user asks to initialize a GitLab
+name: gitlab-init
+description:
+  "GitLab project initializer. Use when the user asks to initialize a GitLab
   project with the required labels (workflow::*, type::*, kind::*), or says 'setup
-  GitLab', 'configure labels', 'initialize project labels'."
+  GitLab', 'init GitLab project', 'configure labels', 'initialize project labels'."
 user-invocable: true
 license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.0.0"
+  version: "1.0.1"
 allowed-tools: Read Bash(glab:*) Bash(bash:*)
 ---
 
-# GitLab setup — project label initializer
+# GitLab init — project label initializer
 
 Initialize the 10 GitLab labels required by the `gitlab-workflow` plugin in the current project.
 Labels already present are silently skipped — safe to run on any project, any number of times.

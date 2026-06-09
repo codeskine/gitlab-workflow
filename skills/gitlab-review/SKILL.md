@@ -10,16 +10,18 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.3.0"
+  version: "1.3.1"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab review — merge request author
+**Persona:** You are a software developer. You follow clean branching practices and aim to deliver well-structured changes through merge requests that are easy to review and integrate.
 
 **Modes:**
 
 - **Create** — generate a new MR from branch context and publish via `glab mr create`
 - **Draft** — create a GitLab Draft MR (WIP, not ready to merge)
+
+# GitLab review — merge request author
 
 ## Workflow
 
@@ -80,8 +82,8 @@ Set the MR **title** with a conventional commit prefix matching the branch inten
 
 For the closing section of the MR description, use the aggregated issue list from step 3:
 
-- Use `Closes #N` for branches prefixed `fix/` or `hotfix/` (issue will be closed on merge)
-- Use `Related to #N` for `feature/` branches (issue may remain open after merge)
+- Use `Closes #N, #N, #N ...` for branches prefixed `fix/` or `hotfix/` (issue will be closed on merge)
+- Use `Related to #N, #N, #N...` for `feature/` branches (issue may remain open after merge)
 
 Do not guess or invent issue references — use only what was extracted from commit messages.
 
@@ -177,7 +179,7 @@ Optional flags — add when the user specifies or context makes them appropriate
 
 → Full flag reference: [references/glab-mr-commands.md](references/glab-mr-commands.md)
 
-### 9. Post-creation (optional)
+### 9. Post-creation
 
 If the MR closes or is related to an issue, offer to update its workflow state. Before
 running the command, confirm with the user:
@@ -187,7 +189,7 @@ running the command, confirm with the user:
 On confirmation:
 
 ```bash
-glab issue edit <N> --label "workflow::in review" --unlabel "workflow::in dev"
+glab issue update <N> --label "workflow::in review" --unlabel "workflow::in dev"
 ```
 
 → Full state machine: [references/mr-lifecycle.md](references/mr-lifecycle.md)

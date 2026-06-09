@@ -10,16 +10,18 @@ license: MIT
 compatibility: "Designed for Claude Code or similar AI coding agents. Requires glab CLI authenticated."
 metadata:
   author: codeskine
-  version: "1.3.0"
+  version: "1.3.1"
 allowed-tools: Read Edit Write Glob Grep Bash(git:*) Bash(glab:*) Agent AskUserQuestion
 ---
 
-# GitLab track — issue author
+**Personas:** You are a team member. You create GitLab issues to track work clearly so it can be refined, prioritized, and developed later by the appropriate people
 
 **Modes:**
 
-- **Create** — generate a new issue from context and publish via `glab issue create`
-- **Transition** — change the lifecycle state of an existing issue via `glab issue edit`
+- **Create** — generate a new issue from context and publish via `glab issue create [--flags]`
+- **Transition** — change the lifecycle state of an existing issue via `glab issue update <id> [--flags]`
+
+# GitLab track — issue author
 
 ## Supported types
 
@@ -162,17 +164,20 @@ Optional flags (use when the user specifies):
 
 3. Return the created issue URL.
 
-**Post-creation:** If the user mentioned related issues, link them:
+**Post-creation:** If the user mentioned related issues, link them (glab has no `issue link`
+subcommand — use the REST API):
 
 ```bash
-glab issue link <new-issue-id> --target-id <related-id>
+glab api --method POST "projects/:id/issues/<new-issue-iid>/links" \
+  -f target_project_id="$(glab api projects/:id --jq .id)" \
+  -f target_issue_iid=<related-iid> -f link_type=relates_to
 ```
 
 → Full flag reference: [references/glab-issue-commands.md](references/glab-issue-commands.md)
 
 ## Transition workflow
 
-Use when the user says "start working on #N", "lavora la issue #N", "resolve #N", or similar lifecycle phrases.
+Use when the user says "start working on #N", "resolve #N", or similar lifecycle phrases.
 
 1. Read current issue state:
    ```bash
@@ -187,7 +192,7 @@ Use when the user says "start working on #N", "lavora la issue #N", "resolve #N"
 
 6. Apply the transition on confirmation:
    ```bash
-   glab issue edit <N> --label "<new-state>" --unlabel "<current-state>"
+   glab issue update <N> --label "<new-state>" --unlabel "<current-state>"
    ```
    Report the applied change in chat.
 7. **Branch setup (only when transitioning to `workflow::in dev`):** Offer two options:

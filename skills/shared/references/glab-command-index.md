@@ -39,13 +39,17 @@ glab milestone list --output json        # All milestones as JSON array
 
 ## Anti-patterns
 
-| Wrong | Correct | Why |
-|---|---|---|
-| `--body "..."` | `--description "..."` | `--body` is a `gh` (GitHub CLI) flag; `glab` uses `--description` |
-| `glab issue comment <id>` | `glab issue note <id> --message "..."` | `comment` is not a valid `glab issue` subcommand |
-| `glab mr comment <id>` | `glab mr note <id> --message "..."` | `comment` is not a valid `glab mr` subcommand |
-| inline description with backticks | `--description "$(cat /tmp/file.md)"` | shell expansion breaks on backticks and unquoted `$` |
-| `--description "multi\nline"` | write to file, use `$(cat file)` | shell quoting fails on embedded newlines |
+| Wrong                                  | Correct                                                                                                     | Why                                                                                            |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `--body "..."`                         | `--description "..."`                                                                                       | `--body` is a `gh` (GitHub CLI) flag; `glab` uses `--description`                              |
+| `glab issue comment <id>`              | `glab issue note <id> --message "..."`                                                                      | `comment` is not a valid `glab issue` subcommand                                               |
+| `glab mr comment <id>`                 | `glab mr note <id> --message "..."`                                                                         | `comment` is not a valid `glab mr` subcommand                                                  |
+| `glab issue edit <id>`                 | `glab issue update <id>`                                                                                    | `edit` is not a valid subcommand; `update` handles title/labels/milestone/assignee/description |
+| `glab mr edit <id>`                    | `glab mr update <id>`                                                                                       | `edit` is not a valid subcommand; `update` handles title/labels/milestone/`--ready`/`--draft`  |
+| `glab issue link <id> --target-id <n>` | `glab api --method POST "projects/:id/issues/<iid>/links" -f target_project_id=... -f target_issue_iid=<n>` | there is no `issue link` subcommand; use the REST API                                          |
+| `glab milestone close/reopen <id>`     | `glab milestone edit <id> --state close` / `--state activate`                                               | there is no `close`/`reopen` milestone subcommand                                              |
+| inline description with backticks      | `--description "$(cat /tmp/file.md)"`                                                                       | shell expansion breaks on backticks and unquoted `$`                                           |
+| `--description "multi\nline"`          | write to file, use `$(cat file)`                                                                            | shell quoting fails on embedded newlines                                                       |
 
 ## Heredoc pattern
 

@@ -14,6 +14,8 @@ of generated content follows the user's active language at runtime.
 ## Project Structure
 
 ```
+commands/             # Optional: skills as flat Markdown files.
+agents/	              # Optional: custom agents definition
 skills/               # Claude Code skill definitions
   <skill-name>/
     SKILL.md          # Required: metadata + instructions
@@ -169,18 +171,6 @@ hardcode any language.
 Workflow logic (steps, conditions, commands) lives exclusively in `SKILL.md`. Structure and
 content shape live exclusively in `templates/`. Never copy SKILL.md instructions into
 template files.
-
-### Top-of-body directives (optional)
-
-These directives go before the first heading, in this order:
-
-| Directive         | Format                                                    | When to include                                               |
-| ----------------- | --------------------------------------------------------- | ------------------------------------------------------------- |
-| **Persona**       | `**Persona:** You are a <role>. <mindset>.`               | Skills with a defined analytical or generative domain         |
-| **Thinking mode** | `**Thinking mode:** Use \`ultrathink\` for <task>.`       | Deep analysis tasks                                           |
-| **Modes**         | `**Modes:**` section listing distinct invocation contexts | Skills with multiple execution paths (draft, review, publish) |
-
-All three are optional. Most skills in this project are procedural and need none.
 
 ## Workflows
 

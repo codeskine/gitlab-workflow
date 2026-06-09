@@ -30,15 +30,20 @@ Update the description of an existing parent issue (used by Add-Child, Sync, Lin
 glab issue update <parent-id> --description "$(cat /tmp/story-<slug>.md)"
 ```
 
-**Note:** `glab issue update` replaces the full description field. For metadata changes (labels, milestone, assignee), use `glab issue edit` instead.
+**Note:** `glab issue update` replaces the full description field. It also handles metadata changes — labels (`--label`/`--unlabel`), `--milestone`, and `--assignee`. (There is no `glab issue edit` subcommand.)
 
 ## Link child to parent
 
+glab has no `issue link` subcommand — use the REST API:
+
 ```bash
-glab issue link <child-id> --target-id <parent-id> --link-type relates_to
+glab api --method POST "projects/:id/issues/<child-iid>/links" \
+  -f target_project_id="$(glab api projects/:id --jq .id)" \
+  -f target_issue_iid=<parent-iid> \
+  -f link_type=relates_to
 ```
 
-**Note:** `--link-type` accepts: `relates_to` (default), `blocks`, `is_blocked_by`.
+**Note:** `link_type` accepts: `relates_to` (default), `blocks`, `is_blocked_by`.
 
 ## Read MR
 

@@ -43,7 +43,7 @@ glab mr create \
 ## Editing an existing MR
 
 ```bash
-glab mr edit <id> \
+glab mr update <id> \
   --title "<new-title>" \
   --label "<add-label>" \
   --unlabel "<remove-label>" \

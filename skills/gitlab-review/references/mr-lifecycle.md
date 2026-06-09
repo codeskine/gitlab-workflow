@@ -9,7 +9,7 @@ flowchart LR
     merged([Merged])
     closed([Closed])
 
-    draft -->|"glab mr edit --ready"| open
+    draft -->|"glab mr update --ready"| open
     open -->|"glab mr merge"| merged
     open -->|"glab mr close"| closed
     draft -->|"glab mr close"| closed
@@ -19,19 +19,19 @@ flowchart LR
 
 When the MR is opened (ties to the issue lifecycle in `gitlab-track` skill):
 
-| MR event              | Issue transition       | glab command                                                                   |
-| --------------------- | ---------------------- | ------------------------------------------------------------------------------ |
-| MR opened (ready)     | `in dev` → `in review` | `glab issue edit N --label 'workflow::in review' --unlabel 'workflow::in dev'` |
-| MR changes requested  | `in review` → `in dev` | `glab issue edit N --label 'workflow::in dev' --unlabel 'workflow::in review'` |
-| MR merged             | auto-closed by GitLab  | GitLab closes issues referenced by `Closes #N` on merge; no manual step needed |
-| MR closed (abandoned) | → `workflow::ready`    | `glab issue edit N --label 'workflow::ready' --unlabel 'workflow::in review'`  |
+| MR event              | Issue transition       | glab command                                                                     |
+| --------------------- | ---------------------- | -------------------------------------------------------------------------------- |
+| MR opened (ready)     | `in dev` → `in review` | `glab issue update N --label 'workflow::in review' --unlabel 'workflow::in dev'` |
+| MR changes requested  | `in review` → `in dev` | `glab issue update N --label 'workflow::in dev' --unlabel 'workflow::in review'` |
+| MR merged             | auto-closed by GitLab  | GitLab closes issues referenced by `Closes #N` on merge; no manual step needed   |
+| MR closed (abandoned) | → `workflow::ready`    | `glab issue update N --label 'workflow::ready' --unlabel 'workflow::in review'`  |
 
 ## Draft → Ready
 
 Remove Draft status when the branch is ready for review:
 
 ```bash
-glab mr edit <id> --ready
+glab mr update <id> --ready
 ```
 
 GitLab also accepts removing Draft via the web UI by clicking "Mark as ready."
