@@ -28,74 +28,21 @@ does it publish to GitLab.
 Artifacts are language-agnostic: section headings and prose follow your active language at
 runtime. No language is hardcoded.
 
-## Workflow overview
-
-The five skills cover the full GitLab development lifecycle from sprint planning to merge:
-
-```mermaid
-sequenceDiagram
-    actor Dev as Developer
-    participant A as AI Agent
-    participant GL as GitLab
-
-    Dev->>A: "Plan sprint 3: auth migration"
-    A->>GL: glab milestone create
-    GL-->>A: milestone/3
-    A-->>Dev: ✓ Milestone #3 created
-
-    Dev->>A: "Create a story for the auth migration"
-    A->>GL: glab label list + milestone list
-    A-->>Dev: Draft story — approve?
-    Dev->>A: yes
-    A->>GL: glab issue create (kind::story)
-    GL-->>A: issue #10
-    A-->>Dev: ✓ Story #10 created
-
-    Dev->>A: "Add issues #11 #12 as children of #10"
-    A->>GL: glab issue view #11 / #12
-    A->>GL: glab issue link #11 --target-id #10
-    A->>GL: glab issue link #12 --target-id #10
-    A-->>Dev: Updated children table — approve?
-    Dev->>A: yes
-    A->>GL: glab issue update #10
-    A-->>Dev: ✓ Children linked
-
-    Dev->>A: "Start working on issue #11"
-    A->>GL: glab issue edit #11 (workflow::in dev)
-    A-->>Dev: ✓ Branch fix/11-oauth-handler created
-
-    Note over Dev,GL: ... development ...
-
-    Dev->>A: "Commit staged changes"
-    A-->>Dev: fix(#11): handle OAuth token expiry — approve?
-    Dev->>A: yes
-    A->>A: git commit
-    A-->>Dev: ✓ Committed abc1234
-
-    Dev->>A: "Create MR for this branch and close #11"
-    A->>GL: glab label list + diff analysis
-    A-->>Dev: Draft MR — approve?
-    Dev->>A: yes
-    A->>GL: glab mr create
-    GL-->>A: MR !5
-    A-->>Dev: ✓ MR !5 created
-
-    Dev->>A: "Link MR !5 to story #10"
-    A->>GL: glab mr view !5 + commits
-    A-->>Dev: Updated parent issue — approve?
-    Dev->>A: yes
-    A->>GL: glab issue update #10
-    A-->>Dev: ✓ Story #10 updated with MR reference
-
-    Dev->>A: "Sync story #10 children status"
-    A->>GL: glab issue view #11 + #12
-    A-->>Dev: Before/after table diff — approve?
-    Dev->>A: yes
-    A->>GL: glab issue update #10
-    A-->>Dev: ✓ Children table synced
-```
-
 ## Skills
+
+### `gitlab-init` — Project label initializer
+
+**Trigger phrases:** "Setup GitLab", "Initialize the project labels", "Configure labels",
+"Init GitLab project"
+
+**What it produces:**
+
+- The labels the workflow relies on (`workflow::*`, `type::*`, `kind::*`), created in the current project
+- Idempotent — labels already present are skipped, so it is safe to re-run any number of times
+
+**Boundary:** one-time project bootstrap. Not for issue creation (→ `gitlab-track`) or milestones (→ `gitlab-plan`).
+
+---
 
 ### `gitlab-plan` — Milestone author
 
@@ -110,11 +57,11 @@ sequenceDiagram
 
 **Modes:**
 
-| Mode           | Command                         | When to use                                 |
-| -------------- | ------------------------------- | ------------------------------------------- |
-| Create         | `glab milestone create`         | New sprint or release                       |
-| Update         | `glab milestone edit`           | Extend deadline, rename, update description |
-| Close / Reopen | `glab milestone close / reopen` | End of sprint; re-open if work resumes      |
+| Mode           | Command                                        | When to use                                 |
+| -------------- | ---------------------------------------------- | ------------------------------------------- |
+| Create         | `glab milestone create`                        | New sprint or release                       |
+| Update         | `glab milestone edit`                          | Extend deadline, rename, update description |
+| Close / Reopen | `glab milestone edit --state close / activate` | End of sprint; re-open if work resumes      |
 
 **Context extracted silently:** recent git log, active branches, existing milestones, open issues.
 
@@ -242,7 +189,8 @@ markdown children table tracking all child issues:
 | [#12](…) | Add refresh token rotation | `type::feature` | `workflow::ready` | — |
 ```
 
-Child issues are linked to the parent via `glab issue link --link-type relates_to`.
+Child issues are linked to the parent via the Issue Links REST API
+(`glab api --method POST "projects/:id/issues/<iid>/links"`, `link_type=relates_to`).
 
 **Modes:**
 
@@ -265,6 +213,24 @@ epic (kind::epic)
 No GitLab Premium required. Hierarchy state is persisted entirely in the parent issue description.
 
 **Boundary:** not for leaf issues (→ `gitlab-track`) or milestones (→ `gitlab-plan`).
+
+---
+
+## Commands
+
+### `/gitlab-doctor` — Environment health check
+
+A slash command (not a skill) that verifies your setup before running the workflow skills:
+
+- Confirms the `glab` CLI is installed
+- Confirms you are authenticated (`glab auth status`)
+- Prints install/login guidance and exits non-zero when something is missing
+
+```
+/gitlab-doctor              # check gitlab.com
+/gitlab-doctor <hostname>   # check a self-managed instance
+/gitlab-doctor help         # usage
+```
 
 ---
 
@@ -332,6 +298,7 @@ mkdir -p .codex/skills && cp -r /tmp/gitlab-workflow/skills/. .codex/skills/
 ### Full sprint cycle (sequence)
 
 ```
+0. "Setup the project labels"                           → gitlab-init
 1. "Create milestone Sprint 3"                          → gitlab-plan
 2. "Create a story for OAuth migration"                 → gitlab-story (Create)
 3. "Add issues #11 #12 as children of story #10"       → gitlab-story (Add-Child)
